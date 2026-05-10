@@ -40,3 +40,5 @@ yarn-error.log*
 # Git
 .git/
 !.git/ # keep the root .git
+
+sas_webapp_flask_sqlite/

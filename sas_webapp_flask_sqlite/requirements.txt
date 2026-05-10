@@ -1,6 +1,0 @@
-flask
-pandas
-openpyxl
-pywebview
-python-escpos
-pywin32
