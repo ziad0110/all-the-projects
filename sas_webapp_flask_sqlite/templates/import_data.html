@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+  <!-- Upload Section -->
+  <div class="col-lg-7">
+    <div class="card p-4">
+      <h5 class="mb-3"><i class="bi bi-cloud-upload me-2"></i>رفع ملف Excel</h5>
+      <form method="post" enctype="multipart/form-data" id="importForm">
+        <div class="mb-3">
+          <label class="form-label fw-bold">نوع البيانات</label>
+          <select name="entity" class="form-select" id="entitySelect">
+            <option value="items">الأصناف (المنتجات)</option>
+            <option value="customers">العملاء</option>
+            <option value="suppliers">الموردين</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">ملف Excel</label>
+          <div class="border rounded p-4 text-center" id="dropZone" style="border-style: dashed !important; cursor: pointer;">
+            <i class="bi bi-file-earmark-spreadsheet fs-1 text-success d-block mb-2"></i>
+            <p class="mb-1">اسحب الملف هنا أو اضغط للاختيار</p>
+            <small class="text-muted">يدعم ملفات .xlsx و .xls</small>
+            <input type="file" name="file" id="fileInput" class="d-none" accept=".xlsx,.xls">
+            <div id="fileName" class="mt-2 text-primary fw-bold" style="display:none;"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="skip_duplicates" id="skipDuplicates" checked>
+            <label class="form-check-label" for="skipDuplicates">تخطي السجلات المكررة (حسب الكود)</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100" id="importBtn" disabled>
+          <i class="bi bi-upload me-1"></i>استيراد البيانات
+        </button>
+      </form>
+
+      {% if result %}
+      <div class="mt-4">
+        <div class="alert alert-{{ 'success' if result.success else 'warning' }}">
+          <h6 class="alert-heading"><i class="bi bi-{{ 'check-circle' if result.success else 'exclamation-triangle' }} me-2"></i>نتيجة الاستيراد</h6>
+          <p class="mb-1">تم استيراد: <strong>{{ result.imported }}</strong> سجل بنجاح</p>
+          {% if result.skipped %}
+          <p class="mb-1">تم تخطي: <strong>{{ result.skipped }}</strong> سجل (مكرر)</p>
+          {% endif %}
+          {% if result.errors %}
+          <hr>
+          <p class="mb-1 text-danger">أخطاء ({{ result.errors|length }}):</p>
+          <ul class="mb-0 small">
+            {% for err in result.errors[:10] %}
+            <li>سطر {{ err.row }}: {{ err.message }}</li>
+            {% endfor %}
+            {% if result.errors|length > 10 %}
+            <li>... و {{ result.errors|length - 10 }} أخطاء أخرى</li>
+            {% endif %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Help Section -->
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h5 class="mb-3"><i class="bi bi-info-circle me-2"></i>تعليمات الاستيراد</h5>
+
+      <!-- Templates Download -->
+      <div class="mb-4">
+        <h6 class="text-primary">تحميل قالب فارغ</h6>
+        <div class="d-flex flex-column gap-2">
+          <a href="{{ url_for('import_template', entity='items') }}" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-download me-1"></i>قالب الأصناف
+          </a>
+          <a href="{{ url_for('import_template', entity='customers') }}" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-download me-1"></i>قالب العملاء
+          </a>
+          <a href="{{ url_for('import_template', entity='suppliers') }}" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-download me-1"></i>قالب الموردين
+          </a>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Column Reference -->
+      <div id="columnsHelp">
+        <h6 class="text-primary mb-3">الأعمدة المطلوبة</h6>
+
+        <div id="helpItems">
+          <table class="table table-sm small">
+            <thead><tr><th>العمود</th><th>مطلوب</th><th>ملاحظات</th></tr></thead>
+            <tbody>
+              <tr><td><code>item_code</code></td><td><span class="badge bg-success">مطلوب</span></td><td>كود فريد لكل صنف</td></tr>
+              <tr><td><code>name_ar</code></td><td><span class="badge bg-success">مطلوب</span></td><td>الاسم العربي للمنتج</td></tr>
+              <tr><td><code>cost_price</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>سعر التكلفة الافتراضي</td></tr>
+              <tr><td><code>sale_price</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>سعر البيع الافتراضي</td></tr>
+              <tr><td><code>category</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>اسم القسم أو التصنيف</td></tr>
+              <tr><td><code>min_stock</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>نقطة إعادة الطلب</td></tr>
+              <tr><td><code>initial_stock</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>الرصيد الافتتاحي</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="helpCustomers" style="display:none;">
+          <table class="table table-sm small">
+            <thead><tr><th>العمود</th><th>مطلوب</th><th>ملاحظات</th></tr></thead>
+            <tbody>
+              <tr><td><code>customer_code</code></td><td><span class="badge bg-success">مطلوب</span></td><td>كود العميل</td></tr>
+              <tr><td><code>name_ar</code></td><td><span class="badge bg-success">مطلوب</span></td><td>الاسم بالكامل</td></tr>
+              <tr><td><code>phone</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>رقم التواصل</td></tr>
+              <tr><td><code>address</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>العنوان</td></tr>
+              <tr><td><code>opening_balance</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>المديونية الحالية</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="helpSuppliers" style="display:none;">
+          <table class="table table-sm small">
+            <thead><tr><th>العمود</th><th>مطلوب</th><th>ملاحظات</th></tr></thead>
+            <tbody>
+              <tr><td><code>supplier_code</code></td><td><span class="badge bg-success">مطلوب</span></td><td>كود المورد</td></tr>
+              <tr><td><code>name_ar</code></td><td><span class="badge bg-success">مطلوب</span></td><td>اسم الشركة أو المورد</td></tr>
+              <tr><td><code>phone</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>رقم التواصل</td></tr>
+              <tr><td><code>address</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>المقر</td></tr>
+              <tr><td><code>opening_balance</code></td><td><span class="badge bg-secondary">اختياري</span></td><td>رصيد المورد المستحق</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const fileNameEl = document.getElementById('fileName');
+const importBtn = document.getElementById('importBtn');
+const entitySelect = document.getElementById('entitySelect');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => { 
+  e.preventDefault(); 
+  dropZone.style.borderColor = 'var(--bs-primary)';
+  dropZone.style.backgroundColor = 'rgba(13, 110, 253, 0.05)';
+});
+dropZone.addEventListener('dragleave', () => { 
+  dropZone.style.borderColor = ''; 
+  dropZone.style.backgroundColor = ''; 
+});
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.style.borderColor = ''; 
+  dropZone.style.backgroundColor = '';
+  
+  if (e.dataTransfer.files.length > 0) {
+    fileInput.files = e.dataTransfer.files;
+    showFileName();
+    // Add a small bounce animation
+    dropZone.animate([
+      { transform: 'scale(1)' },
+      { transform: 'scale(1.02)' },
+      { transform: 'scale(1)' }
+    ], { duration: 300 });
+  }
+});
+
+fileInput.addEventListener('change', showFileName);
+
+function showFileName() {
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    fileNameEl.innerHTML = `
+      <div class="p-2 border rounded bg-light d-inline-block mt-2">
+        <i class="bi bi-file-earmark-check text-success"></i> 
+        ${file.name} <span class="text-muted small">(${(file.size/1024).toFixed(1)} KB)</span>
+      </div>
+    `;
+    fileNameEl.style.display = 'block';
+    importBtn.disabled = false;
+    importBtn.classList.replace('btn-success', 'btn-primary');
+  }
+}
+
+// Toggle help columns
+entitySelect.addEventListener('change', function() {
+  document.getElementById('helpItems').style.display = this.value === 'items' ? '' : 'none';
+  document.getElementById('helpCustomers').style.display = this.value === 'customers' ? '' : 'none';
+  document.getElementById('helpSuppliers').style.display = this.value === 'suppliers' ? '' : 'none';
+});
+
+// Loading state on submit
+document.getElementById('importForm').addEventListener('submit', function() {
+  importBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>جاري الاستيراد...';
+  importBtn.disabled = true;
+});
+</script>
+{% endblock %}

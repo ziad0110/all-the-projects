@@ -1,0 +1,687 @@
+ 
+REF NO  EVENT  HAZARD  Consequence  
+( Worst case 
+scenarios )  Existing 
+Controls  Risk 
+Mitigation Action  Own
+ershi
+p New 
+Controls  Risk 
+Probability  Severity  Rating  Probability  Severity  Rating  
+ 
+ 
+RISK REGISTRY ( MATRIX SHEET ) (    2025 —YGHC      )                                                                                                                                              Page 1 of 7 
+  
+1 GSE Fault   
+• Technical fault 
+in passenger bus 
+number 67, due 
+to damage to the 
+clip (or clamp) 
+used for water 
+storage.  • The bus water 
+clamp  is 
+damaged 
+causing 
+potential   
+leakage  of 
+water  • Water 
+leakage that 
+could lead to 
+employees or 
+passengers 
+slipping  
+• Delay in 
+passenger 
+boarding due to 
+a shortage of 
+available buses  •    Moderate  Corrective Actions:  
+• Repair the clip 
+and replace it with 
+a higher -quality 
+component.  
+• Inspect all other 
+buses for the same 
+fault.  
+• Review 
+maintenance 
+procedures to 
+ensure the early 
+detection of minor 
+faults.   Preventive Actions:  
+• Update 
+maintenance 
+schedules to include 
+inspection of all water 
+tank components 
+and related systems.  
+• Provide a 
+standby bus ready at 
+each departure gate.  
+• Train drivers and 
+technicians to report 
+minor leaks 
+immediately.  
+Additional 
+Recommendations:  
+• Please address 
+the root cause, which 
+is the absence of 
+effective periodic 
+preventive inspection 
+for minor bus 
+components.  
+• Ensure a nearby 
+standby bus is 
+available to cover 
+emergency 
+breakdowns.    Moderate   SAH-Apr 2025  
+2 Baggage 
+Containers  
+•  Loading 
+containers with 
+minor to 
+moderate 
+defects.  • Use of 
+defected 
+baggage 
+containers  • It is Potential 
+that such  
+containers to get 
+stuck in the 
+aircraft causing 
+(damage to the 
+aircraft)  
+• Work delays  •  C 3 3C 
+ 
+Acceptable 
+based on 
+risk 
+mitigation. 
+Manageme
+nt decision 
+is required  
+ • FLLOW -UP : 
+Container 
+supervisor follow -
+up – to repair 
+damaged ones.   •  E 2 2E 
+ 
+Acceptab
+le  SAH-Apr 2025  
+3 Baggage Belt :  
+• Some workers 
+and operators are 
+speeding up the 
+baggage belt  to 
+expedite 
+unloading the 
+luggage  • Improper use 
+of the baggage 
+belt  • Luggage 
+falling and 
+getting 
+damaged.  
+• Causi ng 
+damage to the 
+aircraft's 
+fuselage  •  C 3 3C 
+ 
+Acceptable 
+based on 
+risk 
+mitigation. 
+Manageme
+nt decision 
+is required  • Raising the 
+awareness of the 
+operator or worker 
+about the danger  / 
+risk   •  C 2 2C 
+ 
+Acceptab
+le based 
+on risk 
+mitigation. 
+Managem
+ent 
+decision is 
+required  SAH-Apr 2025  
+4 Staff Behavior  •  B 3 3B  •  B 2 2B 
+
+---PAGE---
+
+ 
+REF NO  EVENT  HAZARD  Consequence  
+( Worst case 
+scenarios )  Existing 
+Controls  Risk 
+Mitigation Action  Own
+ershi
+p New 
+Controls  Risk 
+Probability  Severity  Rating  Probability  Severity  Rating  
+ 
+ 
+RISK REGISTRY ( MATRIX SHEET ) (    2025 —YGHC      )                                                                                                                                              Page 2 of 7 
+ SAH-Apr 2025  • Some workers 
+and operators  
+don't  wear  the 
+safety shoes  • Non-
+compliance to 
+wear the safety 
+shoes  • Injuries to the 
+staff Acceptable 
+based on 
+risk 
+mitigation. 
+Manageme
+nt decision 
+is required  • Raising 
+awareness : The 
+worker and operator 
+were apprised of the 
+risks of disregarding 
+safety guidelines and 
+were cautioned against 
+repeated violations  Acceptab
+le based 
+on risk 
+mitigation. 
+Managem
+ent 
+decision is 
+required  
+5 Trolleys and Containers 
+Maintenance  
+•   Neglecting 
+Lubrication of 
+Luggage Carts 
+and Container 
+Dollies  • Neglecting 
+Lubrication of 
+Luggage Carts 
+and Container 
+Dollies  • Injuries to 
+personnel  
+• Difficulties in 
+use  and movement  
+• Increased friction 
+and wear  
+• Noise  
+• Shorter lifespan  
+• Higher 
+operational costs  •  C 4 4C 
+ 
+Acceptable 
+based on 
+risk 
+mitigation. 
+Manageme
+nt decision 
+is required  • Raising Awareness: 
+Dealing with Faulty 
+Equipment : 
+• Educating the 
+operator or worker to 
+avoid dealing with faulty 
+equipment   
+• Inform ing the direct 
+supervisor   
+• Escalating the 
+problem to safety 
+management   •  C 3 3C 
+ 
+Acceptab
+le based 
+on risk 
+mitigation. 
+Managem
+ent 
+decision is 
+required  
+ SAH-Apr 2025  
+6 Foreign Object 
+Debris (FOD)  : 
+Presence of 
+debris, gravel, 
+stones, or 
+plastic/metal 
+cans near 
+aircraft engines.  
+ • FODs around 
+the aircraft 
+areas — that could 
+be ingested by the 
+engine during 
+operation  •  Significant  
+damage to the 
+engine during 
+operation.  
+•  Threat to the 
+safety of aircraft, 
+passengers, and 
+staff.  •  B 5 5B  
+ 
+Intolerable  CAUTION : There 
+must be work on  
+• Cleaning the apron  
+generally of any of the 
+mentioned items.  
+• Specifically cleaning 
+the aircraft's vicinity of 
+objects that could be 
+ingested by the engine 
+during operation.  
+•   •  E 3 3E 
+ 
+Acceptab
+le 
+ SAH-Apr 2025  
+7 •  •     •   •     
+
+---PAGE---
+
+ 
+REF NO  EVENT  HAZARD  Consequence  
+( Worst case 
+scenarios )  Existing 
+Controls  Risk 
+Mitigation Action  Own
+ershi
+p New 
+Controls  Risk 
+Probability  Severity  Rating  Probability  Severity  Rating  
+ 
+ 
+RISK REGISTRY ( MATRIX SHEET ) (    2025 —YGHC      )                                                                                                                                              Page 3 of 7 
+ SAH-Apr 2025  SAFETY CONES — 
+Shortages and 
+Deterioration  
+* Significant 
+shortage of cones.  
+* Poor condition of 
+existing safety vests 
+and deterioration of 
+the reflective tape on 
+most vests.  
+* Repetition  of the risk  
+from the first quarter.  
+ SAFETY CONES — 
+Shortages and 
+Deterioration  
+8 Containers 
+Securing  
+• Empty 
+containers were 
+not secured  on 
+the apron, 
+leading to one 
+being moved by 
+the wind into the 
+middle of the 
+apron.  • Unsecured 
+Empty Containers 
+on the Apron   • Severe 
+damage to 
+aircraft.  
+• Collisions  
+• Disruption of 
+operations.  
+• Damage to 
+the company's 
+reputation . 
+ •  C 3 3C 
+ 
+Acceptable 
+based on 
+risk 
+mitigation. 
+Manageme
+nt decision 
+is required  • The container was 
+returned and secured 
+onto one of its 
+dedicated dollies.  
+• A risk analysis report 
+was prepared and 
+submitted to the 
+company's Operational 
+Safety Manager.  
+Recommendations  
+-Establish clear lines and 
+markings, especially in 
+relevant areas and near 
+the maintenance hangar.  
+-Foster practical 
+cooperative coordination 
+to assess and implement 
+suitable practical solutions 
+for existing risks .  •  D 3 3D 
+ 
+Acceptab
+le based 
+on risk 
+mitigation. 
+Managem
+ent 
+decision is 
+required  
+ 
+ SAH-Apr 2025  
+9 •  B 4 4B  •  C 2 2C 
+
+---PAGE---
+
+ 
+REF NO  EVENT  HAZARD  Consequence  
+( Worst case 
+scenarios )  Existing 
+Controls  Risk 
+Mitigation Action  Own
+ershi
+p New 
+Controls  Risk 
+Probability  Severity  Rating  Probability  Severity  Rating  
+ 
+ 
+RISK REGISTRY ( MATRIX SHEET ) (    2025 —YGHC      )                                                                                                                                              Page 4 of 7 
+ SAH-Apr 2025  Passenger Stairs Bus 
+Safety Procedures  
+• Operator Non -
+Compliance with 
+Apron Safety 
+Procedures for 
+Passenger Stairs 
+Service  • Non-
+Compliance with 
+Safety 
+Procedures 
+regarding  
+Passenger Stairs 
+Service  • Severe 
+damage to 
+aircraft.  
+• Work 
+disruption.  
+• Injuries to staff 
+and passengers  
+• Operational 
+delays   
+• Reputation 
+Damage   
+Intolerable  The recommendation was 
+made and escalated  to 
+both: the Equipment 
+Department Manager and 
+the Direct Supervisor , 
+regarding  
+• The necessity of 
+not repeating the 
+violation  
+• The importance of 
+holding a refresher 
+course in service 
+delivery,  
+Recommendations  
+• Direct oversight and 
+supervision by the 
+Equipment Department 
+Manager and operations 
+supervisors over operators.  
+• Awareness campaigns 
+and training courses for 
+operators.   
+Acceptab
+le based 
+on risk 
+mitigation. 
+Managem
+ent 
+decision is 
+required  
+ 
+10 Weather 
+Conditions  
+• Rushing to perform 
+tasks during inclement 
+weather (rainfall) (by Air 
+Catering, Fuel 
+Management, and 
+Equipment Operators) 
+and their weak 
+adherence to safety 
+procedures.  • Rushing to 
+Perform Tasks 
+During Bad 
+Weather 
+(Rainfall)  •  Accidents and 
+damages.  
+•  Damage to the 
+company's 
+reputation.  
+•  •  D 5 5D 
+ 
+Acceptable 
+based on 
+risk 
+mitigation. 
+Manageme
+nt decision 
+is required  
+ 
+ • The 
+recommendation was 
+escalated  to all three 
+parties: Air Catering 
+Management, Fuel 
+Management, and 
+Equipment Operators, 
+with an emphasis that 
+safety comes first.   •  E 2 2E 
+ 
+Acceptab
+le  SAH-Apr 2025  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+---PAGE---
+
+ 
+REF NO  EVENT  HAZARD  Consequence  
+( Worst case 
+scenarios )  Existing 
+Controls  Risk 
+Mitigation Action  Own
+ershi
+p New 
+Controls  Risk 
+Probability  Severity  Rating  Probability  Severity  Rating  
+ 
+ 
+RISK REGISTRY ( MATRIX SHEET ) (    2025 —YGHC      )                                                                                                                                              Page 5 of 7 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+1 SAH 2 
+ .م الـــــنـــــشـــــــاط  الــمــخــاطــر الـمـحـتـمـلـة  تقييم  
+المخاطر  استراتيجية التخفيف  تقييم المخاطر  
+بعد التخفيف  
+      
+APRIL 2025 1 
+ في صباح اإلثنين 82 أبريل  8282 ، وأثناء تحميل ركاب رحلة  248 المتجهة من عمّان إلى صنعاء )طائرة  A320 ، تسجيل 
+AFA (، تعرض باص المسافرين رقم 67لعطل ميكانيكي يتمثل في تلف "الكليب  "الخاص  بخزان  الماء، مما أدى إلى تسرب الماء 
+وتعطّل الباص بجانب بوابة المغادرة .حاول المهندسان حاتم وسلطان إصالح الباص في الموقع، ولكن دون جدوى، مما استدعى 
+سحبه إلى الورشة .وقد أدى ذل ك إلى تأخر الرحلة بسبب النقص المؤقت في عدد الحافالت المتاحة لنقل الركاب. 
+1 عطل فني في باص نقل الركاب  رقم  
+67   ، وذلك بسبب تلف الكليب
+الخاص بتخزين الماء  
+ o تسرب مياه  قد يؤدي  إلى  
+انزالق الموظفين أو  الركاب . 
+o تأخر في تحميل الركاب  
+بسبب قلة الباصات المتاحة. متوسط o : اإلجراءات التصحيحية 
+- إصالح الكليب واستبداله بمكون 
+أكثر جودة. 
+- فحص جميع الباصات األخرى لنفس 
+العطل. 
+- مراجعة إجراءات الصيانة لضمان 
+اكتشاف األعطال الدقيقة مسبقًا. 
+o : إجراءات وقائية 
+- تحديث جداول الصيانة لتشمل 
+فحص جميع أجزاء خزانات المياه 
+واألنظمة ذات الصلة. 
+- توفير حافلة احتياطية جاهزة لكل 
+بوابة مغادرة. 
+- تدريب السائقين والفنيين على 
+اإلبالغ الفوري عن التسريبات 
+البسيطة. 
+o  يرجى معالجة السبب الكائن 
+المتمثل في  غياب الفحص الوقائي         RISK REGISTRY  
+        
+II 4 A  Operation Safety Reporting System 
+تـــقـــيـــيـــم الـــمـــخـــاطــــر 2025Q  nd2 SQAD  
+ISSUE Article PART   
+ Risk Assessment Report   
+ 
+4 
+ 
+SAH  
+
+  Risks & Categories                    
+المخاطر وتصنيفاتها
+  
+   
+
+---PAGE---
+
+ 
+REF NO  EVENT  HAZARD  Consequence  
+( Worst case 
+scenarios )  Existing 
+Controls  Risk 
+Mitigation Action  Own
+ershi
+p New 
+Controls  Risk 
+Probability  Severity  Rating  Probability  Severity  Rating  
+ 
+ 
+RISK REGISTRY ( MATRIX SHEET ) (    2025 —YGHC      )                                                                                                                                              Page 6 of 7 
+ الدوري  ال فعال  لمكونات الحافلة 
+الدقيقة. 
+o  توفر حافلة احتياطية قريبة 
+لتغطية العطل الطارئ. 
+2 تحميل حاويات ذات عيوب تتراوح 
+من صغيرة إلى متوسطة 
+ تكرار من الربع األول  o إمكانية تعلق هذه  الحاويات 
+في الطائرة ( أضرار بالطائرة )  
+o  تأخير العمل 3C o متابعة مسؤول الحاويات – 
+بإصالح المتضرر  منها  2E 
+3 تسريع بعض العمال و المشغلين   
+لسير البطة لتعجيل إنزال العفش  
+ تكرار من الربع األول  o سقوط العفش وتضرره  
+o إلحاق  الضرر  بجسم  الطائرة 3C o توعية المشغل أو العامل 
+بخطورة ذلك  2C 
+4 عدم إرتداء بعض العمال 
+والمشغلين ألحذية السالمة  
+ تكرار من الربع األول  o تضرر العامل أو المشغل 3B o تم توعية العامل و المشغل 
+بخطورة تجاهلم إرشادات  السالمة 
+وتم تحذيرهم من تكرار المخالفة 2B 
+5 إهمال تزييت عربيات العفش 
+وعربيات الحاويات  
+ تكرار من الربع األول  o  إلحاق الضرر  بالمشغل أو 
+العامل  صعوبة التعامل مع  
+عربيات العفش  4C o توعية المشغل أو العامل 
+بتجنب التعامل مع المعدة 
+المعيوبة وإبالغ المشرف  المباشر 
+والرفع بالمشكلة إلى  إدارة 
+السالمة  3C 
+6 (FOD) 
+ وجود مخلفاتأو  حصى (كري) أو   
+احجار أو  علب بالستيكية او معدنية 
+بالقرب من محركات الطائرة   o اضرار كبيرة  للمحرك اثناء 
+التشغيل  
+o تهديد لسالمة   الطائرات 
+والركاب والموظفين  5B  : يجب العمل على 
+o   تنظيف المرسى بشكل عام من
+أي من ما تم ذكره  
+o  وتنظيف محيط الطائرة بشكل 
+خاص من االشياء التي يمكن ان 
+يسحبها المحرك اثناء التشغيل  3E 
+7  نقص كبير في األقماع 
+وتردي حاله الكنزات الموجودة   
+وتهالك الشريط الفسفوري ألغلبيه  
+الكنزات 
+ تكرار من الربع األول  o   o   
+8  عدم تأمين الحاويات الفارغة في
+المرسى مما تسبب في تحريك 
+الرياح إلحدى الحاويات حتى  
+وصلت بها إلى وسط المرسى   تضرر للطائرات والمعدات والكادر نتيجة : 
+o   اصطدام الحاويات بالطائرة 
+o  اصطدام الحاويات بالمعدات 
+o   جروح خطيرة 3C 
+  اعتمادا على
+استراتيجية 
+تخفيف  
+المخاطر  
+واتخاذ اقرار o  تم القيام بإرجاع الحاوية 
+وتأمينها على إحدى العربات 
+الخاصة بها  3D 
+
+---PAGE---
+
+ 
+REF NO  EVENT  HAZARD  Consequence  
+( Worst case 
+scenarios )  Existing 
+Controls  Risk 
+Mitigation Action  Own
+ershi
+p New 
+Controls  Risk 
+Probability  Severity  Rating  Probability  Severity  Rating  
+ 
+ 
+RISK REGISTRY ( MATRIX SHEET ) (    2025 —YGHC      )                                                                                                                                              Page 7 of 7 
+ o  عمل تقرير تحليل مخاطر 
+والرفع به إلى مدير السالمة  
+التشغيلية بالشركة  
+توصيات :  
+o   عمل خطوط وعالمات ال سيما في المناطق 
+المعنية وكذلك القريبة من هنجر الصيانة  
+o   التنسيق التعاوني عملياً في سبيل تقييم وتنفيذ
+حلول عملية مالئمة لما هو قائم من المخاطر  
+9   عدم التزام مشغل المعدات
+بإجراءات سالمة المرسى الخاصة  
+بتقديم خدمة درج المسافرين o   ضرر بالغ للطائرات 
+o إرباك العمل 
+o  تشويه لسمعة الشركة 4B o   تم الرفع والتوصية إلى ضرورة عدم
+تكرار المخالفة وضرورة عقد دورة  
+تنشيطية في مجال تقديم الخدمة  ، إلى كالً 
+من : مدير قسم المعدات والمشرف 
+المباشر  
+توصيات :  
+o   الرقابة واإلشراف المباشر من قبل مدير
+قسم المعدات ومشرفي التشغيل على المشغلين  
+، والتوعية وعقد دورات تدريبة لهم 2C 
+10  اإلستعجال بتنفيذ المهام أثناء سوء
+األحوال الجوية (هطول األمطار) ( 
+من قبل التموين الجوي وإدارة  
+الوقود ومشغلي المعدات) وضعف 
+التزامهم بإجراءات السالمة   o  احتمالية حصول حوادث 
+وأضرار  
+o  تشويه لسمعة الشركة 5D o   تم الرفع والتوصية لكل من 
+الجهات الثالث : إدارة التموين 
+الجوي  –  إدارة الوقود  –  مشغلي 
+المعدات   
+o  التنبيه بأن السالمة أوالً  2E 
+ 

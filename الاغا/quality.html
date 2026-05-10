@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="معايير الجودة والاعتماد في شركة نبع الريحان - شهادات دولية وضمان الجودة">
+
+    <title>الجودة والاعتماد | نبع الريحان</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        .page-hero {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+
+        .cert-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+            transition: var(--transition-normal);
+        }
+
+        .cert-card:hover {
+            border-color: var(--border-gold);
+            transform: translateY(-5px);
+        }
+
+        .cert-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto var(--space-lg);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cert-icon i {
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+        }
+
+        .process-card {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-lg);
+            background: var(--bg-card);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            transition: var(--transition-normal);
+        }
+
+        .process-card:hover {
+            border-color: var(--border-gold);
+        }
+
+        .process-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bg-primary);
+            flex-shrink: 0;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .lab-card {
+            background: var(--bg-card);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .lab-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto var(--space-md);
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lab-icon i {
+            font-size: 1.75rem;
+            color: #27ae60;
+        }
+
+        @media (max-width: 1024px) {
+            .lab-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-text">
+                        <span class="text-gold">نبع الريحان</span>
+                    </div>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="about.html" class="nav-link">من نحن</a></li>
+                    <li><a href="index.html#brands" class="nav-link">علاماتنا</a></li>
+                    <li><a href="quality.html" class="nav-link active">الجودة</a></li>
+                    <li><a href="news.html" class="nav-link">الأخبار</a></li>
+                    <li><a href="contact.html" class="nav-link">تواصل معنا</a></li>
+                </ul>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="القائمة">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="reveal">الجودة <span class="text-gold">والاعتماد</span></h1>
+            <div class="divider"></div>
+            <p class="lead reveal reveal-delay-1"
+                style="max-width: 700px; margin: 0 auto; color: var(--text-secondary);">
+                نلتزم بأعلى معايير الجودة العالمية في جميع منتجاتنا
+            </p>
+        </div>
+    </section>
+
+    <!-- Quality Statement -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center reveal" style="max-width: 900px; margin: 0 auto;">
+                <div
+                    style="width: 100px; height: 100px; margin: 0 auto var(--space-xl); background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05)); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-award" style="font-size: 3rem; color: var(--gold-primary);"></i>
+                </div>
+                <h2 class="mb-lg">التزامنا <span class="text-gold">بالجودة</span></h2>
+                <p class="lead" style="color: var(--text-secondary); line-height: 1.9;">
+                    في نبع الريحان، الجودة ليست مجرد معيار نسعى لتحقيقه، بل هي فلسفة نعيشها في كل تفاصيل عملنا. من
+                    اختيار أفضل المواد الخام، مروراً بعمليات التصنيع الدقيقة، وصولاً إلى التعبئة والتغليف - كل خطوة تخضع
+                    لرقابة صارمة وفق أعلى المعايير الدولية.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="section" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>شهاداتنا <span class="text-gold">الدولية</span></h2>
+                <div class="divider"></div>
+                <p>حاصلون على أهم الشهادات والاعتمادات العالمية</p>
+            </div>
+
+            <div class="grid grid-4">
+                <div class="cert-card reveal reveal-delay-1">
+                    <div class="cert-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h4 class="mb-sm">ISO 22000</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        نظام إدارة سلامة الغذاء الدولي
+                    </p>
+                </div>
+
+                <div class="cert-card reveal reveal-delay-2">
+                    <div class="cert-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="mb-sm">HACCP</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        تحليل المخاطر ونقاط التحكم الحرجة
+                    </p>
+                </div>
+
+                <div class="cert-card reveal reveal-delay-3">
+                    <div class="cert-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h4 class="mb-sm">GMP</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        ممارسات التصنيع الجيدة
+                    </p>
+                </div>
+
+                <div class="cert-card reveal reveal-delay-4">
+                    <div class="cert-icon">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <h4 class="mb-sm">ISO 9001</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        نظام إدارة الجودة الشاملة
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality Process -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>عملية ضمان <span class="text-gold">الجودة</span></h2>
+                <div class="divider"></div>
+                <p>نتبع نظاماً صارماً لضمان الجودة في كل مرحلة</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+                <div class="process-card reveal reveal-delay-1">
+                    <div class="process-number">1</div>
+                    <div>
+                        <h4 class="mb-sm">اختيار المواد الخام</h4>
+                        <p style="color: var(--text-secondary);">
+                            نختار بعناية فائقة أفضل المواد الخام من مصادر موثوقة ومعتمدة، مع إجراء فحوصات دقيقة للتأكد
+                            من الجودة قبل الاستلام.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-card reveal reveal-delay-2">
+                    <div class="process-number">2</div>
+                    <div>
+                        <h4 class="mb-sm">فحص المدخلات</h4>
+                        <p style="color: var(--text-secondary);">
+                            تخضع جميع المواد الخام لفحوصات مخبرية شاملة للتأكد من مطابقتها للمواصفات قبل دخولها خط
+                            الإنتاج.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-card reveal reveal-delay-3">
+                    <div class="process-number">3</div>
+                    <div>
+                        <h4 class="mb-sm">مراقبة التصنيع</h4>
+                        <p style="color: var(--text-secondary);">
+                            نراقب كل مرحلة من مراحل التصنيع بدقة عالية، مع تسجيل جميع المعاملات للتأكد من الالتزام
+                            بالمعايير.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-card reveal reveal-delay-4">
+                    <div class="process-number">4</div>
+                    <div>
+                        <h4 class="mb-sm">فحص المنتج النهائي</h4>
+                        <p style="color: var(--text-secondary);">
+                            يخضع كل منتج نهائي لفحوصات شاملة تشمل الجودة والطعم والمظهر والتعبئة قبل التعبئة والتوزيع.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-card reveal reveal-delay-4">
+                    <div class="process-number">5</div>
+                    <div>
+                        <h4 class="mb-sm">التتبع والمراجعة</h4>
+                        <p style="color: var(--text-secondary);">
+                            نحتفظ بسجلات كاملة لكل دفعة إنتاجية تمكننا من تتبع أي منتج من المواد الخام حتى وصوله
+                            للمستهلك.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Testing -->
+    <section class="section" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>الفحوصات <span class="text-gold">المخبرية</span></h2>
+                <div class="divider"></div>
+                <p>نجري فحوصات دورية شاملة لضمان سلامة منتجاتنا</p>
+            </div>
+
+            <div class="lab-grid">
+                <div class="lab-card reveal reveal-delay-1">
+                    <div class="lab-icon">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <h4 class="mb-sm">التحاليل الكيميائية</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">فحص التركيب الكيميائي والمواد المضافة
+                    </p>
+                </div>
+
+                <div class="lab-card reveal reveal-delay-2">
+                    <div class="lab-icon">
+                        <i class="fas fa-bacteria"></i>
+                    </div>
+                    <h4 class="mb-sm">التحاليل الميكروبية</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">الكشف عن البكتيريا والفطريات</p>
+                </div>
+
+                <div class="lab-card reveal reveal-delay-3">
+                    <div class="lab-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h4 class="mb-sm">الفحص الفيزيائي</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">الوزن والكثافة واللزوجة</p>
+                </div>
+
+                <div class="lab-card reveal reveal-delay-1">
+                    <div class="lab-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h4 class="mb-sm">الفحص الحسي</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">الطعم والرائحة واللون والقوام</p>
+                </div>
+
+                <div class="lab-card reveal reveal-delay-2">
+                    <div class="lab-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h4 class="mb-sm">فحص الصلاحية</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">اختبار ثبات المنتج عبر الزمن</p>
+                </div>
+
+                <div class="lab-card reveal reveal-delay-3">
+                    <div class="lab-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h4 class="mb-sm">فحص التغليف</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">سلامة العبوات والختم</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Natural Products -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>منتجات <span class="text-gold">طبيعية</span></h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-item reveal reveal-delay-1">
+                    <div class="value-icon"
+                        style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));">
+                        <i class="fas fa-leaf" style="color: #27ae60;"></i>
+                    </div>
+                    <h4 class="value-title">100% طبيعي</h4>
+                    <p class="value-text">جميع منتجاتنا مصنوعة من مكونات طبيعية 100%</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-2">
+                    <div class="value-icon"
+                        style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));">
+                        <i class="fas fa-ban" style="color: #27ae60;"></i>
+                    </div>
+                    <h4 class="value-title">بدون مواد حافظة</h4>
+                    <p class="value-text">لا نستخدم مواد حافظة صناعية في منتجاتنا</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-3">
+                    <div class="value-icon"
+                        style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));">
+                        <i class="fas fa-palette" style="color: #27ae60;"></i>
+                    </div>
+                    <h4 class="value-title">بدون ألوان صناعية</h4>
+                    <p class="value-text">ألوان منتجاتنا طبيعية 100% من المكونات الأصلية</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-4">
+                    <div class="value-icon"
+                        style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));">
+                        <i class="fas fa-heart" style="color: #27ae60;"></i>
+                    </div>
+                    <h4 class="value-title">صحي وآمن</h4>
+                    <p class="value-text">منتجات آمنة ومناسبة لجميع أفراد العائلة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section"
+        style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, var(--bg-primary) 100%);">
+        <div class="container text-center">
+            <h2 class="reveal mb-lg">
+                جودة تثق بها <span class="text-gold">لعائلتك</span>
+            </h2>
+            <p class="lead reveal mb-xl"
+                style="color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-xl);">
+                اختر منتجات نبع الريحان واستمتع بالجودة والطعم الأصيل
+            </p>
+            <div class="reveal">
+                <a href="index.html#brands" class="btn btn-primary btn-lg">
+                    <span>استكشف منتجاتنا</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-text">نبع الريحان</span>
+                    </div>
+                    <p class="footer-desc">
+                        شركة نبع الريحان للتجارة والصناعة - رائدة في مجال الصناعات الغذائية في اليمن.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="footer-link">الرئيسية</a></li>
+                        <li><a href="about.html" class="footer-link">من نحن</a></li>
+                        <li><a href="quality.html" class="footer-link">الجودة</a></li>
+                        <li><a href="contact.html" class="footer-link">تواصل معنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">علاماتنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="brands/al-agha/index.html" class="footer-link">شركة الأغا</a></li>
+                        <li><a href="brands/dream/index.html" class="footer-link">شركة دريم</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">تواصل معنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+967123456789" class="footer-link"><i class="fas fa-phone-alt"
+                                    style="margin-left: 8px; color: var(--gold-primary);"></i>+967 123 456 789</a></li>
+                        <li><a href="mailto:info@nabalrehan.com" class="footer-link"><i class="fas fa-envelope"
+                                    style="margin-left: 8px; color: var(--gold-primary);"></i>info@nabalrehan.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 شركة نبع الريحان. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

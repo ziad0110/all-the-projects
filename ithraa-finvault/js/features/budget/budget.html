@@ -1,0 +1,69 @@
+<div id="page-budget" class="page p-4 md:p-8">
+    <!-- Month Navigation & Summary Cards -->
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">الميزانية</h2>
+        <div class="flex items-center gap-4 bg-white/5 rounded-xl p-1">
+            <button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/10 transition" onclick="changeBudgetMonth(1)">
+                <i class="fas fa-chevron-right text-sm"></i>
+            </button>
+            <span id="budget-month-display" class="text-sm font-bold min-w-[100px] text-center">...</span>
+            <button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/10 transition" onclick="changeBudgetMonth(-1)">
+                <i class="fas fa-chevron-left text-sm"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center">
+            <p class="text-xs text-gray-400 mb-1">إجمالي الميزانية</p>
+            <p class="font-bold text-lg text-white" id="budget-total-limit">0</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center">
+            <p class="text-xs text-gray-400 mb-1">إجمالي المصروفات</p>
+            <p class="font-bold text-lg text-rose" id="budget-total-spent">0</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald/10 to-transparent z-0"></div>
+            <div class="relative z-10">
+                <p class="text-xs text-gray-400 mb-1">المتبقي الكلي</p>
+                <p class="font-bold text-lg text-emerald" id="budget-total-remaining">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart & Categories Split -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Chart -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col">
+            <h3 class="font-bold text-lg mb-4">توزيع النفقات</h3>
+            <div class="flex-1 flex items-center justify-center relative min-h-[250px]">
+                <canvas id="budget-chart" style="max-height: 250px;"></canvas>
+                <div id="budget-chart-empty" class="absolute inset-0 items-center justify-center text-sm text-gray-500 hidden">
+                    لا توجد مصروفات مسجلة لهذا الشهر
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Categories -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col">
+            <h3 class="font-bold text-lg mb-6">تتبع الفئات</h3>
+            <div id="budget-categories" class="space-y-5 flex-1 overflow-y-auto custom-scrollbar pr-2 max-h-[280px]">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Saving Goals -->
+    <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="font-bold text-lg">أهداف التوفير</h3>
+            <button class="w-10 h-10 rounded-xl bg-gradient-to-r from-ethereal-violet to-ethereal-cyan flex items-center justify-center shadow-lg hover:scale-105 transition" onclick="showAddGoalModal()">
+                <i class="fas fa-plus text-obsidian-base"></i>
+            </button>
+        </div>
+        <div id="goals-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Injected via JS -->
+        </div>
+    </div>
+</div>

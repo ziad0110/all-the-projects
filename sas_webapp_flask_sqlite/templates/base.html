@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or 'SAS' }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+  <style>
+    @media print {
+      /* Hide everything that shouldn't be printed */
+      header, footer, aside, nav, .sidebar, .mobile-toggle, .sidebar-overlay, 
+      .page-header, .no-print, .btn, .btn-group, .dropdown, .modal, 
+      .alert, .breadcrumb, .input-group, select, input {
+        display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+      }
+
+      /* Force the main content to take full width */
+      .app-layout, body, html {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+      }
+      
+      .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        position: static !important;
+      }
+      
+      .page-body {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      /* Reset cards and shadows */
+      .card {
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+      }
+      
+      .card-body {
+        padding: 0 !important;
+      }
+
+      /* Improve table printing */
+      .table {
+        width: 100% !important;
+        border: 1px solid #000 !important;
+        border-collapse: collapse !important;
+      }
+      .table th, .table td {
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        background: #fff !important;
+        padding: 4px 8px !important;
+        font-size: 10pt !important;
+      }
+
+      /* Show only print-specific elements */
+      .print-only {
+        display: block !important;
+        visibility: visible !important;
+      }
+      
+      /* Ensure text is black */
+      * {
+        color: #000 !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+      }
+    }
+    .print-only { display: none; }
+    
+    /* Select2 Dark Mode Styles */
+    [data-theme='dark'] .select2-container--default .select2-selection--single,
+    [data-theme='dark'] .select2-container--default .select2-selection--multiple {
+      background-color: #1e293b !important;
+      border-color: #334155 !important;
+      color: #f8fafc !important;
+      height: 45px;
+      padding: 8px;
+    }
+    [data-theme='dark'] .select2-container--default .select2-selection--single .select2-selection__rendered,
+    [data-theme='dark'] .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+      color: #f8fafc !important;
+    }
+    [data-theme='dark'] .select2-container--default .select2-selection--single .select2-selection__arrow b {
+      border-color: #94a3b8 transparent transparent transparent !important;
+    }
+    [data-theme='dark'] .select2-dropdown {
+      background-color: #1e293b !important;
+      border-color: #334155 !important;
+      color: #f8fafc !important;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+    }
+    [data-theme='dark'] .select2-container--default .select2-search--dropdown .select2-search__field {
+      background-color: #0f172a !important;
+      border-color: #334155 !important;
+      color: #f8fafc !important;
+    }
+    [data-theme='dark'] .select2-container--default .select2-results__option--highlighted[aria-selected] {
+      background-color: #3b82f6 !important;
+      color: white !important;
+    }
+    [data-theme='dark'] .select2-container--default .select2-results__option[aria-selected=true] {
+      background-color: rgba(59, 130, 246, 0.2) !important;
+      color: #fff !important;
+    }
+    [data-theme='dark'] .select2-container--default .select2-results__option {
+      color: #cbd5e1 !important;
+      background-color: transparent;
+    }
+    [data-theme='dark'] .select2-results__option--selectable:hover {
+      background-color: #3b82f6 !important;
+      color: white !important;
+    }
+
+    /* Global Dark Mode Base Styles */
+    [data-theme='dark'] { color-scheme: dark; }
+    [data-theme='dark'] body { background-color: #0f172a; color: #f8fafc; }
+    [data-theme='dark'] .main-content { background-color: #0f172a; }
+    [data-theme='dark'] .card { background-color: #1e293b; border-color: #334155; color: #f8fafc; }
+    [data-theme='dark'] .form-control, [data-theme='dark'] .form-select {
+      background-color: #0f172a;
+      border-color: #334155;
+      color: #f8fafc;
+    }
+    [data-theme='dark'] .form-control:focus, [data-theme='dark'] .form-select:focus {
+      background-color: #0f172a;
+      border-color: #3b82f6;
+      color: #fff;
+    }
+    [data-theme='dark'] .modal-content { background-color: #1e293b; color: #f8fafc; border-color: #334155; }
+    [data-theme='dark'] .table { color: #cbd5e1; }
+    [data-theme='dark'] .table thead th { background-color: #0f172a; color: #94a3b8; border-color: #334155; }
+    [data-theme='dark'] .table td { border-color: #334155; }
+    [data-theme='dark'] .text-muted { color: #94a3b8 !important; }
+    [data-theme='dark'] .bg-light { background-color: #0f172a !important; }
+    [data-theme='dark'] .dropdown-menu { background-color: #1e293b; border-color: #334155; }
+    [data-theme='dark'] .dropdown-item { color: #cbd5e1; }
+    [data-theme='dark'] .dropdown-item:hover { background-color: #334155; color: #fff; }
+    [data-theme='dark'] .dropdown-header { color: #94a3b8; border-color: #334155; }
+    [data-theme='dark'] .border-bottom, [data-theme='dark'] .border-top, [data-theme='dark'] .border { border-color: #334155 !important; }
+  </style>
+
+  <script>
+
+    // Apply saved theme instantly to prevent flash
+    (function(){var t=localStorage.getItem('sas-theme');if(t)document.documentElement.setAttribute('data-theme',t);})()
+  </script>
+</head>
+<body>
+
+<!-- Mobile Toggle -->
+<button class="mobile-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<div class="app-layout">
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-box">
+      <h4>SAS</h4>
+      <div class="brand-subtitle">Smart Accounting Suite</div>
+      {% if current_user %}
+      <div class="brand-user"><i class="bi bi-person-circle"></i> {{ current_user['full_name_ar'] }} - {{ current_user['role_name'] }}</div>
+      {% endif %}
+    </div>
+
+    <nav class="sidebar-nav">
+      <!-- لوحة التحكم -->
+      <a class="nav-link{{ ' active' if request.endpoint == 'dashboard' }}" href="{{ url_for('dashboard') }}"><i class="bi bi-grid"></i>لوحة التحكم</a>
+      <a class="nav-link{{ ' active' if request.endpoint == 'pos_interface' }}" href="{{ url_for('pos_interface') }}"><i class="bi bi-display"></i>نقطة البيع</a>
+
+      <!-- المبيعات -->
+      <div class="nav-section collapsed" onclick="toggleSection(this)">المبيعات <i class="bi bi-chevron-down section-chevron"></i></div>
+      <div class="nav-section-items collapsed">
+        <a class="nav-link" href="{{ url_for('sales_create') }}"><i class="bi bi-receipt"></i>بيع جديد</a>
+        <a class="nav-link" href="{{ url_for('sales_list') }}"><i class="bi bi-list-ul"></i>فواتير المبيعات</a>
+        <a class="nav-link" href="{{ url_for('quotations_list') }}"><i class="bi bi-file-earmark-text"></i>عروض الأسعار</a>
+        <a class="nav-link" href="{{ url_for('sales_return_create') }}"><i class="bi bi-arrow-counterclockwise"></i>مرتجع بيع</a>
+      </div>
+
+      <!-- المشتريات -->
+      {% if has_permission('manage_purchases') %}
+      <div class="nav-section collapsed" onclick="toggleSection(this)">المشتريات <i class="bi bi-chevron-down section-chevron"></i></div>
+      <div class="nav-section-items collapsed">
+        <a class="nav-link" href="{{ url_for('purchases_list') }}"><i class="bi bi-cart"></i>فواتير الشراء</a>
+        <a class="nav-link" href="{{ url_for('purchase_create') }}"><i class="bi bi-plus-circle"></i>فاتورة جديدة</a>
+        <a class="nav-link" href="{{ url_for('purchase_return_create') }}"><i class="bi bi-arrow-clockwise"></i>مرتجع شراء</a>
+      </div>
+      {% endif %}
+
+      <!-- المخزون -->
+      {% if has_permission('manage_inventory') %}
+      <div class="nav-section collapsed" onclick="toggleSection(this)">المخزون <i class="bi bi-chevron-down section-chevron"></i></div>
+      <div class="nav-section-items collapsed">
+        <a class="nav-link" href="{{ url_for('items_list') }}"><i class="bi bi-box-seam"></i>الأصناف</a>
+        <a class="nav-link" href="{{ url_for('stock_view') }}"><i class="bi bi-stack"></i>المخزون</a>
+        <a class="nav-link" href="{{ url_for('barcode_print') }}"><i class="bi bi-upc-scan"></i>طباعة الباركود</a>
+        <a class="nav-link" href="{{ url_for('transfers_list') }}"><i class="bi bi-arrow-left-right"></i>التحويلات</a>
+        <a class="nav-link" href="{{ url_for('counts_list') }}"><i class="bi bi-clipboard-check"></i>جرد المخزن</a>
+        <a class="nav-link" href="{{ url_for('alerts_view') }}"><i class="bi bi-bell"></i>التنبيهات</a>
+      </div>
+      {% endif %}
+
+      <!-- المحاسبة -->
+      {% if has_permission('view_accounting') %}
+      <div class="nav-section collapsed" onclick="toggleSection(this)">المحاسبة <i class="bi bi-chevron-down section-chevron"></i></div>
+      <div class="nav-section-items collapsed">
+        <a class="nav-link" href="{{ url_for('coa_tree') }}"><i class="bi bi-journal-text"></i>شجرة الحسابات</a>
+        <a class="nav-link" href="{{ url_for('journals_list') }}"><i class="bi bi-journal-check"></i>القيود</a>
+        {% if has_permission('manage_journals') %}
+        <a class="nav-link" href="{{ url_for('journal_create') }}"><i class="bi bi-plus-circle"></i>قيد يدوي</a>
+        {% endif %}
+        <a class="nav-link" href="{{ url_for('expenses_list') }}"><i class="bi bi-wallet2"></i>المصروفات</a>
+        <a class="nav-link" href="{{ url_for('checks_list') }}"><i class="bi bi-credit-card"></i>الشيكات</a>
+        <a class="nav-link" href="{{ url_for('vouchers_list') }}"><i class="bi bi-receipt-cutoff"></i>سندات استلام وصرف كاش</a>
+        <a class="nav-link" href="{{ url_for('fiscal_years_list') }}"><i class="bi bi-calendar-check"></i>السنوات المالية والإقفال</a>
+      </div>
+
+      {% endif %}
+
+      <!-- التقارير -->
+      {% if has_permission('view_reports') %}
+      <div class="nav-section collapsed" onclick="toggleSection(this)">التقارير <i class="bi bi-chevron-down section-chevron"></i></div>
+      <div class="nav-section-items collapsed">
+        <a class="nav-link" href="{{ url_for('trial_balance') }}"><i class="bi bi-table"></i>ميزان المراجعة</a>
+        <a class="nav-link" href="{{ url_for('income_statement') }}"><i class="bi bi-graph-up"></i>قائمة الدخل</a>
+        <a class="nav-link" href="{{ url_for('balance_sheet') }}"><i class="bi bi-pie-chart"></i>الميزانية العمومية</a>
+        <a class="nav-link" href="{{ url_for('profitability_report') }}"><i class="bi bi-trophy"></i>تقرير الربحية</a>
+        <a class="nav-link" href="{{ url_for('debts_report') }}"><i class="bi bi-person-lines-fill"></i>إدارة المديونيات</a>
+        <a class="nav-link" href="{{ url_for('account_statement') }}"><i class="bi bi-file-text"></i>كشف حساب</a>
+        <a class="nav-link" href="{{ url_for('reports') }}"><i class="bi bi-bar-chart"></i>تقارير شاملة</a>
+      </div>
+      {% endif %}
+
+      <!-- البيانات الأساسية -->
+      {% if has_permission('manage_settings') or has_permission('manage_inventory') %}
+      <div class="nav-section collapsed" onclick="toggleSection(this)">العملاء والأصناف <i class="bi bi-chevron-down section-chevron"></i></div>
+      <div class="nav-section-items collapsed">
+        <a class="nav-link" href="{{ url_for('master_list', entity='customers') }}"><i class="bi bi-person-badge"></i>العملاء</a>
+        <a class="nav-link" href="{{ url_for('master_list', entity='suppliers') }}"><i class="bi bi-truck"></i>الموردون</a>
+        {% if has_permission('manage_settings') %}
+        <a class="nav-link" href="{{ url_for('master_list', entity='branches') }}"><i class="bi bi-building"></i>الفروع</a>
+        <a class="nav-link" href="{{ url_for('master_list', entity='warehouses') }}"><i class="bi bi-house"></i>المستودعات</a>
+        {% endif %}
+        <a class="nav-link" href="{{ url_for('master_list', entity='categories') }}"><i class="bi bi-tags"></i>التصنيفات</a>
+        <a class="nav-link" href="{{ url_for('master_list', entity='units') }}"><i class="bi bi-rulers"></i>الوحدات</a>
+      </div>
+      {% endif %}
+
+      <!-- الإعدادات -->
+      {% if has_permission('manage_settings') or has_permission('manage_users') %}
+      <div class="nav-section collapsed" onclick="toggleSection(this)">الإعدادات <i class="bi bi-chevron-down section-chevron"></i></div>
+      <div class="nav-section-items collapsed">
+        {% if has_permission('manage_settings') %}
+        <a class="nav-link" href="{{ url_for('company_settings') }}"><i class="bi bi-gear"></i>الشركة</a>
+        <a class="nav-link" href="{{ url_for('exchange_rates') }}"><i class="bi bi-currency-exchange"></i>أسعار الصرف</a>
+        <a class="nav-link" href="{{ url_for('backup_page') }}"><i class="bi bi-hdd"></i>النسخ الاحتياطي</a>
+        <a class="nav-link" href="{{ url_for('import_data') }}"><i class="bi bi-cloud-upload"></i>استيراد بيانات Excel</a>
+        <a class="nav-link" href="{{ url_for('audit_log') }}"><i class="bi bi-shield-check"></i>سجل العمليات (المراقبة)</a>
+        <a class="nav-link" href="{{ url_for('license_page') }}"><i class="bi bi-key"></i>تفعيل البرنامج</a>
+        {% endif %}
+        {% if has_permission('manage_users') %}
+        <a class="nav-link" href="{{ url_for('master_list', entity='users') }}"><i class="bi bi-people"></i>المستخدمون</a>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <hr>
+      <a class="nav-link" href="#" onclick="toggleTheme();return false" id="themeToggle"><i class="bi bi-moon-stars"></i><span id="themeLabel">الوضع الليلي</span></a>
+      {% if has_permission('manage_settings') %}
+      <a class="nav-link text-danger fw-bold" href="{{ url_for('init_demo') }}"><i class="bi bi-trash3"></i>تصفير قاعدة البيانات (حذف شامل)</a>
+      {% endif %}
+      <a class="nav-link" href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-left"></i>خروج</a>
+      <hr class="mx-3 my-2 text-secondary">
+      <div class="px-3 py-2 mt-auto">
+        <div class="card bg-dark border-secondary">
+          <div class="card-body p-2 text-center">
+            <small class="text-info d-block mb-1" style="font-weight:600">للدعم الفني والتواصل</small>
+            <h6 class="text-white mb-1" style="font-size:0.9rem">736499765</h6>
+            <div class="d-flex justify-content-center gap-2 mt-2">
+              <a href="https://wa.me/967736499765" class="btn btn-sm btn-outline-success p-1"><i class="bi bi-whatsapp"></i></a>
+              <a href="tel:+967736499765" class="btn btn-sm btn-outline-info p-1"><i class="bi bi-telephone"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ===== Main Content ===== -->
+  <main class="main-content">
+    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+      <div class="page-title-box">
+        <h1 class="page-title">{{ title }}</h1>
+        <div class="page-subtitle">
+          {% set descriptions = {
+            'لوحة التحكم': 'نظرة عامة على أداء النشاط والمؤشرات المالية الرئيسية.',
+            'نقطة البيع': 'واجهة البيع السريع وإدارة الكاشير والعمليات اليومية المباشرة.',
+            'فواتير المبيعات': 'قائمة بجميع فواتير المبيعات المسجلة مع إمكانية البحث والطباعة.',
+            'مرتجع بيع': 'معالجة المرتجعات من المبيعات السابقة وتعديل المخزون والحسابات.',
+            'مرتجع مبيعات': 'معالجة المرتجعات من المبيعات السابقة وتعديل المخزون والحسابات.',
+            'فاتورة بيع جديدة': 'إنشاء فاتورة مبيعات جديدة للعملاء مع احتساب الضرائب والخصومات.',
+            'فواتير الشراء': 'سجل بجميع عمليات الشراء من الموردين ومتابعة حالاتها.',
+            'فاتورة جديدة': 'تسجيل فواتير مشتريات جديدة من الموردين لزيادة المخزون.',
+            'فاتورة شراء جديدة': 'تسجيل فواتير مشتريات جديدة من الموردين لزيادة المخزون.',
+            'مرتجع شراء': 'تسجيل إعادة بضاعة إلى المورد واسترجاع قيمتها أو خصمها من حسابك.',
+            'مرتجع مشتريات': 'نموذج إرجاع بضاعة لمورد وتعديل الحسابات الدائنة.',
+            'الأصناف': 'إدارة كافة المنتجات في محلك، الأكواد، وأسعار البيع والشراء.',
+            'المخزون': 'مراقبة كميات البضاعة المتوفرة حالياً في كافة المستودعات.',
+            'المخزون الحالي': 'مراقبة كميات البضاعة المتوفرة حالياً في كافة المستودعات.',
+            'طباعة الباركود': 'أداة توليد ملصقات الباركود للأصناف لطباعتها ولصقها على المنتجات.',
+            'التحويلات': 'نقل البضاعة من مستودع إلى آخر داخل المنشأة.',
+            'تحويلات المخزون': 'سجل عمليات نقل البضائع بين الفروع والمستودعات.',
+            'تحويل مخزون جديد': 'إنشاء أمر تحويل بضاعة بين مستودعين.',
+            'جرد المخزن': 'عملية مطابقة الكميات الموجودة في الرفوف مع الكميات المسجلة في النظام.',
+            'جرد جديد': 'بدء عملية جرد جديدة لمستودع محدد.',
+            'الجرد': 'قائمة بعمليات الجرد السابقة وحالات اعتمادها.',
+            'التنبيهات': 'قائمة بكافة التحذيرات الهامة مثل قرب نفاذ المخزون أو انتهاء الصلاحية.',
+            'شجرة الحسابات': 'الهيكل المالي للمنشأة، حيث يتم تنظيم كافة الحسابات والمصروفات.',
+            'القيود': 'عرض القيود المحاسبية الآلية واليدوية المسجلة في النظام.',
+            'القيود اليومية': 'استعراض الحركات المالية التفصيلية المسجلة في الدفاتر.',
+            'قيد يدوي جديد': 'إضافة قيد محاسبي يدوي للتسويات المالية الخاصة.',
+            'قيد يدوي': 'إضافة قيد محاسبي يدوي للتسويات المالية الخاصة.',
+            'سجل العمليات (المراقبة)': 'سجل الأمان الذي يوضح من قام بأي عملية في النظام بالتفصيل.',
+            'سجل التدقيق': 'سجل الأمان الذي يوضح من قام بأي عملية في النظام بالتفصيل.',
+            'تفعيل البرنامج': 'إدارة ترخيص النظام وربط النسخة الحالية بجهاز الكمبيوتر الخاص بك.',
+            'تفعيل الترخيص': 'أدخل مفتاح التفعيل لفتح كافة ميزات النظام.',
+            'سندات استلام وصرف كاش': 'تسجيل المبالغ النقدية التي تم استلامها أو دفعها يدوياً خارج الفواتير.',
+            'سند قبض / صرف جديد': 'إصدار مستند مالي لاستلام كاش من عميل أو صرفه لمورد.',
+            'المصروفات': 'تسجيل المصاريف النثرية والتشغيلية مثل الإيجار، الكهرباء، والرواتب.',
+            'مصروف جديد': 'إدخال بند مصروفات جديد وتحديد الحساب المسؤول عنه.',
+            'الشيكات': 'متابعة الشيكات الصادرة والواردة وتواريخ استحقاقها وحالاتها.',
+            'شيك جديد': 'تسجيل بيانات شيك جديد وارد من عميل أو صادر لمورد.',
+            'العملاء': 'قاعدة بيانات الزبائن لمتابعة ديونهم وتاريخ تعاملاتهم.',
+            'الموردون': 'إدارة الشركات والموردين الذين يوفرون لك البضاعة ومتابعة حساباتهم.',
+            'ميزان المراجعة': 'تقرير محاسبي يوضح توازن كافة الحسابات وأرصدتها الحالية.',
+            'قائمة الدخل': 'تقرير الأرباح والخسائر الصافي خلال فترة محددة.',
+            'الميزانية العمومية': 'تقرير يوضح قيمة أصولك (ما تملك) والتزاماتك (ما عليك) في لحظة معينة.',
+            'إدارة المديونيات': 'متابعة كافة الديون المستحقة لك عند العملاء أو عليك للموردين.',
+            'تقرير المديونيات': 'متابعة كافة الديون المستحقة لك عند العملاء أو عليك للموردين.',
+            'كشف حساب': 'عرض تفصيلي لكافة الحركات المالية المرتبطة بحساب معين.',
+            'الشركة': 'تعديل بيانات منشأتك، شعار المحل، وبيانات التواصل والعنوان.',
+            'بيانات الشركة': 'تعديل بيانات منشأتك، شعار المحل، وبيانات التواصل والعنوان.',
+            'أسعار الصرف': 'تحديث أسعار العملات المختلفة مقابل العملة الأساسية للمحل.',
+            'النسخ الاحتياطي': 'أدوات حماية البيانات عبر أخذ نسخ يدوية أو استعادة نسخ سابقة.',
+            'المستخدمون': 'إدارة صلاحيات الموظفين وإضافة مستخدمين جدد للنظام.',
+            'التقارير': 'مركز التقارير الشاملة لمتابعة سير العمل في المنشأة.',
+            'تسجيل الدخول': 'يرجى إدخال بيانات الاعتماد للوصول إلى النظام.',
+            'عروض الأسعار': 'إدارة عروض الأسعار المقدمة للعملاء وتحويلها لفواتير بيع.',
+            'عرض سعر جديد': 'إنشاء عرض سعر جديد للعملاء مع إمكانية تحويله لفاتورة لاحقاً.',
+            'تقرير الربحية': 'تحليل تفصيلي لربحية كل صنف وهوامش الربح حسب الفترة والتصنيف.',
+            'استيراد البيانات': 'رفع ملفات Excel لاستيراد الأصناف والعملاء والموردين بشكل جماعي.'
+          } %}
+          {% set display_desc = descriptions.get(title, "") %}
+          {% if not display_desc %}
+            {% if title.startswith('إضافة') %}
+                {% set display_desc = 'نموذج إضافة بيانات جديدة للنظام.' %}
+            {% elif title.startswith('تعديل') %}
+                {% set display_desc = 'تحديث المعلومات المسجلة مسبقاً في النظام.' %}
+            {% else %}
+                {% set display_desc = 'النظام المحاسبي الذكي - SAS' %}
+            {% endif %}
+          {% endif %}
+          {{ display_desc }}
+        </div>
+      </div>
+      
+      {% if current_user %}
+      <div class="dropdown">
+        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding-right: 15px;">
+          <i class="bi bi-bell fs-4" style="color: var(--text-primary);"></i>
+          {% if notifications %}
+          <span class="position-absolute top-10 start-0 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem; margin-top: 5px;">
+            {{ notifications|length }}
+          </span>
+          {% endif %}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow" style="width: 350px; max-height: 400px; overflow-y: auto;">
+          <li><h6 class="dropdown-header fw-bold fs-6 border-bottom pb-2">الإشعارات والتنبيهات</h6></li>
+          {% if notifications %}
+            {% for note in notifications %}
+            <li>
+              <a class="dropdown-item d-flex align-items-start text-wrap py-2 border-bottom" href="#" style="white-space: normal;">
+                <i class="bi {{ note.icon }} ms-2 mt-1 fs-4"></i>
+                <div>
+                  <strong>{{ note.title }}</strong><br>
+                  <small class="text-muted">{{ note.message }}</small>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          {% else %}
+            <li><span class="dropdown-item text-muted text-center py-4"><i class="bi bi-check2-circle fs-3 d-block mb-2"></i>لا توجد إشعارات حالياً</span></li>
+          {% endif %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="page-body">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              {% for category, message in messages %}
+                Swal.fire({
+                  icon: "{{ 'success' if category == 'success' else 'error' if category == 'danger' else 'warning' if category == 'warning' else 'info' }}",
+                  title: "{{ 'نجاح' if category == 'success' else 'خطأ' if category == 'danger' else 'تنبيه' }}",
+                  text: "{{ message }}",
+                  confirmButtonText: 'حسناً',
+                  timer: 3000,
+                  timerProgressBar: true
+                });
+              {% endfor %}
+            });
+          </script>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* Mobile sidebar toggle */
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('show');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+
+function toggleSection(element) {
+  const sectionItems = element.nextElementSibling;
+  if (sectionItems && sectionItems.classList.contains('nav-section-items')) {
+    const isCollapsed = sectionItems.classList.toggle('collapsed');
+    element.classList.toggle('collapsed', isCollapsed);
+    const sectionName = element.innerText.trim();
+    localStorage.setItem('sidebar_' + sectionName, isCollapsed ? 'closed' : 'open');
+  }
+}
+
+/* Sidebar Persistence & Highlighting */
+document.addEventListener('DOMContentLoaded', function() {
+  const currentPath = window.location.pathname;
+  const sidebar = document.querySelector('.sidebar');
+  const sidebarNav = document.querySelector('.sidebar-nav');
+  
+  // تعطيل الحركة مؤقتاً لمنع الوميض
+  sidebar.style.transition = 'none';
+  document.querySelectorAll('.nav-section-items').forEach(el => el.style.transition = 'none');
+  document.querySelectorAll('.section-chevron').forEach(el => el.style.transition = 'none');
+
+  // 1. Restore sections' states
+  document.querySelectorAll('.nav-section').forEach(sectionHeader => {
+    const sectionName = sectionHeader.innerText.trim();
+    const savedState = localStorage.getItem('sidebar_' + sectionName);
+    const sectionItems = sectionHeader.nextElementSibling;
+    
+    if (sectionItems && sectionItems.classList.contains('nav-section-items')) {
+      if (savedState === 'open') {
+        sectionItems.classList.remove('collapsed');
+        sectionHeader.classList.remove('collapsed');
+      } else {
+        sectionItems.classList.add('collapsed');
+        sectionHeader.classList.add('collapsed');
+      }
+    }
+  });
+  
+  // 2. Highlight active link and FORCE its section to be open
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+      link.classList.add('active');
+      const parentItems = link.closest('.nav-section-items');
+      if (parentItems) {
+        parentItems.classList.remove('collapsed');
+        const header = parentItems.previousElementSibling;
+        if (header) header.classList.remove('collapsed');
+      }
+    }
+  });
+
+  // 3. استعادة مكان التمرير (Scroll Position)
+  const savedScroll = localStorage.getItem('sidebarScroll');
+  if (savedScroll && sidebarNav) {
+    sidebarNav.scrollTop = savedScroll;
+  }
+
+  // إعادة تفعيل الحركة بعد استقرار الصفحة
+  setTimeout(() => {
+    sidebar.style.transition = '';
+    document.querySelectorAll('.nav-section-items').forEach(el => el.style.transition = '');
+    document.querySelectorAll('.section-chevron').forEach(el => el.style.transition = '');
+  }, 50);
+
+  // حفظ مكان التمرير عند التحرك
+  if (sidebarNav) {
+    sidebarNav.addEventListener('scroll', () => {
+      localStorage.setItem('sidebarScroll', sidebarNav.scrollTop);
+    });
+  }
+
+  // --- ميزة 1: زر Enter للانتقال للحقل التالي ---
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const active = document.activeElement;
+      // لا تفعل شيئاً إذا كان العنصر هو زر إرسال أو منطقة نص كبيرة
+      if (active.tagName === 'TEXTAREA' || active.type === 'submit' || active.tagName === 'BUTTON') return;
+      
+      e.preventDefault();
+      const form = active.form;
+      if (!form) return;
+      
+      const elms = Array.from(form.elements).filter(el => 
+        !el.disabled && el.type !== 'hidden' && el.style.display !== 'none' && el.tagName !== 'FIELDSET'
+      );
+      const index = elms.indexOf(active);
+      if (index > -1 && index < elms.length - 1) {
+        elms[index + 1].focus();
+        if (elms[index + 1].select) elms[index + 1].select();
+      }
+    }
+  });
+});
+
+/* ---- Dark Mode Toggle ---- */
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('sas-theme', next);
+  updateThemeUI(next);
+}
+
+function updateThemeUI(theme) {
+  const icon = document.querySelector('#themeToggle i');
+  const label = document.getElementById('themeLabel');
+  if (icon && label) {
+    if (theme === 'dark') {
+      icon.className = 'bi bi-sun';
+      label.textContent = 'الوضع النهاري';
+    } else {
+      icon.className = 'bi bi-moon-stars';
+      label.textContent = 'الوضع الليلي';
+    }
+  }
+}
+
+// Initial UI Update and Custom Unsaved Changes Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('sas-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeUI(savedTheme);
+
+  // --- ميزة التنبيه عند المغادرة (نظام النافذة المخصصة) ---
+  let isFormDirty = false;
+  let targetNavigationUrl = null;
+
+  document.addEventListener('input', function(e) {
+    if (e.target.closest('form') && !e.target.classList.contains('no-dirty')) {
+      isFormDirty = true;
+    }
+  });
+
+  document.addEventListener('submit', function() {
+    isFormDirty = false;
+  });
+
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.href && !link.href.includes('#') && link.target !== '_blank' && !link.hasAttribute('download')) {
+      if (isFormDirty) {
+        e.preventDefault(); 
+        targetNavigationUrl = link.href;
+        try {
+          const unsavedModal = new bootstrap.Modal(document.getElementById('unsavedChangesModal'));
+          unsavedModal.show();
+        } catch (err) {
+          Swal.fire({
+            title: 'تنبيه',
+            text: 'لديك تغييرات غير محفوظة، هل أنت متأكد من المغادرة؟',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم، مغادرة',
+            cancelButtonText: 'إلغاء'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              isFormDirty = false;
+              window.location.href = link.href;
+            }
+          });
+        }
+      }
+    }
+  });
+
+  const confirmLeaveBtn = document.getElementById('confirmLeaveBtn');
+  if (confirmLeaveBtn) {
+    confirmLeaveBtn.addEventListener('click', function() {
+      isFormDirty = false; 
+      if (targetNavigationUrl) {
+        window.location.href = targetNavigationUrl;
+      }
+    });
+  }
+
+  // Initialize Select2 globally
+  if (typeof jQuery !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+    $('.select2').select2({ dir: "rtl", width: '100%' });
+  }
+});
+
+/**
+ * Robust Table Printer
+ * Opens a new clean window with ONLY the table and professional header
+ */
+function printTable(tableId, reportTitle) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+
+    const companyName = "{{ company_name|e }}";
+    const now = "{{ now_date|e }}";
+    
+    // Create a clean print window
+    const printWindow = window.open('', '_blank', 'height=800,width=1000');
+    
+    printWindow.document.write('<html><head><title>' + reportTitle + '</title>');
+    printWindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">');
+    printWindow.document.write('<style>');
+    printWindow.document.write('body { font-family: "Tajawal", Tahoma, sans-serif; direction: rtl; padding: 20px; background: #fff; }');
+    printWindow.document.write('.print-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #334155; padding-bottom: 15px; }');
+    printWindow.document.write('.print-header h2 { margin: 0; color: #1e293b; font-weight: 800; }');
+    printWindow.document.write('.print-header p { margin: 5px 0 0; color: #64748b; font-size: 0.9rem; }');
+    printWindow.document.write('table { width: 100% !important; border-collapse: collapse !important; margin-top: 20px; }');
+    printWindow.document.write('table th, table td { border: 1px solid #cbd5e1 !important; padding: 8px 12px !important; text-align: right !important; }');
+    printWindow.document.write('table th { background-color: #f8fafc !important; color: #334155 !important; font-weight: 700; }');
+    printWindow.document.write('.footer { margin-top: 30px; text-align: center; font-size: 0.8rem; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 10px; }');
+    // Hide buttons/inputs that might be inside the table
+    printWindow.document.write('.btn, .no-print, input, select { display: none !important; }');
+    printWindow.document.write('</style></head><body>');
+    
+    // Header
+    printWindow.document.write('<div class="print-header">');
+    printWindow.document.write('<h2>' + companyName + '</h2>');
+    printWindow.document.write('<h3>' + reportTitle + '</h3>');
+    printWindow.document.write('<p>تاريخ الاستخراج: ' + now + '</p>');
+    printWindow.document.write('</div>');
+    
+    // Table Content (clone it to not affect original)
+    const tableClone = table.cloneNode(true);
+    // Remove search-hidden rows from clone
+    tableClone.querySelectorAll('tr').forEach(tr => {
+        if (tr.style.display === 'none') tr.remove();
+    });
+    
+    printWindow.document.write(tableClone.outerHTML);
+    
+    // Footer
+    printWindow.document.write('<div class="footer">طُبع بواسطة نظام SAS المحاسبي الذكي</div>');
+    
+    printWindow.document.write('</body></html>');
+    
+    printWindow.document.close();
+    
+    // Wait for styles/fonts to load then print
+    printWindow.onload = function() {
+        printWindow.focus();
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.close();
+        }, 500);
+    };
+}
+
+function normalizeArabic(text) {
+
+    if (!text) return "";
+    return text.toString().trim().toLowerCase()
+        .replace(/[أإآ]/g, "ا")
+        .replace(/ة/g, "ه")
+        .replace(/ى/g, "ي")
+        .replace(/[ًٌٍَُِّ]/g, ""); 
+}
+</script>
+
+<!-- Custom Unsaved Changes Modal -->
+<div class="modal fade" id="unsavedChangesModal" tabindex="-1" aria-labelledby="unsavedChangesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="unsavedChangesModalLabel"><i class="bi bi-exclamation-triangle-fill"></i> تنبيه: تغييرات غير محفوظة</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center fs-5">
+        هل تريد مغادرة هذه الصفحة؟ <br> <span class="text-muted fs-6">قد تفقد البيانات التي قمت بإدخالها ولم تقم بحفظها.</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">البقاء وإكمال العمل</button>
+        <button type="button" class="btn btn-danger" id="confirmLeaveBtn">تجاهل والمغادرة</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-4 mb-3">
+  <form method="get" class="row g-2 align-items-end">
+    <div class="col-md-3"><label class="form-label">حتى تاريخ</label><input type="date" name="as_of_date" value="{{ as_of_date or '' }}" class="form-control"></div>
+    <div class="col-md-2"><button class="btn btn-primary w-100">عرض</button></div>
+  </form>
+</div>
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h5 class="text-primary mb-3"><i class="bi bi-building me-2"></i>الأصول</h5>
+      <table class="table table-sm mb-0">
+        <tbody>{% for r in data.assets %}<tr><td>{{ r.account_code }}</td><td>{{ r.name_ar }}</td><td>{{ r.balance|currency }}</td></tr>{% endfor %}</tbody>
+        <tfoot><tr class="fw-bold table-primary"><td colspan="2">إجمالي الأصول</td><td>{{ data.total_assets|currency }}</td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-4 mb-3">
+      <h5 class="text-warning mb-3"><i class="bi bi-bank me-2"></i>الالتزامات</h5>
+      <table class="table table-sm mb-0">
+        <tbody>{% for r in data.liabilities %}<tr><td>{{ r.account_code }}</td><td>{{ r.name_ar }}</td><td>{{ r.balance|currency }}</td></tr>{% endfor %}</tbody>
+        <tfoot><tr class="fw-bold table-warning"><td colspan="2">إجمالي الالتزامات</td><td>{{ data.total_liabilities|currency }}</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="card p-4">
+      <h5 class="text-success mb-3"><i class="bi bi-person me-2"></i>حقوق الملكية</h5>
+      <table class="table table-sm mb-0">
+        <tbody>{% for r in data.equity %}<tr><td>{{ r.account_code }}</td><td>{{ r.name_ar }}</td><td>{{ r.balance|currency }}</td></tr>{% endfor %}</tbody>
+        <tfoot><tr class="fw-bold table-success"><td colspan="2">إجمالي حقوق الملكية</td><td>{{ data.total_equity|currency }}</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="card p-3 mt-3 text-center fw-bold">إجمالي الالتزامات + حقوق الملكية: {{ data.total_liabilities_equity|currency }}</div>
+  </div>
+</div>
+{% endblock %}

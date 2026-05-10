@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-arrow-left-right me-2"></i>التحويلات المخزنية</h2>
+            <p class="text-muted">تتبع حركة الأصناف بين المستودعات والفروع</p>
+        </div>
+        <a href="{{ url_for('transfer_create') }}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-2"></i>تحويل جديد
+        </a>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3 border-start border-primary border-4" style="border-radius: 12px;">
+                <div class="text-muted small fw-bold">إجمالي التحويلات</div>
+                <div class="h4 fw-bold mb-0 text-dark">{{ rows|length }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3 border-start border-warning border-4" style="border-radius: 12px;">
+                <div class="text-muted small fw-bold">قيد الانتظار</div>
+                {% set pending = rows|selectattr('status', 'equalto', 'PENDING')|list|length %}
+                <div class="h4 fw-bold mb-0 text-warning">{{ pending }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3 border-start border-success border-4" style="border-radius: 12px;">
+                <div class="text-muted small fw-bold">تم الاستلام</div>
+                {% set received = rows|selectattr('status', 'equalto', 'RECEIVED')|list|length %}
+                <div class="h4 fw-bold mb-0 text-success">{{ received }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light small fw-bold text-muted text-uppercase">
+                        <tr>
+                            <th class="ps-4 py-3">رقم العملية</th>
+                            <th class="py-3">التاريخ</th>
+                            <th class="py-3">المصدر (من)</th>
+                            <th class="py-3">الوجهة (إلى)</th>
+                            <th class="py-3 text-center">الحالة</th>
+                            <th class="pe-4 py-3 text-end">إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in rows %}
+                        <tr>
+                            <td class="ps-4">
+                                <span class="badge bg-light text-dark border px-3">#{{ r.transfer_number }}</span>
+                            </td>
+                            <td class="small text-muted">{{ r.transfer_date }}</td>
+                            <td>
+                                <div class="fw-bold"><i class="bi bi-box-arrow-right me-1 text-danger"></i>{{ r.from_warehouse }}</div>
+                            </td>
+                            <td>
+                                <div class="fw-bold"><i class="bi bi-box-arrow-in-left me-1 text-success"></i>{{ r.to_warehouse }}</div>
+                            </td>
+                            <td class="text-center">
+                                {% if r.status == 'RECEIVED' %}
+                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">
+                                    <i class="bi bi-check-circle me-1"></i> تم الاستلام
+                                </span>
+                                {% else %}
+                                <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 py-2">
+                                    <i class="bi bi-clock-history me-1"></i> قيد النقل
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="pe-4 text-end">
+                                <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                                    <i class="bi bi-eye me-1"></i> عرض
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">لا توجد عمليات تحويل مسجلة حالياً</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

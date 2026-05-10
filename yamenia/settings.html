@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الإعدادات - يمن سيف | YEMEN SAFE</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <style>
+      .settings-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: var(--space-6);
+      }
+
+      .settings-nav {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        overflow: hidden;
+        position: sticky;
+        top: calc(var(--header-height) + var(--space-6));
+      }
+
+      .settings-nav-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-4) var(--space-5);
+        border-bottom: 1px solid var(--border-light);
+        cursor: pointer;
+        transition: var(--transition-base);
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+      }
+
+      .settings-nav-item:hover {
+        background: var(--gray-50);
+        color: var(--primary-600);
+      }
+
+      .settings-nav-item.active {
+        background: var(--primary-50);
+        color: var(--primary-600);
+        font-weight: var(--font-semibold);
+        border-right: 3px solid var(--primary-500);
+      }
+
+      .settings-nav-item i {
+        width: 20px;
+        text-align: center;
+      }
+
+      .settings-panel {
+        display: none;
+      }
+
+      .settings-panel.active {
+        display: block;
+      }
+
+      .settings-section {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        margin-bottom: var(--space-6);
+        overflow: hidden;
+      }
+
+      .settings-section-header {
+        padding: var(--space-5) var(--space-6);
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .settings-section-header h3 {
+        font-size: var(--text-lg);
+        font-weight: var(--font-bold);
+        color: var(--primary-800);
+      }
+
+      .settings-section-header p {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+
+      .settings-section-body {
+        padding: var(--space-6);
+      }
+
+      .settings-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-4) 0;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .settings-row:last-child {
+        border-bottom: none;
+      }
+
+      .settings-row-info h4 {
+        font-size: var(--text-sm);
+        font-weight: var(--font-semibold);
+        margin-bottom: 2px;
+      }
+
+      .settings-row-info p {
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 48px;
+        height: 26px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        inset: 0;
+        background: var(--gray-300);
+        border-radius: var(--radius-full);
+        transition: var(--transition-base);
+      }
+
+      .toggle-slider::before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        right: 3px;
+        bottom: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: var(--transition-base);
+      }
+
+      .toggle-switch input:checked + .toggle-slider {
+        background: var(--primary-500);
+      }
+
+      .toggle-switch input:checked + .toggle-slider::before {
+        transform: translateX(-22px);
+      }
+
+      .profile-avatar-large {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--radius-full);
+        background: linear-gradient(
+          135deg,
+          var(--primary-500),
+          var(--primary-700)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: var(--text-3xl);
+        font-weight: var(--font-bold);
+        margin-bottom: var(--space-4);
+      }
+
+      .users-table {
+        width: 100%;
+      }
+
+      .users-table th {
+        text-align: right;
+      }
+
+      .user-role-badge {
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: var(--font-semibold);
+      }
+
+      @media (max-width: 768px) {
+        .settings-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .settings-nav {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app-layout">
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <img
+              src="image.png"
+              alt="شعار يمن سيف"
+              style="max-width: 100%; height: auto"
+            />
+          </div>
+          <div class="sidebar-logo-text">
+            <h2>يمن سيف</h2>
+            <span>YEMEN SAFE</span>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section">
+            <div class="nav-section-title">القائمة الرئيسية</div>
+            <a class="nav-link" data-page="dashboard.html"
+              ><i class="fas fa-th-large"></i><span>لوحة التحكم</span></a
+            >
+            <a class="nav-link" data-page="incidents.html"
+              ><i class="fas fa-exclamation-triangle"></i
+              ><span>إدارة الحوادث</span></a
+            >
+            <a class="nav-link" href="risks.html" data-page="risks.html"><i class="fas fa-shield-virus"></i><span>سجل المخاطر</span></a>
+                    <a class="nav-link" data-page="reports.html"
+              ><i class="fas fa-chart-bar"></i><span>التقارير</span></a
+            >
+            <a class="nav-link" data-page="notifications.html"
+              ><i class="fas fa-bell"></i><span>الإشعارات</span
+              ><span class="nav-badge notif-count">3</span></a
+            >
+          </div>
+          <div class="nav-section">
+            <div class="nav-section-title">الإدارة</div>
+            <a class="nav-link active" data-page="settings.html"
+              ><i class="fas fa-cog"></i><span>الإعدادات</span></a
+            >
+          </div>
+        </nav>
+        <div class="sidebar-footer">
+          <a class="nav-link" id="logoutBtn" href="#"
+            ><i class="fas fa-sign-out-alt"></i><span>تسجيل الخروج</span></a
+          >
+        </div>
+      </div>
+      <div class="sidebar-overlay"></div>
+
+      <div class="main-wrapper">
+        <header class="top-header">
+          <div class="header-right">
+            <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            <div>
+              <div class="header-title">الإعدادات</div>
+              <div class="header-subtitle">إدارة حسابك وإعدادات النظام</div>
+            </div>
+          </div>
+          <div class="header-left">
+            <div class="header-user">
+              <div class="user-avatar"></div>
+              <div class="user-info">
+                <span class="user-name">المستخدم</span
+                ><span class="user-role">الدور</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-content">
+          <div class="page-header animate-fade-up">
+            <h1 class="page-title">الإعدادات</h1>
+          </div>
+
+          <div class="settings-grid">
+            <!-- Settings Nav -->
+            <div class="settings-nav animate-fade-up">
+              <div
+                class="settings-nav-item active"
+                onclick="switchTab('profile', this)"
+              >
+                <i class="fas fa-user"></i> الملف الشخصي
+              </div>
+              <div
+                class="settings-nav-item"
+                onclick="switchTab('notifications', this)"
+              >
+                <i class="fas fa-bell"></i> الإشعارات
+              </div>
+              <div class="settings-nav-item" onclick="switchTab('users', this)">
+                <i class="fas fa-users"></i> المستخدمون
+              </div>
+              <div
+                class="settings-nav-item"
+                onclick="switchTab('system', this)"
+              >
+                <i class="fas fa-server"></i> النظام
+              </div>
+              <div class="settings-nav-item" onclick="switchTab('about', this)">
+                <i class="fas fa-info-circle"></i> حول النظام
+              </div>
+            </div>
+
+            <!-- Settings Panels -->
+            <div class="settings-panels">
+              <!-- Profile -->
+              <div class="settings-panel active" id="panel-profile">
+                <div class="settings-section animate-fade-up">
+                  <div class="settings-section-header">
+                    <h3>
+                      <i
+                        class="fas fa-user"
+                        style="color: var(--primary-500)"
+                      ></i>
+                      الملف الشخصي
+                    </h3>
+                    <p>إدارة معلومات حسابك الشخصي</p>
+                  </div>
+                  <div class="settings-section-body">
+                    <div
+                      style="text-align: center; margin-bottom: var(--space-6)"
+                    >
+                      <div
+                        class="profile-avatar-large"
+                        id="profileAvatar"
+                        style="margin: 0 auto var(--space-4)"
+                      >
+                        أع
+                      </div>
+                      <button class="btn btn-outline btn-sm">
+                        تغيير الصورة
+                      </button>
+                    </div>
+                    <div
+                      style="
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: var(--space-4);
+                      "
+                    >
+                      <div class="form-group">
+                        <label class="form-label">الاسم الكامل</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="profileName"
+                          value=""
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">اسم المستخدم</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="profileUsername"
+                          value=""
+                          disabled
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">البريد الإلكتروني</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="profileEmail"
+                          value=""
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="profilePhone"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div style="margin-top: var(--space-4)">
+                      <button class="btn btn-primary" id="btnSaveProfile">
+                        <i class="fas fa-save"></i> حفظ التغييرات
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-section">
+                  <div class="settings-section-header">
+                    <h3>
+                      <i
+                        class="fas fa-lock"
+                        style="color: var(--warning-500)"
+                      ></i>
+                      تغيير كلمة المرور
+                    </h3>
+                  </div>
+                  <div class="settings-section-body">
+                    <div class="form-group">
+                      <label class="form-label">كلمة المرور الحالية</label
+                      ><input
+                        type="password"
+                        class="form-control"
+                        id="currentPass"
+                        placeholder="أدخل كلمة المرور الحالية"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">كلمة المرور الجديدة</label
+                      ><input
+                        type="password"
+                        class="form-control"
+                        id="newPass"
+                        placeholder="أدخل كلمة المرور الجديدة"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">تأكيد كلمة المرور</label
+                      ><input
+                        type="password"
+                        class="form-control"
+                        id="confirmPass"
+                        placeholder="أعد إدخال كلمة المرور الجديدة"
+                      />
+                    </div>
+                    <button class="btn btn-primary" id="btnChangePass">
+                      <i class="fas fa-key"></i> تغيير كلمة المرور
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Notification Settings -->
+              <div class="settings-panel" id="panel-notifications">
+                <div class="settings-section animate-fade-up">
+                  <div class="settings-section-header">
+                    <h3>
+                      <i
+                        class="fas fa-bell"
+                        style="color: var(--primary-500)"
+                      ></i>
+                      إعدادات الإشعارات
+                    </h3>
+                    <p>تخصيص طريقة استلام الإشعارات</p>
+                  </div>
+                  <div class="settings-section-body">
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>إشعارات الحوادث الجديدة</h4>
+                        <p>استلام إشعار عند تسجيل حادث جديد</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" checked /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>تحديثات حالة الحوادث</h4>
+                        <p>استلام إشعار عند تغيير حالة حادث</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" checked /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>المهام المعينة</h4>
+                        <p>إشعار عند تعيين مهمة جديدة لك</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" checked /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>إشعارات البريد الإلكتروني</h4>
+                        <p>إرسال نسخة من الإشعارات للبريد</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>إشعارات SMS</h4>
+                        <p>إرسال رسائل نصية للحوادث الحرجة</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>التقارير الأسبوعية</h4>
+                        <p>استلام تقرير أسبوعي ملخص</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" checked /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Users -->
+              <div class="settings-panel" id="panel-users">
+                <div class="settings-section animate-fade-up">
+                  <div
+                    class="settings-section-header"
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    "
+                  >
+                    <div>
+                      <h3>
+                        <i
+                          class="fas fa-users"
+                          style="color: var(--primary-500)"
+                        ></i>
+                        إدارة المستخدمين
+                      </h3>
+                      <p>عرض وإدارة مستخدمي النظام</p>
+                    </div>
+                    <button
+                      class="btn btn-primary"
+                      onclick="
+                        showToast(
+                          'سيتم تفعيل هذه الميزة عند ربط قاعدة البيانات',
+                          'info',
+                        )
+                      "
+                    >
+                      <i class="fas fa-user-plus"></i> إضافة مستخدم
+                    </button>
+                  </div>
+                  <div class="table-container">
+                    <table class="users-table">
+                      <thead>
+                        <tr>
+                          <th>المستخدم</th>
+                          <th>الرقم الوظيفي</th>
+                          <th>اسم المستخدم</th>
+                          <th>البريد</th>
+                          <th>الدور</th>
+                          <th>الحالة</th>
+                        </tr>
+                      </thead>
+                      <tbody id="usersTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- System -->
+              <div class="settings-panel" id="panel-system">
+                <div class="settings-section animate-fade-up">
+                  <div class="settings-section-header">
+                    <h3>
+                      <i
+                        class="fas fa-server"
+                        style="color: var(--primary-500)"
+                      ></i>
+                      إعدادات النظام
+                    </h3>
+                    <p>إعدادات عامة للنظام</p>
+                  </div>
+                  <div class="settings-section-body">
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>اللغة</h4>
+                        <p>لغة واجهة النظام</p>
+                      </div>
+                      <select
+                        class="form-control"
+                        style="width: 200px"
+                        id="systemLanguage"
+                        onchange="switchLanguage(this.value)"
+                      >
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                      </select>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>الوضع الليلي</h4>
+                        <p>تفعيل أو تعطيل الوضع المظلم لراحة العين</p>
+                      </div>
+                      <label class="toggle-switch">
+                        <input
+                          type="checkbox"
+                          id="darkModeToggle"
+                          onchange="toggleTheme()"
+                        />
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>المنطقة الزمنية</h4>
+                        <p>المنطقة الزمنية للنظام</p>
+                      </div>
+                      <select class="form-control" style="width: 200px">
+                        <option>Asia/Aden (GMT+3)</option>
+                      </select>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>التصعيد التلقائي</h4>
+                        <p>تصعيد الحوادث تلقائياً بعد مدة محددة</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" checked /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                    <div class="settings-row">
+                      <div class="settings-row-info">
+                        <h4>النسخ الاحتياطي التلقائي</h4>
+                        <p>حفظ نسخة احتياطية يومية</p>
+                      </div>
+                      <label class="toggle-switch"
+                        ><input type="checkbox" checked /><span
+                          class="toggle-slider"
+                        ></span
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- About -->
+              <div class="settings-panel" id="panel-about">
+                <div class="settings-section animate-fade-up">
+                  <div class="settings-section-header">
+                    <h3>
+                      <i
+                        class="fas fa-info-circle"
+                        style="color: var(--primary-500)"
+                      ></i>
+                      حول النظام
+                    </h3>
+                  </div>
+                  <div
+                    class="settings-section-body"
+                    style="text-align: center; padding: var(--space-10)"
+                  >
+                    <div
+                      style="
+                        width: 80px;
+                        height: 80px;
+                        border-radius: var(--radius-lg);
+                        background: linear-gradient(
+                          135deg,
+                          var(--primary-600),
+                          var(--primary-800)
+                        );
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto var(--space-4);
+                      "
+                    >
+                      <i
+                        class="fas fa-shield-alt"
+                        style="font-size: 36px; color: white"
+                      ></i>
+                    </div>
+                    <h2
+                      style="
+                        color: var(--primary-800);
+                        margin-bottom: var(--space-1);
+                      "
+                    >
+                      نظام يمن سيف
+                    </h2>
+                    <p
+                      style="
+                        color: var(--primary-500);
+                        font-size: var(--text-sm);
+                        font-weight: var(--font-semibold);
+                        letter-spacing: 2px;
+                        margin-bottom: var(--space-4);
+                      "
+                    >
+                      YEMEN SAFE
+                    </p>
+                    <p
+                      style="
+                        color: var(--text-secondary);
+                        margin-bottom: var(--space-6);
+                      "
+                    >
+                      النظام الرقمي المتكامل لإدارة الحوادث التشغيلية<br />الخطوط
+                      الجوية اليمنية
+                    </p>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: center;
+                        gap: var(--space-8);
+                        margin-bottom: var(--space-6);
+                      "
+                    >
+                      <div>
+                        <div
+                          style="
+                            font-size: var(--text-sm);
+                            color: var(--text-muted);
+                          "
+                        >
+                          الإصدار
+                        </div>
+                        <div style="font-weight: var(--font-bold)">2.1.0</div>
+                      </div>
+                      <div>
+                        <div
+                          style="
+                            font-size: var(--text-sm);
+                            color: var(--text-muted);
+                          "
+                        >
+                          آخر تحديث
+                        </div>
+                        <div style="font-weight: var(--font-bold)">
+                          مارس 2026
+                        </div>
+                      </div>
+                      <div>
+                        <div
+                          style="
+                            font-size: var(--text-sm);
+                            color: var(--text-muted);
+                          "
+                        >
+                          الترخيص
+                        </div>
+                        <div style="font-weight: var(--font-bold)">خاص</div>
+                      </div>
+                    </div>
+                    <p
+                      style="
+                        font-size: var(--text-xs);
+                        color: var(--text-muted);
+                      "
+                    >
+                      © 2026 الخطوط الجوية اليمنية - قسم السلامة والجودة
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      showPageLoading();
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var user = getCurrentUser();
+        if (!user) return;
+
+        // Fill profile info
+        document.getElementById("profileName").value = user.name;
+        document.getElementById("profileUsername").value = user.username;
+        document.getElementById("profileEmail").value = user.email;
+        document.getElementById("profilePhone").value = user.phone;
+        document.getElementById("profileAvatar").textContent = user.avatar;
+
+        // Hide admin-only tabs for non-admin users
+        var userIsAdmin = isAdmin(user);
+        hidePageLoading();
+
+        // Sync dark mode toggle
+        var darkToggle = document.getElementById("darkModeToggle");
+        if (darkToggle) {
+          darkToggle.checked =
+            document.documentElement.getAttribute("data-theme") === "dark";
+        }
+
+        if (!userIsAdmin) {
+          var navItems = document.querySelectorAll(".settings-nav-item");
+          navItems.forEach(function (item) {
+            var text = item.textContent.trim();
+            if (text === "المستخدمون" || text === "النظام") {
+              item.style.display = "none";
+            }
+          });
+        }
+
+        // Users table
+        if (userIsAdmin) renderUsersTable(user);
+
+        // Profile save
+        document
+          .getElementById("btnSaveProfile")
+          .addEventListener("click", function () {
+            user.name = document.getElementById("profileName").value;
+            user.email = document.getElementById("profileEmail").value;
+            user.phone = document.getElementById("profilePhone").value;
+            sessionStorage.setItem("currentUser", JSON.stringify(user));
+            var found = MockData.users.find(function (x) {
+              return x.id === user.id;
+            });
+            if (found) {
+              found.name = user.name;
+              found.email = user.email;
+              found.phone = user.phone;
+            }
+            showToast("تم حفظ التغييرات بنجاح", "success");
+          });
+
+        // Password change
+        document
+          .getElementById("btnChangePass")
+          .addEventListener("click", function () {
+            var current = document.getElementById("currentPass").value;
+            var newPass = document.getElementById("newPass").value;
+            var confirmPass = document.getElementById("confirmPass").value;
+
+            if (!current || !newPass || !confirmPass) {
+              showToast("يرجى ملء جميع الحقول", "warning");
+              return;
+            }
+            if (current !== user.password) {
+              showToast("كلمة المرور الحالية غير صحيحة", "error");
+              return;
+            }
+            if (newPass.length < 4) {
+              showToast(
+                "كلمة المرور الجديدة يجب أن تكون 4 أحرف على الأقل",
+                "warning",
+              );
+              return;
+            }
+            if (newPass !== confirmPass) {
+              showToast("كلمة المرور الجديدة غير متطابقة", "error");
+              return;
+            }
+
+            user.password = newPass;
+            sessionStorage.setItem("currentUser", JSON.stringify(user));
+            var found = MockData.users.find(function (x) {
+              return x.id === user.id;
+            });
+            if (found) found.password = newPass;
+            document.getElementById("currentPass").value = "";
+            document.getElementById("newPass").value = "";
+            document.getElementById("confirmPass").value = "";
+            showToast("تم تغيير كلمة المرور بنجاح", "success");
+          });
+
+        // Notification toggles
+        var toggles = document.querySelectorAll(
+          "#panel-notifications .toggle-switch input",
+        );
+        toggles.forEach(function (toggle) {
+          toggle.addEventListener("change", function () {
+            showToast("تم حفظ إعدادات الإشعارات", "success");
+          });
+        });
+
+        // System toggles
+        var sysToggles = document.querySelectorAll(
+          "#panel-system .toggle-switch input",
+        );
+        sysToggles.forEach(function (toggle) {
+          toggle.addEventListener("change", function () {
+            showToast("تم حفظ إعدادات النظام", "success");
+          });
+        });
+
+        // Profile photo change
+        var photoBtn = document.querySelector(".btn-outline");
+        if (photoBtn && photoBtn.textContent.indexOf("تغيير الصورة") !== -1) {
+          photoBtn.addEventListener("click", function () {
+            var input = document.createElement("input");
+            input.type = "file";
+            input.accept = "image/*";
+            input.onchange = function () {
+              var file = this.files[0];
+              if (!file) return;
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                var avatar = document.getElementById("profileAvatar");
+                avatar.style.background =
+                  "url(" + e.target.result + ") center/cover";
+                avatar.textContent = "";
+                showToast("تم تغيير الصورة بنجاح", "success");
+              };
+              reader.readAsDataURL(file);
+            };
+            input.click();
+          });
+        }
+
+        // Load saved language
+        var savedLang = localStorage.getItem("yemensafe_language") || "ar";
+        var langSelect = document.getElementById("systemLanguage");
+        if (langSelect) langSelect.value = savedLang;
+      });
+
+      function renderUsersTable(currentUser) {
+        var tbody = document.getElementById("usersTableBody");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        MockData.users.forEach(function (u, index) {
+          var role = MockData.roles[u.role];
+          if (!role) return;
+          var isCurrent = u.id === currentUser.id;
+          var tr = document.createElement("tr");
+          if (isCurrent) tr.style.background = "var(--primary-50)";
+          tr.innerHTML =
+            '<td><div style="display:flex;align-items:center;gap:8px;">' +
+            '<div class="user-avatar" style="width:36px;height:36px;font-size:11px;">' +
+            u.avatar +
+            "</div>" +
+            '<span style="font-weight:600;">' +
+            u.name +
+            (isCurrent ? " (أنت)" : "") +
+            "</span></div></td>" +
+            '<td><span style="font-family:monospace;background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">' +
+            (u.employeeId || "غير محدد") +
+            "</span></td>" +
+            "<td>" +
+            u.username +
+            "</td>" +
+            "<td>" +
+            u.email +
+            "</td>" +
+            '<td><span class="user-role-badge" style="background:' +
+            role.color +
+            "15;color:" +
+            role.color +
+            ';display:inline-flex;align-items:center;gap:6px;padding:4px 12px;"><i class="' +
+            role.icon +
+            '" style="font-size:12px;"></i> ' +
+            role.label +
+            "</span></td>" +
+            '<td><span class="badge-status resolved">نشط</span></td>' +
+            "<td>" +
+            (isCurrent
+              ? ""
+              : '<button class="btn btn-icon btn-secondary" title="تعديل" data-userid="' +
+                u.id +
+                '" data-action="edit"><i class="fas fa-edit"></i></button> <button class="btn btn-icon btn-secondary" title="حذف" style="color:var(--accent-500)" data-userid="' +
+                u.id +
+                '" data-action="delete"><i class="fas fa-trash"></i></button>') +
+            "</td>";
+          tbody.appendChild(tr);
+        });
+
+        // Attach event listeners
+        tbody.querySelectorAll('[data-action="edit"]').forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            editUser(this.getAttribute("data-userid"));
+          });
+        });
+        tbody
+          .querySelectorAll('[data-action="delete"]')
+          .forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              deleteUser(this.getAttribute("data-userid"));
+            });
+          });
+      }
+
+      function editUser(userId) {
+        var numId = parseInt(userId);
+        var found = MockData.users.find(function (x) {
+          return x.id === numId;
+        });
+        if (!found) return;
+        var newName = prompt("الاسم الجديد:", found.name);
+        if (!newName || newName === found.name) return;
+        found.name = newName;
+        renderUsersTable(getCurrentUser());
+        showToast("تم تعديل بيانات " + newName + " بنجاح", "success");
+      }
+
+      function deleteUser(userId) {
+        var numId = parseInt(userId);
+        var found = MockData.users.find(function (x) {
+          return x.id === numId;
+        });
+        if (!found) return;
+        if (!confirm('هل أنت متأكد من حذف المستخدم "' + found.name + '"؟'))
+          return;
+        var idx = MockData.users.findIndex(function (x) {
+          return x.id === numId;
+        });
+        if (idx !== -1) {
+          MockData.users.splice(idx, 1);
+          renderUsersTable(getCurrentUser());
+          showToast("تم حذف المستخدم " + found.name + " بنجاح", "success");
+        }
+      }
+
+      function switchLanguage(lang) {
+        if (typeof i18n !== "undefined") {
+          i18n.setLanguage(lang);
+          showToast(
+            lang === "en"
+              ? "Language switched to English"
+              : "تم تغيير اللغة إلى العربية",
+            "success",
+          );
+        } else {
+          localStorage.setItem("yemensafe_language", lang);
+          window.location.reload();
+        }
+      }
+
+      function switchTab(tab, el) {
+        document.querySelectorAll(".settings-nav-item").forEach(function (n) {
+          n.classList.remove("active");
+        });
+        document.querySelectorAll(".settings-panel").forEach(function (p) {
+          p.classList.remove("active");
+        });
+        el.classList.add("active");
+        var panel = document.getElementById("panel-" + tab);
+        if (panel) panel.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-clipboard-pulse me-2"></i>بدء عملية جرد جديدة</h2>
+            <p class="text-muted">تسجيل الكميات الفعلية ومقارنتها بالرصيد الدفتري</p>
+        </div>
+        <a href="{{ url_for('counts_list') }}" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-right me-2"></i>العودة للسجلات
+        </a>
+    </div>
+
+    <form method="post" id="countForm">
+        <div class="row g-4">
+            <!-- Configuration Sidebar -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header bg-transparent border-0 py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-info-circle me-2 text-primary"></i>بيانات الجلسة</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted">المستودع المستهدف</label>
+                            <select name="warehouse_id" class="form-select border-0" required>
+                                {% for w in warehouses %}
+                                <option value="{{ w.warehouse_id }}">{{ w.name_ar }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted">تاريخ الجرد</label>
+                            <input type="date" name="count_date" id="count_date" class="form-control border-0" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-muted">ملاحظات الجرد</label>
+                            <textarea name="notes" class="form-control border-0" rows="3" placeholder="مثال: جرد نهاية العام، جرد مفاجئ..."></textarea>
+                        </div>
+
+                        <div class="p-3 rounded-4 bg-primary bg-opacity-10 border border-primary border-opacity-10 mb-4">
+                            <div class="d-flex align-items-start small">
+                                <i class="bi bi-info-circle-fill text-primary me-2 mt-1"></i>
+                                <p class="mb-0 text-dark">سيتم حفظ هذا الجرد كـ <strong>مسودة</strong>. يجب التوجه للسجلات لاعتماده نهائياً وتحديث أرصدة المخازن.</p>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm py-3 fw-bold">
+                            <i class="bi bi-save me-2"></i>حفظ مسودة الجرد
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items Counting Card -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header bg-transparent border-0 py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-list-ol me-2 text-primary"></i>الأصناف المعدودة</h5>
+                        <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="addLine()">
+                            <i class="bi bi-plus-lg me-1"></i>إضافة صنف
+                        </button>
+                    </div>
+                    <div class="card-body p-4">
+                        <div id="linesContainer">
+                            <!-- Dynamic rows will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Line Template -->
+<template id="line-template">
+    <div class="line-row p-3 mb-3 border rounded-4 shadow-sm animate-fade-in" style="border-style: dashed !important;">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-7">
+                <label class="form-label fw-bold small text-muted">الصنف</label>
+                <select name="item_id[]" class="form-select select2-dynamic" required>
+                    <option value="">-- ابحث عن الصنف --</option>
+                    {% for item in items %}
+                    <option value="{{ item.item_id }}">{{ item.item_code }} - {{ item.name_ar }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-bold small text-muted">الكمية الفعلية (الموجودة)</label>
+                <div class="input-group">
+                    <input type="number" name="counted_qty[]" step="0.01" class="form-control border-0" placeholder="0.00" required min="0">
+                    <span class="input-group-text border-0">وحدة</span>
+                </div>
+            </div>
+            <div class="col-md-1 text-end">
+                <button type="button" class="btn btn-link text-danger p-0" onclick="this.closest('.line-row').remove()">
+                    <i class="bi bi-trash fs-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+    .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    [data-theme='dark'] .line-row { background-color: rgba(255,255,255,0.05); }
+    [data-theme='dark'] .form-control, [data-theme='dark'] .form-select, [data-theme='dark'] .input-group-text { background-color: rgba(255,255,255,0.05) !important; color: white; }
+    [data-theme='dark'] .text-dark { color: #f8fafc !important; }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Set current date
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('count_date').value = today;
+    
+    // Add initial line
+    addLine();
+});
+
+function addLine() {
+    const template = document.getElementById('line-template').content.cloneNode(true);
+    const container = document.getElementById('linesContainer');
+    container.appendChild(template);
+    
+    // Initialize select2 for the new row if available
+    const lastRow = container.lastElementChild;
+    if (typeof jQuery !== 'undefined' && typeof jQuery.fn.select2 !== 'undefined') {
+        $(lastRow).find('.select2-dynamic').select2({ dir: "rtl", width: '100%' });
+    }
+}
+
+document.getElementById('countForm').onsubmit = function(e) {
+    if (document.querySelectorAll('.line-row').length === 0) {
+        e.preventDefault();
+        Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'يرجى إضافة صنف واحد على الأقل لإجراء الجرد' });
+        return;
+    }
+};
+</script>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-xl-10">
+            <!-- Page Header -->
+            <div class="d-flex align-items-center mb-4 animate__animated animate__fadeIn">
+                <div class="icon-shape bg-soft-primary rounded-4 p-3 me-3 shadow-sm">
+                    <i class="bi bi-building-fill fs-2 text-primary"></i>
+                </div>
+                <div>
+                    <h2 class="fw-bold mb-1">إعدادات المنشأة والهوية</h2>
+                    <p class="text-muted small mb-0">تخصيص بيانات الشركة، شعار الفاتورة، والإعدادات المالية والضريبية</p>
+                </div>
+            </div>
+
+            <!-- Main Content Card -->
+            <div class="card border-0 shadow-lg animate__animated animate__fadeInUp" style="border-radius: 20px; overflow: hidden;">
+                <div class="card-header bg-white border-0 p-0">
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs nav-fill premium-tabs" id="companyTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active py-4" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">
+                                <i class="bi bi-info-circle-fill me-2"></i>البيانات الأساسية
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link py-4" id="identity-tab" data-bs-toggle="tab" data-bs-target="#identity" type="button" role="tab">
+                                <i class="bi bi-receipt-cutoff me-2"></i>الهوية البصرية والفواتير
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <form method="post" enctype="multipart/form-data" class="needs-validation">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="tab-content" id="companyTabsContent">
+                            
+                            <!-- Tab 1: Basic Info -->
+                            <div class="tab-pane fade show active" id="basic" role="tabpanel">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-muted small">اسم المنشأة (عربي) <span class="text-danger">*</span></label>
+                                        <input class="form-control border-0 bg-light fw-bold" name="name_ar" value="{{ company.name_ar if company else '' }}" required placeholder="اسم الشركة الرسمي">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-muted small">الاسم التجاري (إنجليزي)</label>
+                                        <input class="form-control border-0 bg-light" name="name_en" value="{{ company.name_en if company else '' }}" placeholder="Trade Name in English">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-muted small">الاسم القانوني الكامل</label>
+                                        <input class="form-control border-0 bg-light" name="legal_name" value="{{ company.legal_name if company else '' }}" placeholder="اسم المنشأة في السجل التجاري">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold text-muted small">الرقم الضريبي</label>
+                                        <input class="form-control border-0 bg-light" name="tax_number" value="{{ company.tax_number if company else '' }}" placeholder="VAT Number">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold text-muted small">السجل التجاري</label>
+                                        <input class="form-control border-0 bg-light" name="commercial_reg" value="{{ company.commercial_reg if company else '' }}" placeholder="CR Number">
+                                    </div>
+                                    
+                                    <div class="col-12 my-2"><hr class="opacity-10"></div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">رقم الهاتف / الجوال</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text border-0 bg-light text-muted"><i class="bi bi-telephone"></i></span>
+                                            <input class="form-control border-0 bg-light" name="phone" value="{{ company.phone if company else '' }}" placeholder="مثال: 777xxxxxx">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">البريد الإلكتروني</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text border-0 bg-light text-muted"><i class="bi bi-envelope"></i></span>
+                                            <input class="form-control border-0 bg-light" name="email" value="{{ company.email if company else '' }}" placeholder="info@company.com">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">الموقع الإلكتروني</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text border-0 bg-light text-muted"><i class="bi bi-globe"></i></span>
+                                            <input class="form-control border-0 bg-light" name="website" value="{{ company.website if company else '' }}" placeholder="www.company.com">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-muted small">العملة الأساسية للنظام</label>
+                                        <select class="form-select border-0 bg-soft-primary fw-bold text-primary" name="base_currency_id">
+                                            {% for c in currencies %}
+                                            <option value="{{ c.currency_id }}" {% if company and company.base_currency_id == c.currency_id %}selected{% endif %}>{{ c.code }} - {{ c.name_ar }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-muted small">شهر بداية السنة المالية</label>
+                                        <input class="form-control border-0 bg-light" type="number" min="1" max="12" name="fiscal_year_start_month" value="{{ company.fiscal_year_start_month if company else 1 }}">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold text-muted small">العنوان التفصيلي</label>
+                                        <textarea class="form-control border-0 bg-light" rows="3" name="address_ar" placeholder="أدخل العنوان الوطني أو الجغرافي للمنشأة...">{{ company.address_ar if company else '' }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab 2: Identity & Invoice -->
+                            <div class="tab-pane fade" id="identity" role="tabpanel">
+                                <div class="row g-4">
+                                    <!-- Logo Section -->
+                                    <div class="col-md-4">
+                                        <div class="card border-0 bg-light rounded-4 h-100 shadow-sm overflow-hidden">
+                                            <div class="card-body p-4 text-center d-flex flex-column justify-content-center align-items-center">
+                                                <h6 class="fw-bold mb-4 text-primary">شعار المنشأة</h6>
+                                                
+                                                <div class="logo-preview-container mb-4 position-relative">
+                                                    {% if receipt_logo %}
+                                                    <div class="p-3 bg-white rounded-3 shadow-sm">
+                                                        <img src="{{ url_for('uploaded_file', filename=receipt_logo) }}" alt="Logo" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                                                    </div>
+                                                    <div class="form-check form-switch mt-3 justify-content-center d-flex">
+                                                        <input class="form-check-input" type="checkbox" name="remove_logo" value="1" id="remove_logo">
+                                                        <label class="form-check-label small fw-bold text-danger ms-2" for="remove_logo">حذف الشعار</label>
+                                                    </div>
+                                                    {% else %}
+                                                    <div class="p-5 border-dashed rounded-4 bg-white bg-opacity-50 text-muted">
+                                                        <i class="bi bi-image fs-1 opacity-25"></i>
+                                                        <p class="xx-small mt-2 mb-0">لم يتم رفع شعار بعد</p>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="w-100">
+                                                    <label for="receipt_logo" class="btn btn-soft-primary w-100 rounded-pill px-4 transition-all">
+                                                        <i class="bi bi-upload me-2"></i>رفع شعار جديد
+                                                    </label>
+                                                    <input class="d-none" type="file" id="receipt_logo" name="receipt_logo" accept="image/png, image/jpeg, image/gif">
+                                                    <p class="text-muted xx-small mt-2 mb-0">يفضل صورة PNG شفافة (MAX: 2MB)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Receipt Content Section -->
+                                    <div class="col-md-8">
+                                        <div class="alert alert-soft-primary border-0 rounded-4 p-3 mb-4 d-flex align-items-center">
+                                            <i class="bi bi-info-circle-fill fs-4 me-3 text-primary"></i>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold">نصوص الفواتير المطبوعة</h6>
+                                                <p class="mb-0 text-muted xx-small">هذه المعلومات ستظهر بشكل تلقائي في أعلى وأسفل الفواتير والتقارير المطبوعة.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold text-muted small">رأس الفاتورة (Header Text)</label>
+                                                <textarea class="form-control border-0 bg-light text-center fw-bold p-3" rows="5" name="receipt_header" placeholder="مثال: مجمع التقنية التجاري - فرع الأصبحي">{{ receipt_header }}</textarea>
+                                                <div class="form-text xx-small text-muted text-center mt-2">يظهر في بداية الفاتورة تحت الشعار مباشرة.</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold text-muted small">تذييل الفاتورة (Footer Text)</label>
+                                                <textarea class="form-control border-0 bg-light text-center fw-bold p-3" rows="5" name="receipt_footer" placeholder="مثال: شكراً لزيارتكم - البضاعة المباعة لا ترد ولا تستبدل إلا خلال 24 ساعة">{{ receipt_footer }}</textarea>
+                                                <div class="form-text xx-small text-muted text-center mt-2">يظهر في نهاية الفاتورة (سياسة الاسترجاع أو شكر).</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-0 p-4 p-md-5 text-end">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill shadow transition-all hover-lift fw-bold">
+                            <i class="bi bi-save-fill me-2"></i>حفظ كافة الإعدادات
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-soft: rgba(37, 99, 235, 0.1);
+        --primary-soft-bg: rgba(37, 99, 235, 0.05);
+    }
+    .bg-soft-primary { background-color: var(--primary-soft); }
+    .btn-soft-primary { background-color: var(--primary-soft); color: #2563eb; border: none; }
+    .btn-soft-primary:hover { background-color: #2563eb; color: #fff; }
+    
+    .alert-soft-primary { background-color: var(--primary-soft-bg); }
+
+    .premium-tabs { border-bottom: none; background-color: #f8fafc; }
+    .premium-tabs .nav-link {
+        border: none;
+        color: #64748b;
+        font-weight: 700;
+        font-size: 0.95rem;
+        position: relative;
+        transition: all 0.3s ease;
+        border-radius: 0;
+        padding: 1.5rem 1rem;
+    }
+    .premium-tabs .nav-link:hover { color: #1e293b; background-color: #f1f5f9; }
+    .premium-tabs .nav-link.active {
+        color: #2563eb;
+        background-color: #fff !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .premium-tabs .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #2563eb;
+    }
+
+    .border-dashed { border: 2px dashed #cbd5e1; }
+    .hover-lift:hover { transform: translateY(-3px); }
+    .transition-all { transition: all 0.3s ease; }
+    .xx-small { font-size: 0.65rem; }
+
+    .form-control:focus, .form-select:focus {
+        background-color: #fff !important;
+        box-shadow: 0 0 0 0.25rem var(--primary-soft);
+        border: none;
+    }
+
+    [data-theme='dark'] .card, [data-theme='dark'] .bg-white { background-color: #1e293b !important; color: #fff; }
+    [data-theme='dark'] .premium-tabs { background-color: #0f172a; }
+    [data-theme='dark'] .premium-tabs .nav-link:hover { background-color: #1e293b; }
+    [data-theme='dark'] .premium-tabs .nav-link.active { background-color: #1e293b !important; color: #60a5fa; }
+    [data-theme='dark'] .bg-light { background-color: #0f172a !important; color: #cbd5e1; }
+    [data-theme='dark'] .card-footer { background-color: #0f172a !important; }
+    [data-theme='dark'] .form-control, [data-theme='dark'] .form-select { color: #fff; }
+</style>
+{% endblock %}

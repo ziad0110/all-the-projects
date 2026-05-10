@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="سطر - شريكك في النجاح الرقمي. نقدم خدمات تصميم المواقع والتسويق الرقمي والإعلان والهوية البصرية.">
+    <meta name="keywords"
+        content="سطر, تصميم مواقع, تسويق رقمي, إعلان, هوية بصرية, Satr, web design, digital marketing">
+    <meta name="author" content="سطر - Satr">
+    <meta name="theme-color" content="#0b1120">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="سطر | Satr - Digital Agency">
+    <meta property="og:description" content="نحول أفكارك إلى واقع رقمي مبهر">
+    <meta property="og:type" content="website">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨</text></svg>">
+
+    <title>سطر | Satr - Digital Agency</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">سطر</div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
+        </div>
+    </div>
+
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#home" class="nav-logo">سطر</a>
+
+            <div class="nav-links">
+                <a href="#home" class="nav-link active" data-i18n="nav_home">الرئيسية</a>
+                <a href="#about" class="nav-link" data-i18n="nav_about">من نحن</a>
+                <a href="#services" class="nav-link" data-i18n="nav_services">خدماتنا</a>
+                <a href="#portfolio" class="nav-link" data-i18n="nav_portfolio">أعمالنا</a>
+                <a href="#team" class="nav-link" data-i18n="nav_team">الفريق</a>
+                <a href="#blog-section" class="nav-link" data-i18n="nav_blog">المدونة</a>
+                <a href="#contact" class="nav-link" data-i18n="nav_contact">تواصل معنا</a>
+            </div>
+
+            <div class="nav-controls">
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+                <button class="lang-toggle" aria-label="Toggle language">EN</button>
+                <a href="admin.html" class="admin-link btn-icon" title="Admin" aria-label="Admin Panel">⚙</a>
+                <div class="burger-menu" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <a href="#home" class="nav-link" data-i18n="nav_home">الرئيسية</a>
+        <a href="#about" class="nav-link" data-i18n="nav_about">من نحن</a>
+        <a href="#services" class="nav-link" data-i18n="nav_services">خدماتنا</a>
+        <a href="#portfolio" class="nav-link" data-i18n="nav_portfolio">أعمالنا</a>
+        <a href="#team" class="nav-link" data-i18n="nav_team">الفريق</a>
+        <a href="#blog-section" class="nav-link" data-i18n="nav_blog">المدونة</a>
+        <a href="#contact" class="nav-link" data-i18n="nav_contact">تواصل معنا</a>
+    </div>
+
+    <!-- ============ Hero Section ============ -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <canvas id="particles-canvas"></canvas>
+            <div class="hero-glow hero-glow--1"></div>
+            <div class="hero-glow hero-glow--2"></div>
+        </div>
+
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    <span data-i18n="hero_badge">🚀 نبني المستقبل الرقمي</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span data-i18n="hero_title_1">نحول أفكارك إلى</span><br>
+                    <span class="typed-text">واقع رقمي مبهر</span>
+                    <span class="typed-cursor">|</span>
+                </h1>
+
+                <p class="hero-description" data-i18n="hero_description">
+                    نحن فريق سطر، نقدم حلولاً رقمية متكاملة من تصميم المواقع والتسويق الرقمي إلى الإعلان وبناء الهويات
+                    البصرية.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#portfolio" class="btn btn-primary" data-i18n="hero_btn_portfolio">اكتشف أعمالنا</a>
+                    <a href="#contact" class="btn btn-outline" data-i18n="hero_btn_contact">تواصل معنا</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-number counter-number" data-target="150" data-suffix="+">0</div>
+                        <div class="hero-stat-label" data-i18n="hero_stat_projects">مشروع منجز</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number counter-number" data-target="80" data-suffix="+">0</div>
+                        <div class="hero-stat-label" data-i18n="hero_stat_clients">عميل سعيد</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number counter-number" data-target="7" data-suffix="+">0</div>
+                        <div class="hero-stat-label" data-i18n="hero_stat_years">سنوات خبرة</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="hero-card-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="hero-card-line"></div>
+                    <div class="hero-card-line"></div>
+                    <div class="hero-card-line"></div>
+                    <div class="hero-card-line"></div>
+                    <div class="hero-card-line"></div>
+                </div>
+                <div class="floating-badge floating-badge--1">
+                    <span class="icon blue">🎨</span>
+                    <span data-i18n="hero_badge_1">تصميم إبداعي</span>
+                </div>
+                <div class="floating-badge floating-badge--2">
+                    <span class="icon green">✓</span>
+                    <span data-i18n="hero_badge_2">نتائج مضمونة</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ About Section ============ -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-image-wrapper reveal-left">
+                <div class="about-image">
+                    <span class="about-icon">💡</span>
+                </div>
+                <div class="about-image-decoration"></div>
+            </div>
+
+            <div class="about-content reveal-right">
+                <h2 class="section-title" style="text-align:start;" data-i18n="about_heading">نحن سطر، شريكك في النجاح
+                    الرقمي</h2>
+                <p data-i18n="about_text_1">تأسست سطر بهدف تقديم حلول رقمية مبتكرة تجمع بين الإبداع والتقنية. نؤمن بأن
+                    كل مشروع هو قصة فريدة تستحق أن تُروى بأفضل طريقة ممكنة.</p>
+                <p data-i18n="about_text_2">فريقنا من الخبراء المتخصصين يعمل بشغف لتحويل رؤيتك إلى واقع رقمي يتجاوز
+                    التوقعات.</p>
+
+                <div class="about-features">
+                    <div class="about-feature">
+                        <span class="icon">🎨</span>
+                        <span data-i18n="about_feature_1">تصميم إبداعي</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="icon">💻</span>
+                        <span data-i18n="about_feature_2">تطوير حديث</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="icon">📈</span>
+                        <span data-i18n="about_feature_3">تسويق ذكي</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="icon">🛡️</span>
+                        <span data-i18n="about_feature_4">دعم مستمر</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Counters -->
+    <section class="counters">
+        <div class="container">
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="150" data-suffix="+">0</div>
+                <div class="counter-label" data-i18n="counter_projects">مشروع منجز</div>
+            </div>
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="80" data-suffix="+">0</div>
+                <div class="counter-label" data-i18n="counter_clients">عميل راضٍ</div>
+            </div>
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="7" data-suffix="+">0</div>
+                <div class="counter-label" data-i18n="counter_years">سنوات خبرة</div>
+            </div>
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="15" data-suffix="">0</div>
+                <div class="counter-label" data-i18n="counter_awards">جائزة</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Services Section ============ -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="services_title">خدماتنا</h2>
+            <p class="section-subtitle reveal" data-i18n="services_subtitle">نقدم مجموعة متكاملة من الخدمات الرقمية لنمو
+                أعمالك</p>
+            <div class="services-grid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============ Portfolio Section ============ -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="portfolio_title">أعمالنا</h2>
+            <p class="section-subtitle reveal" data-i18n="portfolio_subtitle">نماذج من المشاريع التي نفتخر بها</p>
+
+            <div class="portfolio-filters reveal">
+                <button class="filter-btn active" data-filter="all" data-i18n="filter_all">الكل</button>
+                <button class="filter-btn" data-filter="web" data-i18n="filter_web">مواقع</button>
+                <button class="filter-btn" data-filter="marketing" data-i18n="filter_marketing">تسويق</button>
+                <button class="filter-btn" data-filter="advertising" data-i18n="filter_advertising">إعلان</button>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Modal -->
+    <div class="modal-overlay" id="portfolioModal" onclick="if(event.target===this) App.closeModal('portfolioModal')">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"></h3>
+                <button class="modal-close" onclick="App.closeModal('portfolioModal')">✕</button>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ============ Team Section ============ -->
+    <section class="team" id="team">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="team_title">فريقنا</h2>
+            <p class="section-subtitle reveal" data-i18n="team_subtitle">تعرف على الفريق المبدع خلف نجاحنا</p>
+            <div class="team-grid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============ Testimonials Section ============ -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="testimonials_title">آراء عملائنا</h2>
+            <p class="section-subtitle reveal" data-i18n="testimonials_subtitle">ماذا يقول عملاؤنا عن تجربتهم معنا</p>
+
+            <div class="testimonials-slider reveal">
+                <div class="testimonials-track">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <div class="testimonials-controls reveal">
+                <button class="testimonial-prev" aria-label="Previous">→</button>
+                <button class="testimonial-next" aria-label="Next">←</button>
+            </div>
+            <div class="testimonials-dots reveal"></div>
+        </div>
+    </section>
+
+    <!-- ============ Blog Preview Section ============ -->
+    <section class="blog-preview" id="blog-section">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="blog_title">المدونة</h2>
+            <p class="section-subtitle reveal" data-i18n="blog_subtitle">أحدث المقالات والأخبار من فريق سطر</p>
+
+            <div class="blog-grid">
+                <!-- Rendered by JS -->
+            </div>
+
+            <div class="flex-center reveal" style="margin-top:1rem;">
+                <a href="blog.html" class="btn btn-outline" data-i18n="blog_all">جميع المقالات</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============ Contact Section ============ -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-info reveal-right">
+                <h2 class="section-title" style="text-align:start;" data-i18n="contact_title">تواصل معنا</h2>
+                <p data-i18n="contact_subtitle">نحن هنا لمساعدتك. أرسل لنا رسالة وسنرد عليك في أقرب وقت</p>
+
+                <div class="contact-details">
+                    <div class="contact-detail">
+                        <span class="icon">📞</span>
+                        <div class="contact-detail-text">
+                            <h4 data-i18n="contact_phone_label">الهاتف</h4>
+                            <p data-i18n="contact_phone">+966 50 xxx xxxx</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <span class="icon">📧</span>
+                        <div class="contact-detail-text">
+                            <h4 data-i18n="contact_email_label">البريد</h4>
+                            <p data-i18n="contact_email_val">info@satr.sa</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <span class="icon">📍</span>
+                        <div class="contact-detail-text">
+                            <h4 data-i18n="contact_address_label">العنوان</h4>
+                            <p data-i18n="contact_address">الرياض، المملكة العربية السعودية</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <span class="icon">🕐</span>
+                        <div class="contact-detail-text">
+                            <h4 data-i18n="contact_hours_label">ساعات العمل</h4>
+                            <p data-i18n="contact_hours">الأحد - الخميس: 9 ص - 6 م</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-social">
+                    <a href="#" aria-label="Twitter">𝕏</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="#" aria-label="WhatsApp">💬</a>
+                </div>
+            </div>
+
+            <div class="contact-form reveal-left">
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="contact_name">الاسم الكامل</label>
+                            <input type="text" name="name" required data-i18n="contact_name">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="contact_email">البريد الإلكتروني</label>
+                            <input type="email" name="email" required data-i18n="contact_email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="contact_subject">الموضوع</label>
+                        <input type="text" name="subject" data-i18n="contact_subject">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="contact_message">الرسالة</label>
+                        <textarea name="message" rows="5" required data-i18n="contact_message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;"
+                        data-i18n="contact_send">
+                        إرسال الرسالة
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Footer ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#home" class="nav-logo">سطر</a>
+                    <p data-i18n="footer_description">شريكك الموثوق في رحلة التحول الرقمي. نقدم حلولاً إبداعية متكاملة.
+                    </p>
+                </div>
+                <div class="footer-column">
+                    <h4 data-i18n="footer_links">روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#home" data-i18n="nav_home">الرئيسية</a></li>
+                        <li><a href="#about" data-i18n="nav_about">من نحن</a></li>
+                        <li><a href="#portfolio" data-i18n="nav_portfolio">أعمالنا</a></li>
+                        <li><a href="#contact" data-i18n="nav_contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 data-i18n="footer_services">خدماتنا</h4>
+                    <ul>
+                        <li><a href="#services" data-i18n="filter_web">مواقع</a></li>
+                        <li><a href="#services" data-i18n="filter_marketing">تسويق</a></li>
+                        <li><a href="#services" data-i18n="filter_advertising">إعلان</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 data-i18n="footer_contact">تواصل معنا</h4>
+                    <ul>
+                        <li><a href="#" data-i18n="contact_email_val">info@satr.sa</a></li>
+                        <li><a href="#" data-i18n="contact_phone">+966 50 xxx xxxx</a></li>
+                        <li><a href="#" data-i18n="contact_address">الرياض</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span data-i18n="footer_rights">© 2026 سطر. جميع الحقوق محفوظة.</span>
+                <span>Made with ❤️ by سطر</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" aria-label="Back to top">↑</button>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('js/sw.js').catch(() => { });
+            });
+        }
+    </script>
+</body>
+
+</html>

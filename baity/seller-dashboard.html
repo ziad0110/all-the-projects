@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>لوحة تحكم البائع - بيتي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="search-box"><input type="text" placeholder="بحث في المتجر..."><button><i
+                        class="fas fa-search"></i></button></div>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()"><i class="fas fa-bell"></i><span
+                        class="badge">3</span></button>
+                <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <a href="profile.html" class="user-menu"><i class="fas fa-user"></i> متجر الأصالة</a>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Notifications -->
+    <div class="notifications-panel" id="notifPanel">
+        <div class="notif-header">
+            <h3>الإشعارات</h3><button class="btn-ghost btn-sm" onclick="clearNotifs()">مسح الكل</button>
+        </div>
+        <div class="notif-list">
+            <div class="notif-item unread">
+                <div class="notif-icon order"><i class="fas fa-box"></i></div>
+                <div class="notif-text">
+                    <p><strong>طلب جديد!</strong> #BYT-5678 - كنبة عصرية</p><span class="time">منذ 10 دقائق</span>
+                </div>
+            </div>
+            <div class="notif-item unread">
+                <div class="notif-icon msg"><i class="fas fa-comment"></i></div>
+                <div class="notif-text">
+                    <p><strong>رسالة من مشتري:</strong> هل المنتج متاح باللون البيج؟</p><span class="time">منذ 30
+                        دقيقة</span>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="notif-icon order"><i class="fas fa-star"></i></div>
+                <div class="notif-text">
+                    <p>تقييم جديد ⭐⭐⭐⭐⭐ على "طقم أواني جرانيت"</p><span class="time">منذ ساعتين</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content full">
+        <!-- Welcome -->
+        <div
+            style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+            <div>
+                <h1 style="font-size:1.5rem;font-weight:700">مرحباً، أحمد! 👋</h1>
+                <p style="color:var(--text-muted);font-size:.9rem">آخر تسجيل دخول: اليوم 2:30 م</p>
+            </div>
+            <button class="btn btn-primary"
+                onclick="document.getElementById('addProductModal').classList.add('open')"><i class="fas fa-plus"></i>
+                إضافة منتج جديد</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="icon-box"><i class="fas fa-coins"></i></div>
+                <div class="stat-info">
+                    <h4>إجمالي الإيرادات</h4>
+                    <div class="num">45,600</div><span class="change up"><i class="fas fa-arrow-up"></i> +12% عن الشهر
+                        الماضي</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon-box"><i class="fas fa-shopping-bag"></i></div>
+                <div class="stat-info">
+                    <h4>الطلبات</h4>
+                    <div class="num">128</div><span class="change up"><i class="fas fa-arrow-up"></i> +8% عن الشهر
+                        الماضي</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon-box"><i class="fas fa-box-open"></i></div>
+                <div class="stat-info">
+                    <h4>المنتجات</h4>
+                    <div class="num">56</div><span class="change up"><i class="fas fa-arrow-up"></i> 3 منتجات
+                        جديدة</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon-box"><i class="fas fa-star"></i></div>
+                <div class="stat-info">
+                    <h4>التقييم</h4>
+                    <div class="num">4.8</div><span class="change up"><i class="fas fa-arrow-up"></i> +0.2 عن الشهر
+                        الماضي</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-bottom:24px">
+            <div class="chart-card">
+                <h3><i class="fas fa-chart-line" style="color:var(--green-500)"></i> المبيعات (آخر 7 أيام)</h3>
+                <div style="height:250px;display:flex;align-items:flex-end;gap:8px;padding:20px 0">
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div
+                            style="width:100%;background:linear-gradient(to top,var(--green-500),var(--green-300));border-radius:6px 6px 0 0;height:120px">
+                        </div><span style="font-size:.72rem;color:var(--text-muted)">سبت</span>
+                    </div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div
+                            style="width:100%;background:linear-gradient(to top,var(--green-500),var(--green-300));border-radius:6px 6px 0 0;height:180px">
+                        </div><span style="font-size:.72rem;color:var(--text-muted)">أحد</span>
+                    </div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div
+                            style="width:100%;background:linear-gradient(to top,var(--green-500),var(--green-300));border-radius:6px 6px 0 0;height:90px">
+                        </div><span style="font-size:.72rem;color:var(--text-muted)">اثنين</span>
+                    </div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div
+                            style="width:100%;background:linear-gradient(to top,var(--green-500),var(--green-300));border-radius:6px 6px 0 0;height:200px">
+                        </div><span style="font-size:.72rem;color:var(--text-muted)">ثلاثاء</span>
+                    </div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div
+                            style="width:100%;background:linear-gradient(to top,var(--green-500),var(--green-300));border-radius:6px 6px 0 0;height:150px">
+                        </div><span style="font-size:.72rem;color:var(--text-muted)">أربعاء</span>
+                    </div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div
+                            style="width:100%;background:linear-gradient(to top,var(--green-500),var(--green-300));border-radius:6px 6px 0 0;height:220px">
+                        </div><span style="font-size:.72rem;color:var(--text-muted)">خميس</span>
+                    </div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div
+                            style="width:100%;background:linear-gradient(to top,var(--gold),var(--gold-light));border-radius:6px 6px 0 0;height:170px">
+                        </div><span style="font-size:.72rem;color:var(--text-muted)">جمعة</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3><i class="fas fa-chart-pie" style="color:var(--green-500)"></i> توزيع المبيعات</h3>
+                <div style="padding:20px;text-align:center">
+                    <div
+                        style="width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--green-500) 0% 40%,var(--brown-400) 40% 65%,var(--gold) 65% 85%,var(--info) 85% 100%);margin:0 auto 16px">
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:.78rem">
+                        <span><span
+                                style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green-500);margin-left:4px"></span>أدوات
+                            منزلية 40%</span>
+                        <span><span
+                                style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--brown-400);margin-left:4px"></span>مطبخ
+                            25%</span>
+                        <span><span
+                                style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--gold);margin-left:4px"></span>أزياء
+                            20%</span>
+                        <span><span
+                                style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--info);margin-left:4px"></span>أخرى
+                            15%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="chart-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <h3><i class="fas fa-clipboard-list" style="color:var(--green-500)"></i> أحدث الطلبات</h3><a
+                    href="profile.html" class="see-all">عرض الكل <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="table-container">
+                <table id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>رقم الطلب</th>
+                            <th>المنتج</th>
+                            <th>المشتري</th>
+                            <th>المبلغ</th>
+                            <th>الحالة</th>
+                            <th>إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic orders -->
+                    </tbody>
+                </table>
+                <div id="noSellerOrders" style="display:none;text-align:center;padding:20px;color:var(--text-muted)">لا
+                    توجد طلبات جديدة حالياً.</div>
+            </div>
+        </div>
+
+        <!-- My Products -->
+        <div class="chart-card" style="margin-top:24px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <h3><i class="fas fa-boxes" style="color:var(--green-500)"></i> منتجاتي</h3>
+            </div>
+            <div class="table-container">
+                <table id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>المنتج</th>
+                            <th>السعر</th>
+                            <th>المخزون</th>
+                            <th>المبيعات</th>
+                            <th>التقييم</th>
+                            <th>إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic products -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Product Modal -->
+    <div class="modal-overlay" id="addProductModal">
+        <div class="modal" style="max-width:600px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h2><i class="fas fa-plus-circle" style="color:var(--green-500)"></i> إضافة منتج جديد</h2><button
+                    onclick="this.closest('.modal-overlay').classList.remove('open')"
+                    style="background:none;font-size:1.2rem;color:var(--text-muted)"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <form id="addProductForm">
+                <div class="form-group"><label class="form-label">اسم المنتج</label><input type="text" id="pName"
+                        class="form-control" required placeholder="اسم المنتج"></div>
+                <div class="form-group"><label class="form-label">الوصف</label><textarea id="pDesc" class="form-control"
+                        rows="3" required placeholder="وصف تفصيلي للمنتج"></textarea></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                    <div class="form-group"><label class="form-label">السعر (ر.ي)</label><input type="number"
+                            id="pPrice" class="form-control" required placeholder="0"></div>
+                    <div class="form-group"><label class="form-label">الكمية</label><input type="number" id="pQty"
+                            class="form-control" required placeholder="0"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                    <div class="form-group"><label class="form-label">القسم</label>
+                        <select id="pCat" class="form-control">
+                            <option value="home">أدوات منزلية</option>
+                            <option value="kitchen">أدوات المطبخ</option>
+                            <option value="food">طعام وبقالة</option>
+                            <option value="fashion">ملابس</option>
+                            <option value="electronics">إلكترونيات</option>
+                            <option value="used">مستعمل</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label class="form-label">الحالة</label>
+                        <select id="pCond" class="form-control">
+                            <option value="new">جديد</option>
+                            <option value="used">مستعمل</option>
+                            <option value="refurbished">مجدد</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="form-label">رابط الصورة (URL)</label>
+                    <input type="text" id="pImg" class="form-control" placeholder="https://example.com/image.jpg"
+                        value="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" style="width:100%"><i class="fas fa-check"></i> نشر
+                    المنتج</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/app.js"></script>
+    <script>
+        const sellerName = 'متجر الأصالة';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSellerDashboard();
+
+            document.getElementById('addProductForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newP = {
+                    id: Date.now(),
+                    name: document.getElementById('pName').value,
+                    price: parseFloat(document.getElementById('pPrice').value),
+                    cat: document.getElementById('pCat').value,
+                    condition: document.getElementById('pCond').value,
+                    img: document.getElementById('pImg').value,
+                    seller: sellerName,
+                    rating: 5.0,
+                    reviews: 0,
+                    stock: parseInt(document.getElementById('pQty').value)
+                };
+
+                window.productsData.unshift(newP);
+                saveProducts();
+                document.getElementById('addProductModal').classList.remove('open');
+                showToast('تم إضافة المنتج بنجاح!', 'success');
+                renderSellerDashboard();
+                e.target.reset();
+            });
+        });
+
+        function renderSellerDashboard() {
+            // Render Products
+            const pTable = document.querySelector('#productsTable tbody');
+            const myProducts = window.productsData.filter(p => p.seller === sellerName);
+
+            pTable.innerHTML = myProducts.map(p => `
+                <tr>
+                    <td style="display:flex;align-items:center;gap:8px">
+                        <img src="${p.img}" style="width:40px;height:40px;border-radius:8px;object-fit:cover"> ${p.name}
+                    </td>
+                    <td>${p.price.toLocaleString()} ر.ي</td>
+                    <td>${p.stock || 10}</td>
+                    <td>${p.sales || 0}</td>
+                    <td>⭐ ${p.rating}</td>
+                    <td>
+                        <button class="btn btn-sm btn-ghost" onclick="showToast('قريباً: تعديل المنتج')"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update Stats
+            document.querySelectorAll('.stat-card .num')[0].innerText = (myProducts.reduce((sum, p) => sum + (p.price * (p.sales || 0)), 0) + 45600).toLocaleString();
+            document.querySelectorAll('.stat-card .num')[2].innerText = myProducts.length;
+
+            // Render Mock Orders belonging to seller
+            const oTable = document.querySelector('#ordersTable tbody');
+            const allOrders = JSON.parse(localStorage.getItem('bayti-orders') || '[]');
+
+            // Filter orders that have products from this seller
+            const sellerOrders = allOrders.filter(o => o.items.some(i => {
+                const p = window.productsData.find(x => x.id === i.id);
+                return p && p.seller === sellerName;
+            }));
+
+            if (sellerOrders.length === 0) {
+                document.getElementById('noSellerOrders').style.display = 'block';
+                oTable.innerHTML = '';
+            } else {
+                document.getElementById('noSellerOrders').style.display = 'none';
+                oTable.innerHTML = sellerOrders.map(o => `
+                    <tr>
+                        <td>#${o.id}</td>
+                        <td>${o.items.length} منتجات</td>
+                        <td>مشتري مجهول</td>
+                        <td>${o.total}</td>
+                        <td><span class="status-badge status-${o.status}">${o.status === 'pending' ? 'قيد التحضير' : 'تم'}</span></td>
+                        <td><button class="btn btn-sm btn-outline">تفاصيل</button></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                window.productsData = window.productsData.filter(p => p.id !== id);
+                saveProducts();
+                showToast('تم حذف المنتج بنجاح');
+                renderSellerDashboard();
+            }
+        }
+
+        function toggleNotifications() {
+            document.getElementById('notifPanel').classList.toggle('open');
+        }
+    </script>
+</body>
+
+</html>

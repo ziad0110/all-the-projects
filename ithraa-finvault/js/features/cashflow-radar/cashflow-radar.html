@@ -1,0 +1,130 @@
+<div id="page-cashflow-radar" class="page p-4 md:p-8">
+      <!-- Liquidity Score -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="font-bold text-lg">رادار التدفق النقدي الذكي</h3>
+            <p class="text-sm text-gray-400">
+              توقعات مدعومة بالذكاء الاصطناعي لـ 30 يوماً
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="risk-pulse risk-green" id="radar-risk-dot"></span>
+            <span class="text-sm text-emerald" id="radar-risk-label">مستقر</span>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="radar-score-ring" id="radar-score-ring" style="--radar-color: #10b981; --radar-percent: 78">
+            <div class="radar-score-inner">
+              <div class="radar-score-value text-emerald" id="radar-score">
+                78
+              </div>
+              <div class="text-xs text-gray-400">نقطة سيولة</div>
+            </div>
+          </div>
+          <div class="flex-1 w-full">
+            <div class="grid grid-cols-3 gap-4">
+              <div class="text-center p-3 rounded-xl glass">
+                <p class="text-xs text-gray-400 mb-1">الدخل المتوقع</p>
+                <p class="text-lg font-bold text-emerald" id="radar-income">
+                  15,200
+                </p>
+                <p class="text-[10px] text-gray-500">ر.س</p>
+              </div>
+              <div class="text-center p-3 rounded-xl glass">
+                <p class="text-xs text-gray-400 mb-1">المصاريف المتوقعة</p>
+                <p class="text-lg font-bold text-rose" id="radar-expenses">
+                  9,850
+                </p>
+                <p class="text-[10px] text-gray-500">ر.س</p>
+              </div>
+              <div class="text-center p-3 rounded-xl glass">
+                <p class="text-xs text-gray-400 mb-1">الفائض المتوقع</p>
+                <p class="text-lg font-bold text-ethereal-violet" id="radar-surplus">
+                  5,350
+                </p>
+                <p class="text-[10px] text-gray-500">ر.س</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 30-Day Prediction Chart -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold">التوقعات المالية - 30 يوم</h3>
+          <div class="flex gap-2">
+            <span class="px-2 py-1 rounded-lg bg-emerald/20 text-emerald text-[10px]">● دخل</span>
+            <span class="px-2 py-1 rounded-lg bg-rose/20 text-rose text-[10px]">● مصاريف</span>
+            <span class="px-2 py-1 rounded-lg bg-purple-500/20 text-ethereal-violet text-[10px]">● رصيد</span>
+          </div>
+        </div>
+        <div class="chart-container" style="height: 280px">
+          <canvas id="radar-prediction-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Smart Alerts -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-bell text-gold"></i>
+          <h3 class="font-bold">التنبيهات الذكية</h3>
+        </div>
+        <div id="radar-alerts" class="space-y-3"></div>
+      </div>
+
+      <!-- Recommended Actions -->
+      <h3 class="font-bold text-lg mb-4">
+        إجراءات مقترحة من الذكاء الاصطناعي
+      </h3>
+      <div id="radar-actions" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"></div>
+
+      <!-- Auto-Save Section -->
+      <div class="glass-card rounded-2xl p-6 mb-6 border border-dashed border-emerald/30">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-robot text-emerald"></i>
+            <h3 class="font-bold">الادخار التلقائي (Auto-Save)</h3>
+            <span class="px-2 py-0.5 rounded-full bg-emerald/20 text-emerald text-[10px] font-bold">AI</span>
+          </div>
+          <div class="toggle-switch" id="autosave-toggle" onclick="toggleAutoSave(this)"></div>
+        </div>
+        <p class="text-xs text-gray-400 mb-4">
+          عند التفعيل، يقوم النظام بادخار نسبة من راتبك تلقائياً عند وصوله بناءً على تنبؤات الرادار.
+        </p>
+        <div class="grid grid-cols-3 gap-3 mb-4">
+          <div class="text-center p-3 rounded-xl glass">
+            <p class="text-xs text-gray-400 mb-1">نسبة الادخار</p>
+            <select class="bg-transparent border-none text-center text-lg font-bold text-emerald outline-none w-full" onchange="changeAutoSavePercent(this.value)">
+              <option value="5">5%</option>
+              <option value="10" selected="">10%</option>
+              <option value="15">15%</option>
+              <option value="20">20%</option>
+              <option value="30">30%</option>
+            </select>
+          </div>
+          <div class="text-center p-3 rounded-xl glass">
+            <p class="text-xs text-gray-400 mb-1">المبلغ المتوقع</p>
+            <p class="text-lg font-bold text-ethereal-violet" id="autosave-preview">≈ 1,520 ر.س / شهرياً</p>
+          </div>
+          <div class="text-center p-3 rounded-xl glass">
+            <p class="text-xs text-gray-400 mb-1">الحصالة المستهدفة</p>
+            <p class="text-sm font-bold" id="autosave-target-vault">الأولى</p>
+          </div>
+        </div>
+        <button class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald to-teal-500 text-white font-bold text-sm hover:shadow-lg hover:shadow-emerald/25 transition-all active:scale-[0.98]" onclick="executeAutoSave()">
+          <i class="fas fa-piggy-bank ml-2"></i>
+          تنفيذ الادخار الآن
+        </button>
+      </div>
+
+      <!-- Recurring Analysis -->
+      <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-redo text-ethereal-cyan"></i>
+          <h3 class="font-bold">تحليل المصاريف المتكررة</h3>
+        </div>
+        <div id="radar-recurring" class="space-y-3"></div>
+      </div>
+    </div>

@@ -1,0 +1,98 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About Us",
+        "products": "Products",
+        "tips": "Medical Tips",
+        "faq": "FAQ",
+        "contact": "Contact Us",
+        "sizeGuide": "Size Guide",
+        "blog": "Blog"
+    },
+    "hero": {
+        "badge": "High Quality - Ultimate Comfort",
+        "title": "Prince Baby Diapers",
+        "subtitle": "Extra Comfort, Perfect Protection",
+        "desc": "Discover our wide range of high-quality diapers and wipes specifically designed for your baby's comfort and sensitive skin protection",
+        "cta_products": "Discover Products",
+        "cta_contact": "Contact Us",
+        "explore_more": "Explore More"
+    },
+    "products": {
+        "title": "Our Products",
+        "subtitle": "Discover Our Wide Collection",
+        "description": "High-quality products specially designed for your baby's comfort and skin protection",
+        "filter_all": "All",
+        "filter_diapers": "Diapers",
+        "filter_wipes": "Wipes",
+        "filter_skincare": "Skincare",
+        "details": "Details",
+        "add_to_cart": "Add to Cart",
+        "price": "Price",
+        "currency": "SAR",
+        "features": "Features",
+        "bestseller": "Bestseller",
+        "new": "New"
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Cart is Empty",
+        "empty_description": "Add some products to start shopping",
+        "total": "Total",
+        "checkout": "Checkout",
+        "continue_shopping": "Continue Shopping",
+        "item_added": "Product added to cart",
+        "order_success": "Your order has been placed successfully!"
+    },
+    "faq": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Answers to your inquiries"
+    },
+    "contact": {
+        "title": "Contact Us",
+        "subtitle": "We're Here to Help",
+        "description": "Contact us for inquiries or orders, our team is ready to help you",
+        "form_title": "Send Your Message",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "send": "Send Message",
+        "success": "Sent successfully! We will contact you soon",
+        "address": "Address",
+        "phone": "Phone Number",
+        "working_hours": "Working Hours"
+    },
+    "sizeGuide": {
+        "title": "Royal Size Guide",
+        "subtitle": "Enter your baby's weight and we'll recommend the perfect size",
+        "calculator": "Size Calculator",
+        "weight": "Baby Weight (kg)",
+        "calculate": "Calculate Size",
+        "recommended": "Recommended Size",
+        "size": "Size"
+    },
+    "about": {
+        "title": "About Us",
+        "subtitle": "The Prince Baby Story",
+        "testimonials_title": "What Mothers Say About Us?"
+    },
+    "tips": {
+        "title": "Medical Tips",
+        "subtitle": "Guidelines for caring for your baby's skin"
+    },
+    "footer": {
+        "rights": "All Rights Reserved"
+    },
+    "blog": {
+        "title": "Blog",
+        "subtitle": "Tips & Articles for Mothers",
+        "readMore": "Read More",
+        "searchPlaceholder": "Search articles..."
+    },
+    "reviews": {
+        "title": "Customer Reviews",
+        "writeReview": "Write a Review",
+        "submitReview": "Submit Review",
+        "reviewPlaceholder": "Share your experience with this product..."
+    }
+}

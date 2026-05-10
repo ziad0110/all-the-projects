@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-receipt me-2"></i>فاتورة بيع جديدة</h2>
+            <p class="text-muted">إنشاء فاتورة مبيعات، تحديث المخزون، وتحصيل المبالغ</p>
+        </div>
+        <a href="{{ url_for('sales_list') }}" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-right me-2"></i>العودة للقائمة
+        </a>
+    </div>
+
+    <form method="post" id="salesForm">
+        <div class="row g-4">
+            <!-- Main Info Card -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm mb-4" style="border-radius: 20px;">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-info-circle me-2 text-primary"></i>البيانات الأساسية</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small text-muted">تاريخ ووقت الفاتورة</label>
+                                <input class="form-control bg-light border-0" type="datetime-local" name="invoice_date" id="invoice_date" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small text-muted">الفرع</label>
+                                <select class="form-select bg-light border-0" name="branch_id" required>
+                                    {% for x in branches %}<option value="{{ x.branch_id }}">{{ x.name_ar }}</option>{% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small text-muted">المستودع</label>
+                                <select class="form-select bg-light border-0" name="warehouse_id" required>
+                                    {% for x in warehouses %}<option value="{{ x.warehouse_id }}">{{ x.name_ar }}</option>{% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold small text-muted">العميل</label>
+                                <select class="form-select bg-light border-0 select2" name="customer_id">
+                                    <option value="">عميل نقدي</option>
+                                    {% for x in customers %}
+                                    <option value="{{ x.customer_id }}">
+                                        {{ x.name_ar }}{% if x.current_balance %} (رصيد: {{ x.current_balance|currency }}){% endif %}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice Lines Card -->
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-list-stars me-2 text-primary"></i>بنود الفاتورة</h5>
+                        <button type="button" class="btn btn-primary btn-sm rounded-pill px-3" onclick="addLine()">
+                            <i class="bi bi-plus-lg me-1"></i>إضافة صنف
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0" id="linesTable">
+                                <thead class="bg-light small fw-bold text-muted">
+                                    <tr>
+                                        <th style="width: 30%;">الصنف</th>
+                                        <th style="width: 15%;">الوحدة</th>
+                                        <th style="width: 12%;">الكمية</th>
+                                        <th style="width: 15%;">سعر البيع</th>
+                                        <th style="width: 12%;">الخصم</th>
+                                        <th style="width: 12%;">الإجمالي</th>
+                                        <th style="width: 4%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lines">
+                                    <!-- Dynamic rows here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment & Summary Card -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-4" style="border-radius: 20px;">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-credit-card me-2 text-primary"></i>الدفع والتسوية</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted">نوع الدفع</label>
+                            <select class="form-select bg-light border-0" name="payment_type" id="payment_type">
+                                <option value="CASH" selected>نقدي (CASH)</option>
+                                <option value="CREDIT">آجل (CREDIT)</option>
+                                <option value="PARTIAL">جزئي (PARTIAL)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted">طريقة الدفع</label>
+                            <select class="form-select bg-light border-0" name="payment_method">
+                                <option value="CASH">نقداً</option>
+                                <option value="CARD">شبكة / بطاقة</option>
+                                <option value="BANK">تحويل بنكي</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted">المبلغ المحصل</label>
+                            <div class="input-group">
+                                <input class="form-control bg-light border-0" type="number" step="0.01" name="paid_amount" id="paid_amount" value="0">
+                                <span class="input-group-text bg-light border-0">ر.س</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">الإجمالي الفرعي:</span>
+                            <span class="fw-bold" id="subtotalDisplay">0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 text-danger">
+                            <span>إجمالي الخصم:</span>
+                            <span class="fw-bold" id="discountDisplay">0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 text-primary fs-4 fw-bold border-top pt-3">
+                            <span>الإجمالي النهائي:</span>
+                            <span id="grandTotalDisplay">0.00</span>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm py-3 mt-2 fw-bold">
+                            <i class="bi bi-check2-circle me-2"></i>حفظ وترحيل الفاتورة
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-body p-3">
+                        <label class="form-label fw-bold small text-muted">ملاحظات إضافية</label>
+                        <textarea class="form-control bg-light border-0" name="notes" rows="3" placeholder="اكتب أي ملاحظات هنا..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Row Template -->
+<template id="line-template">
+    <tr class="line-row">
+        <td>
+            <select class="form-select border-0 bg-light item-select" name="item_id[]" required onchange="populateUnits(this.closest('tr'))">
+                <option value="">-- اختر الصنف --</option>
+                {% for item in items %}
+                <option value="{{ item.item_id }}">{{ item.item_code }} - {{ item.name_ar }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <select class="form-select border-0 bg-light unit-select" name="item_unit_id[]" required></select>
+        </td>
+        <td>
+            <input class="form-control border-0 bg-light text-center qty-input" type="number" step="0.01" name="quantity[]" value="1" oninput="updateLineTotal(this.closest('tr'))">
+        </td>
+        <td>
+            <input class="form-control border-0 bg-light text-end price-input" type="number" step="0.01" name="unit_price[]" value="0" oninput="updateLineTotal(this.closest('tr'))">
+        </td>
+        <td>
+            <input class="form-control border-0 bg-light text-end disc-input" type="number" step="0.01" name="discount_amount[]" value="0" oninput="updateLineTotal(this.closest('tr'))">
+        </td>
+        <td class="text-end fw-bold line-total">0.00</td>
+        <td>
+            <button type="button" class="btn btn-link text-danger p-0" onclick="removeLine(this)">
+                <i class="bi bi-trash"></i>
+            </button>
+        </td>
+        <input type="hidden" name="tax_rate[]" class="tax-input" value="0">
+    </tr>
+</template>
+{% endblock %}
+
+{% block scripts %}
+<script id="data-unitsMap" type="application/json">{{ item_units_map|tojson }}</script>
+<script>
+const unitsMap = JSON.parse(document.getElementById('data-unitsMap').textContent);
+
+// Set default date to now
+document.addEventListener('DOMContentLoaded', () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById('invoice_date').value = now.toISOString().slice(0, 16);
+    addLine();
+});
+
+function addLine() {
+    const template = document.getElementById('line-template').content.cloneNode(true);
+    document.getElementById('lines').appendChild(template);
+    updateGrandTotal();
+}
+
+function removeLine(btn) {
+    btn.closest('tr').remove();
+    updateGrandTotal();
+}
+
+function populateUnits(row) {
+    const itemId = row.querySelector('.item-select').value;
+    const unitSelect = row.querySelector('.unit-select');
+    const priceInput = row.querySelector('.price-input');
+    const taxInput = row.querySelector('.tax-input');
+    
+    unitSelect.innerHTML = '';
+    const units = unitsMap[itemId] || [];
+    
+    units.forEach((u, idx) => {
+        const opt = document.createElement('option');
+        opt.value = u.item_unit_id;
+        opt.textContent = u.label;
+        if (idx === 0) {
+            priceInput.value = u.sale_price || 0;
+            taxInput.value = u.tax_rate || 0;
+        }
+        unitSelect.appendChild(opt);
+    });
+    updateLineTotal(row);
+}
+
+function updateLineTotal(row) {
+    const qty = parseFloat(row.querySelector('.qty-input').value) || 0;
+    const price = parseFloat(row.querySelector('.price-input').value) || 0;
+    const disc = parseFloat(row.querySelector('.disc-input').value) || 0;
+    
+    const total = (qty * price) - disc;
+    row.querySelector('.line-total').textContent = total.toFixed(2);
+    updateGrandTotal();
+}
+
+function updateGrandTotal() {
+    let subtotal = 0;
+    let discount = 0;
+    
+    document.querySelectorAll('.line-row').forEach(row => {
+        const qty = parseFloat(row.querySelector('.qty-input').value) || 0;
+        const price = parseFloat(row.querySelector('.price-input').value) || 0;
+        const disc = parseFloat(row.querySelector('.disc-input').value) || 0;
+        
+        subtotal += (qty * price);
+        discount += disc;
+    });
+    
+    const grandTotal = subtotal - discount;
+    
+    document.getElementById('subtotalDisplay').textContent = subtotal.toFixed(2);
+    document.getElementById('discountDisplay').textContent = discount.toFixed(2);
+    document.getElementById('grandTotalDisplay').textContent = grandTotal.toLocaleString(undefined, {minimumFractionDigits:2});
+}
+
+document.getElementById('salesForm').onsubmit = function(e) {
+    if (document.querySelectorAll('.line-row').length === 0) {
+        e.preventDefault();
+        Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'يرجى إضافة صنف واحد على الأقل' });
+        return;
+    }
+};
+</script>
+{% endblock %}

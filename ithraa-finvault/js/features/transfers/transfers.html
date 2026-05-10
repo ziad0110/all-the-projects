@@ -1,0 +1,526 @@
+<div id="page-transfers" class="page p-4 md:p-8">
+      <!-- Transfers Summary Hero -->
+      <div class="relative overflow-hidden premium-card mb-5">
+        <div class="absolute inset-0 opacity-10">
+          <div class="absolute top-0 left-0 w-52 h-52 rounded-full" style="background: radial-gradient(circle, rgba(59,130,246,0.5) 0%, transparent 70%); transform: translate(-20%, -30%);">
+          </div>
+          <div class="absolute bottom-0 right-0 w-40 h-40 rounded-full" style="background: radial-gradient(circle, rgba(16,185,129,0.4) 0%, transparent 70%); transform: translate(20%, 20%);">
+          </div>
+        </div>
+        <div class="relative p-5">
+          <!-- Security Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg glass flex items-center justify-center">
+                <i class="fas fa-lock text-cyan-500 text-[10px]"></i>
+              </div>
+              <span class="text-[10px] text-cyan-600 dark:text-cyan-400 font-bold">حوالات مؤمّنة — نظام سريع</span>
+            </div>
+          </div>
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="glass rounded-xl p-3 text-center">
+              <i class="fas fa-arrow-up text-blue-500 text-xs mb-1.5 block"></i>
+              <p class="text-sm font-bold" id="transfers-total-sent">6,625</p>
+              <p class="text-[9px] text-gray-500">إجمالي المرسل</p>
+            </div>
+            <div class="glass rounded-xl p-3 text-center">
+              <i class="fas fa-arrow-down text-emerald-500 text-xs mb-1.5 block"></i>
+              <p class="text-sm font-bold" id="transfers-total-received">19,950</p>
+              <p class="text-[9px] text-gray-500">إجمالي المستلم</p>
+            </div>
+            <div class="glass rounded-xl p-3 text-center">
+              <i class="fas fa-clock text-amber-500 text-xs mb-1.5 block"></i>
+              <p class="text-sm font-bold" id="transfers-pending-count">2</p>
+              <p class="text-[9px] text-gray-500">قيد الانتظار</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transfers Back Navigation -->
+      <div id="transfers-back-nav" class="hidden mb-6 mt-6">
+        <button class="back-nav-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2" onclick="setTransferTab('menu')">
+          <i class="fas fa-arrow-right"></i>
+          العودة للقائمة
+        </button>
+      </div>
+
+      <!-- Transfer Menu (Main Categories) -->
+      <div id="transfer-menu" class="transfer-content mt-4">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">
+          <button class="glass-card tint-blue rounded-2xl p-5 text-center transition-all group flex flex-col items-center justify-center gap-3 h-40" style="border: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.borderColor='rgba(59,130,246,0.5)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';" onclick="setTransferTab('local-category')">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform" style="background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(16,185,129,0.2));">
+              <i class="fas fa-university text-blue-400 text-2xl"></i>
+            </div>
+            <div>
+              <p class="text-base font-bold text-white mb-1">حوالات محلية</p>
+              <p class="text-[11px] text-gray-400">إرسال واستقبال داخل المملكة</p>
+            </div>
+          </button>
+
+          <button class="glass-card tint-indigo rounded-2xl p-5 text-center transition-all group flex flex-col items-center justify-center gap-3 h-40" style="border: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.borderColor='rgba(99,102,241,0.5)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';" onclick="setTransferTab('intl-category')">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform" style="background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(6,182,212,0.2));">
+              <i class="fas fa-globe text-indigo-400 text-2xl"></i>
+            </div>
+            <div>
+              <p class="text-base font-bold text-white mb-1">حوالات دولية</p>
+              <p class="text-[11px] text-gray-400">تحويل واستلام عالمي</p>
+            </div>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <button class="glass-card tint-purple rounded-2xl p-4 text-center transition-all group flex flex-col items-center justify-center gap-2 h-28" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('status')">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-tasks text-purple-400"></i>
+            </div>
+            <p class="text-xs font-bold text-white">حالة الحوالات</p>
+          </button>
+
+          <button class="glass-card tint-rose rounded-2xl p-4 text-center transition-all group flex flex-col items-center justify-center gap-2 h-28" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('cancel')">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-rose-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-ban text-rose-400"></i>
+            </div>
+            <p class="text-xs font-bold text-white">إلغاء حوالة</p>
+          </button>
+
+          <button class="glass-card tint-amber rounded-2xl p-4 text-center transition-all group flex flex-col items-center justify-center gap-2 h-28" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('requests')">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-hand-holding-usd text-amber-400"></i>
+            </div>
+            <p class="text-xs font-bold text-white">طلبات استلام</p>
+          </button>
+
+          <button class="glass-card tint-pink rounded-2xl p-4 text-center transition-all group flex flex-col items-center justify-center gap-2 h-28" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('internal')">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-pink-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-user-friends text-pink-400"></i>
+            </div>
+            <p class="text-xs font-bold text-white">لمشترك إثراء</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Local Category Sub-Menu -->
+      <div id="transfer-local-category" class="transfer-content hidden mt-4">
+        <h3 class="text-lg font-bold mb-4 px-1">الحوالات المحلية</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button class="glass-card tint-blue rounded-2xl p-6 flex items-center gap-4 transition-all group h-32" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('local-send', 'local-category')">
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center bg-blue-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-paper-plane text-blue-400 text-xl"></i>
+            </div>
+            <div class="text-right">
+              <p class="text-base font-bold text-white mb-1">إرسال محلية</p>
+              <p class="text-xs text-gray-400">تحويل بنكي داخل المملكة</p>
+            </div>
+          </button>
+
+          <button class="glass-card tint-emerald rounded-2xl p-6 flex items-center gap-4 transition-all group h-32" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('local-receive', 'local-category')">
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center bg-emerald-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-download text-emerald-400 text-xl"></i>
+            </div>
+            <div class="text-right">
+              <p class="text-base font-bold text-white mb-1">استلام محلية</p>
+              <p class="text-xs text-gray-400">سجل الحوالات المستلمة</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- International Category Sub-Menu -->
+      <div id="transfer-intl-category" class="transfer-content hidden mt-4">
+        <h3 class="text-lg font-bold mb-4 px-1">الحوالات الدولية</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button class="glass-card tint-indigo rounded-2xl p-6 flex items-center gap-4 transition-all group h-32" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('intl-send', 'intl-category')">
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center bg-indigo-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-globe text-indigo-400 text-xl"></i>
+            </div>
+            <div class="text-right">
+              <p class="text-base font-bold text-white mb-1">إرسال دولية</p>
+              <p class="text-xs text-gray-400">تحويل آمن لأكثر من 20 دولة</p>
+            </div>
+          </button>
+
+          <button class="glass-card tint-cyan rounded-2xl p-6 flex items-center gap-4 transition-all group h-32" style="border: 1px solid rgba(255,255,255,0.05);" onclick="setTransferTab('intl-receive', 'intl-category')">
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center bg-cyan-500/20 group-hover:scale-110 transition-transform">
+              <i class="fas fa-globe-americas text-cyan-400 text-xl"></i>
+            </div>
+            <div class="text-right">
+              <p class="text-base font-bold text-white mb-1">استلام دولية</p>
+              <p class="text-xs text-gray-400">سجل الحوالات الواردة عالمياً</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. إرسال حوالة محلية -->
+      <div id="transfer-local-send" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2));">
+              <i class="fas fa-paper-plane text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="font-bold">إرسال حوالة محلية</h3>
+              <p class="text-xs text-gray-400">تحويل بنكي داخل المملكة</p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">اسم المستفيد</label>
+              <input type="text" class="premium-input w-full" placeholder="الاسم كما في البنك" id="local-send-recipient">
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">رقم IBAN</label>
+              <input type="text" class="premium-input w-full" placeholder="SA00 0000 0000 0000 0000 0000" id="local-send-iban" dir="ltr" maxlength="24">
+              <p class="text-[10px] text-gray-500 mt-1" id="local-iban-hint">يبدأ بـ SA ويتكون من 24 حرف</p>
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">البنك المستلم</label>
+              <select class="premium-input w-full" id="local-send-bank">
+                <option value="">اختر البنك</option>
+                <option value="الراجحي">مصرف الراجحي</option>
+                <option value="الأهلي">البنك الأهلي السعودي</option>
+                <option value="الرياض">بنك الرياض</option>
+                <option value="الإنماء">مصرف الإنماء</option>
+                <option value="البلاد">بنك البلاد</option>
+                <option value="الجزيرة">بنك الجزيرة</option>
+                <option value="العربي">البنك العربي الوطني</option>
+                <option value="الفرنسي">البنك السعودي الفرنسي</option>
+                <option value="ساب">بنك ساب</option>
+                <option value="الاستثمار">البنك السعودي للاستثمار</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-sm text-gray-400 block mb-2">المبلغ</label>
+                <input type="number" class="premium-input w-full" placeholder="0.00" id="local-send-amount">
+              </div>
+              <div>
+                <label class="text-sm text-gray-400 block mb-2">العملة</label>
+                <div class="premium-input w-full flex items-center gap-2">
+                  <span class="text-emerald font-bold">SAR</span>
+                  <span class="text-xs text-gray-400">ريال سعودي</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">الغرض من التحويل</label>
+              <select class="premium-input w-full" id="local-send-purpose">
+                <option value="">اختر الغرض</option>
+                <option value="سداد دين">سداد دين</option>
+                <option value="إيجار">إيجار</option>
+                <option value="راتب">راتب</option>
+                <option value="هدية">هدية</option>
+                <option value="تسوق">تسوق</option>
+                <option value="تعليم">تعليم</option>
+                <option value="علاج">علاج</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">ملاحظات (اختياري)</label>
+              <textarea class="premium-input w-full" placeholder="أي ملاحظات إضافية..." id="local-send-notes" rows="2" style="resize:none;"></textarea>
+            </div>
+            <div class="smart-alert info">
+              <i class="fas fa-shield-alt text-blue-400"></i>
+              <span class="text-xs">الحوالات المحلية مجانية وتصل خلال دقائق</span>
+            </div>
+            <button class="btn-primary w-full py-4" onclick="confirmLocalSend()">
+              <i class="fas fa-paper-plane ml-2"></i>
+              إرسال الحوالة
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. استلام حوالة محلية -->
+      <div id="transfer-local-receive" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-4 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent opacity-50 pointer-events-none"></div>
+          <div class="relative flex items-center justify-between mb-4 mt-1">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(52,211,153,0.2)); border: 1px solid rgba(16,185,129,0.2);">
+                <i class="fas fa-download text-emerald-400"></i>
+              </div>
+              <div>
+                <h3 class="font-bold tracking-wide">حوالات محلية واردة</h3>
+                <p class="text-xs text-gray-400 mt-0.5">سجل الحوالات المستلمة محلياً</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="local-incoming-list" class="space-y-3">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- 3. إرسال حوالة دولية -->
+      <div id="transfer-intl-send" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-6 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-transparent opacity-50 pointer-events-none"></div>
+          <div class="relative flex items-center gap-3 mb-5 mt-1">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.15)]" style="background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border: 1px solid rgba(99,102,241,0.2);">
+              <i class="fas fa-globe text-indigo-400"></i>
+            </div>
+            <div>
+              <h3 class="font-bold tracking-wide">إرسال حوالة دولية</h3>
+              <p class="text-xs text-gray-400 mt-0.5">تحويل آمن لأكثر من 20 دولة</p>
+            </div>
+          </div>
+          <div class="space-y-4 relative">
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">اسم المستفيد (بالإنجليزية)</label>
+              <input type="text" class="premium-input w-full" placeholder="Full Name as in Bank" id="intl-send-recipient" dir="ltr">
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">IBAN المستلم</label>
+              <input type="text" class="premium-input w-full" placeholder="رقم الحساب الدولي" id="intl-send-iban" dir="ltr">
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">رمز SWIFT/BIC</label>
+              <input type="text" class="premium-input w-full font-mono tracking-wider" placeholder="RIBLSARI (8 أو 11 حرف)" id="intl-send-swift" dir="ltr" maxlength="11">
+              <p class="text-[10px] text-indigo-300/60 mt-1 flex items-center gap-1"><i class="fas fa-info-circle"></i>
+                رمز SWIFT مطلوب للتحويلات الدولية لتحديد بنك المستلم</p>
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">اسم البنك</label>
+              <input type="text" class="premium-input w-full" placeholder="Bank Name" id="intl-send-bank" dir="ltr">
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">عنوان البنك</label>
+              <input type="text" class="premium-input w-full" placeholder="City, Country" id="intl-send-bank-address" dir="ltr">
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div>
+                <label class="text-sm text-gray-400 block mb-2">المبلغ (ر.س)</label>
+                <input type="number" class="premium-input w-full text-lg font-bold text-white tracking-widest" placeholder="0.00" id="intl-send-amount" oninput="updateIntlSendPreview()">
+              </div>
+              <div>
+                <label class="text-sm text-gray-400 block mb-2">العملة المستلمة</label>
+                <select class="premium-input w-full text-lg font-bold" id="intl-send-currency" onchange="updateIntlSendPreview()">
+                  <option value="USD">USD 🇺🇸</option>
+                  <option value="EUR">EUR 🇪🇺</option>
+                  <option value="GBP">GBP 🇬🇧</option>
+                  <option value="AED">AED 🇦🇪</option>
+                  <option value="KWD">KWD 🇰🇼</option>
+                  <option value="EGP">EGP 🇪🇬</option>
+                  <option value="YER">YER 🇾🇪</option>
+                  <option value="TRY">TRY 🇹🇷</option>
+                  <option value="JOD">JOD 🇯🇴</option>
+                </select>
+              </div>
+            </div>
+            <div class="rounded-xl p-4 space-y-2.5 mt-2 shadow-inner" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);">
+              <div class="flex justify-between items-center">
+                <span class="text-xs text-gray-400">سعر الصرف المباشر</span>
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="font-bold text-emerald-400 text-sm" id="intl-send-rate">3.75 ر.س / 1 USD</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-xs text-gray-400">المبلغ المحوّل تقريباً</span>
+                <span class="font-bold text-cyan-400 text-sm tracking-wide" id="intl-send-converted">0.00 USD</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-xs text-gray-400">الرسوم والمصاريف</span>
+                <span class="font-bold text-amber-400 text-sm">25.00 ر.س</span>
+              </div>
+              <div class="border-t border-white/10 pt-3 mt-1 flex justify-between items-center">
+                <span class="text-sm font-bold text-gray-300">المبلغ الإجمالي للخصم</span>
+                <span class="font-black text-white text-lg tracking-wider" id="intl-send-total">25.00 ر.س</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 mt-2">
+              <i class="fas fa-shield-check text-indigo-400 mt-0.5"></i>
+              <div>
+                <p class="text-xs text-indigo-300 font-semibold mb-1">تحويل دولي محمي</p>
+                <p class="text-[10px] text-gray-400 leading-relaxed">تتم معالجة الحوالة عبر شبكة SWIFT الموثوقة. وقت
+                  التسليم المتوقع من 1 إلى 2 يوم عمل تفادياً للـ Compliance Checks.</p>
+              </div>
+            </div>
+            <button class="w-full py-4 text-base font-bold text-white rounded-xl active:scale-[0.98] transition-transform flex items-center justify-center gap-2 shadow-lg" onclick="confirmIntlSend()" style="background: linear-gradient(135deg, #4f46e5, #6366f1); box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);">
+              <div>إرسال الحوالة الدولية</div>
+              <i class="fas fa-arrow-left text-sm opacity-80"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. استلام حوالة دولية -->
+      <div id="transfer-intl-receive" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-4 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent opacity-50 pointer-events-none"></div>
+          <div class="relative flex items-center justify-between mb-4 mt-1">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(14,165,233,0.2)); border: 1px solid rgba(6,182,212,0.2);">
+                <i class="fas fa-globe-americas text-cyan-400"></i>
+              </div>
+              <div>
+                <h3 class="font-bold tracking-wide">حوالات دولية واردة</h3>
+                <p class="text-xs text-gray-400 mt-0.5">سجل التحويلات المستلمة عالمياً</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="intl-incoming-list" class="space-y-3">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- 5. حالة الحوالات -->
+      <div id="transfer-status" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-4 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-transparent opacity-50 pointer-events-none"></div>
+          <div class="relative flex items-center justify-between mb-4 mt-1">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(217,70,239,0.2)); border: 1px solid rgba(168,85,247,0.2);">
+                <i class="fas fa-tasks text-purple-400"></i>
+              </div>
+              <div>
+                <h3 class="font-bold tracking-wide">متابعة حالة الحوالات</h3>
+                <p class="text-xs text-gray-400 mt-0.5">تتبع شامل وفوري لجميع حوالاتك</p>
+              </div>
+            </div>
+          </div>
+          <!-- Status Filter -->
+          <div class="flex gap-2 overflow-x-auto hide-scroll pb-1" id="status-filter-bar">
+            <button class="px-4 py-2 rounded-full text-xs whitespace-nowrap font-medium transition" style="background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3);" onclick="filterTransferStatus(this, 'all')">الكل</button>
+            <button class="px-4 py-2 rounded-full glass text-xs whitespace-nowrap text-gray-400 hover:text-amber-400 transition" onclick="filterTransferStatus(this, 'pending')">⏳ الانتظار</button>
+            <button class="px-4 py-2 rounded-full glass text-xs whitespace-nowrap text-gray-400 hover:text-blue-400 transition" onclick="filterTransferStatus(this, 'in-progress')">🔄 قيد التنفيذ</button>
+            <button class="px-4 py-2 rounded-full glass text-xs whitespace-nowrap text-gray-400 hover:text-emerald-400 transition" onclick="filterTransferStatus(this, 'completed')">✅ مكتملة</button>
+            <button class="px-4 py-2 rounded-full glass text-xs whitespace-nowrap text-gray-400 hover:text-rose-400 transition" onclick="filterTransferStatus(this, 'rejected')">❌ مرفوضة</button>
+            <button class="px-4 py-2 rounded-full glass text-xs whitespace-nowrap text-gray-400 hover:text-gray-300 transition" onclick="filterTransferStatus(this, 'cancelled')">🚫 ملغاة</button>
+          </div>
+        </div>
+        <div id="transfer-status-list" class="space-y-3">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- 6. إلغاء حوالة -->
+      <div id="transfer-cancel" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-6 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-rose-500/5 to-transparent opacity-50 pointer-events-none"></div>
+          <div class="relative flex items-center gap-3 mb-5 mt-1">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(244,63,94,0.2), rgba(225,29,72,0.2)); border: 1px solid rgba(244,63,94,0.2);">
+              <i class="fas fa-ban text-rose-400"></i>
+            </div>
+            <div>
+              <h3 class="font-bold tracking-wide">استرداد وإلغاء الحوالات</h3>
+              <p class="text-xs text-gray-400 mt-0.5">إلغاء فوري للحوالات غير المكتملة</p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">الرقم المرجعي للحوالة</label>
+              <input type="text" class="premium-input w-full" placeholder="مثال: TRX-20260420-004" id="cancel-ref-id" dir="ltr" oninput="lookupTransferForCancel()">
+            </div>
+            <!-- Preview of found transfer -->
+            <div id="cancel-transfer-preview" class="hidden">
+              <div class="glass rounded-xl p-4 border border-white/10">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs text-gray-400">تفاصيل الحوالة</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full" id="cancel-preview-status"></span>
+                </div>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between"><span class="text-gray-400">المستفيد</span><span id="cancel-preview-recipient" class="font-semibold"></span></div>
+                  <div class="flex justify-between"><span class="text-gray-400">المبلغ</span><span id="cancel-preview-amount" class="font-bold text-emerald"></span></div>
+                  <div class="flex justify-between"><span class="text-gray-400">التاريخ</span><span id="cancel-preview-date"></span></div>
+                  <div class="flex justify-between"><span class="text-gray-400">النوع</span><span id="cancel-preview-type"></span></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">سبب الإلغاء</label>
+              <select class="premium-input w-full" id="cancel-reason">
+                <option value="">اختر السبب</option>
+                <option value="خطأ في البيانات">خطأ في البيانات</option>
+                <option value="تغيير المبلغ">تغيير المبلغ</option>
+                <option value="لم أعد بحاجة للتحويل">لم أعد بحاجة للتحويل</option>
+                <option value="خطأ في المستفيد">خطأ في المستفيد</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+            <div class="smart-alert info" style="border-color: rgba(244,63,94,0.3); background: rgba(244,63,94,0.05);">
+              <i class="fas fa-exclamation-triangle text-rose-400"></i>
+              <span class="text-xs">يمكن إلغاء الحوالات بحالة "قيد الانتظار" أو "قيد التنفيذ" فقط</span>
+            </div>
+            <button class="w-full py-4 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold transition-all hover:shadow-lg hover:shadow-rose-500/25 active:scale-[0.98]" onclick="confirmCancelTransfer()">
+              <i class="fas fa-ban ml-2"></i>
+              تأكيد الإلغاء
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. طلبات استلام -->
+      <div id="transfer-requests" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-4">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
+                <i class="fas fa-hand-holding-usd text-amber-400"></i>
+              </div>
+              <div>
+                <h3 class="font-bold">طلبات استلام أموال</h3>
+                <p class="text-xs text-gray-400">طلبات واردة من مستخدمين آخرين</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="money-requests-list" class="space-y-3">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- 8. تحويل لمشترك داخلي -->
+      <div id="transfer-internal" class="transfer-content hidden">
+        <div class="glass-card rounded-2xl p-6 mb-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(236,72,153,0.2), rgba(244,114,182,0.2)); border: 1px solid rgba(236,72,153,0.2);">
+              <i class="fas fa-user-friends text-pink-400"></i>
+            </div>
+            <div>
+              <h3 class="font-bold tracking-wide">التحويل إلى مشترك إثراء</h3>
+              <p class="text-xs text-gray-400 mt-0.5">تحويل فوري ومجاني لأي مستخدم مسجل</p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">رقم الجوال أو حساب المشترك</label>
+              <div class="flex gap-2">
+                 <input type="text" class="premium-input w-full" placeholder="مثال: 05xxxxxx أو إيميل" id="internal-send-id" onkeyup="onInternalIdInput(event)">
+                 <button class="bg-pink-500 hover:bg-pink-600 text-white px-4 rounded-xl transition" onclick="lookupInternalUser()">بحث</button>
+              </div>
+            </div>
+            <!-- User Fetch Preview -->
+            <div id="internal-user-preview" class="hidden animate-fade-in">
+               <div class="glass rounded-xl p-4 border border-emerald-500/30 bg-emerald-500/5">
+                 <div class="flex items-center gap-3">
+                   <div class="w-10 h-10 rounded-full bg-emerald-400/20 text-emerald-400 flex items-center justify-center font-bold" id="internal-user-initial">م</div>
+                   <div>
+                     <p class="font-bold text-sm text-emerald-400" id="internal-user-name">محمد عبدالله</p>
+                     <p class="text-xs text-gray-400" id="internal-user-account">حساب إثراء مفعل</p>
+                   </div>
+                   <div class="mr-auto">
+                     <i class="fas fa-check-circle text-emerald-400 text-xl"></i>
+                   </div>
+                 </div>
+               </div>
+            </div>
+            
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">المبلغ (ر.س)</label>
+              <input type="number" class="premium-input w-full" placeholder="0.00" id="internal-send-amount">
+            </div>
+            
+            <button class="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold transition-all hover:shadow-lg hover:shadow-pink-500/25 active:scale-[0.98] mt-4 opacity-50 cursor-not-allowed pointer-events-none" id="internal-transfer-btn" onclick="confirmInternalTransfer()" style="color: white !important;">
+              <i class="fas fa-paper-plane ml-2"></i>
+              متابعة التحويل
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>

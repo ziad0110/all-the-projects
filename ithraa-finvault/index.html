@@ -1,0 +1,2174 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>إثراء - محفظتك المالية الذكية</title>
+    <meta
+      name="description"
+      content="إثراء - تطبيق مالي ذكي لإدارة الميزانية والتوفير والتحويلات المالية بتقنيات الذكاء الاصطناعي. إدارة أموالك بذكاء مع رادار التدفق النقدي والحصالات الذكية."
+    />
+    <link rel="icon" type="image/png" href="img/logo.png" />
+
+    <!-- Preconnect for faster external resource loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="" />
+    <link rel="preconnect" href="https://ui-avatars.com" crossorigin="" />
+
+    <!-- Fonts (with display=swap for no render-blocking) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Pre-built Tailwind CSS (replaces runtime CDN compiler) -->
+    <link rel="stylesheet" href="css/tailwind-built.css" />
+
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!-- App Entry Point -->
+    <script type="module" src="js/main.js" defer></script>
+
+    <!-- Chart.js (deferred — not needed until after page loads) -->
+    <script defer="" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body class="dark gradient-mesh min-h-screen pin-active">
+    <!-- Auth Screens -->
+    <div
+      id="auth-screen"
+      class="fixed inset-0 z-[100] auth-screen-vibe flex flex-col items-center p-6 overflow-y-auto"
+    >
+      <div
+        class="fixed inset-0 gradient-mesh opacity-100 pointer-events-none"
+      ></div>
+
+      <!-- Login Screen -->
+      <div
+        id="login-screen"
+        class="relative z-10 w-full max-w-md my-auto pt-8 pb-8"
+      >
+        <div class="text-center mb-6">
+          <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center animate-float overflow-hidden">
+            <img src="img/logo.png" alt="إثراء" class="w-full h-full object-cover">
+          </div>
+          <h1 class="text-2xl font-bold mb-1">إثراء</h1>
+          <p class="text-gray-400 text-sm">محفظتك المالية الذكية</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 mb-4">
+          <h2 class="text-xl font-bold mb-6 text-center">تسجيل الدخول</h2>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >البريد الإلكتروني</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-envelope absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+                <input
+                  type="email"
+                  id="login-email"
+                  class="premium-input w-full pr-12"
+                  placeholder="example@email.com"
+                  dir="ltr"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >كلمة المرور</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-lock absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+                <input
+                  type="password"
+                  id="login-password"
+                  class="premium-input w-full pr-12"
+                  placeholder="••••••••"
+                  autocomplete="off"
+                />
+                <button
+                  type="button"
+                  onclick="togglePasswordVisibility('login-password', this)"
+                  class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="w-full py-4 mt-6 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 active:scale-[0.98]"
+            onclick="handleLogin()"
+          >
+            <i class="fas fa-sign-in-alt ml-2"></i>
+            تسجيل الدخول
+          </button>
+
+          <p class="text-center mt-3">
+            <button
+              type="button"
+              onclick="showForgotPassword()"
+              class="text-xs text-ethereal-violet hover:underline"
+            >
+              نسيت كلمة المرور؟
+            </button>
+          </p>
+
+          <div class="flex items-center gap-4 my-5">
+            <div class="flex-1 h-px bg-white/10"></div>
+            <span class="text-xs text-gray-500">أو</span>
+            <div class="flex-1 h-px bg-white/10"></div>
+          </div>
+
+          <button
+            class="w-full py-3 rounded-2xl glass border border-white/10 text-white font-semibold hover:bg-white/5 transition"
+            onclick="showAuthScreen('register')"
+          >
+            <i class="fas fa-user-plus ml-2"></i>
+            إنشاء حساب جديد
+          </button>
+
+          <button
+            class="w-full py-3 mt-3 rounded-2xl text-gray-400 font-semibold hover:text-white hover:bg-white/5 transition border border-dashed border-white/10"
+            onclick="guestLogin()"
+          >
+            <i class="fas fa-eye ml-2"></i>
+            الدخول كزائر
+          </button>
+        </div>
+
+        <p class="text-center text-xs text-gray-500 mt-4">
+          بالمتابعة، أنت توافق على
+          <button
+            type="button"
+            onclick="showTermsModal()"
+            class="text-ethereal-violet hover:underline"
+          >
+            شروط الاستخدام
+          </button>
+          و<button
+            type="button"
+            onclick="showPrivacyModal()"
+            class="text-ethereal-violet hover:underline"
+          >
+            سياسة الخصوصية
+          </button>
+        </p>
+      </div>
+
+      <!-- Register Screen -->
+      <div
+        id="register-screen"
+        class="relative z-10 w-full max-w-md hidden pt-8 pb-12"
+      >
+        <!-- Back Button -->
+        <button
+          onclick="showAuthScreen('login')"
+          class="absolute top-2 right-0 w-10 h-10 flex items-center justify-center rounded-full glass hover:bg-white/10 transition z-20"
+          title="العودة"
+        >
+          <i class="fas fa-chevron-right text-sm text-gray-400"></i>
+        </button>
+
+        <div class="text-center mb-6">
+          <div
+            class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-emerald to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald/30"
+          >
+            <i class="fas fa-user-plus text-2xl text-white"></i>
+          </div>
+          <h2 class="text-2xl font-bold mb-1">إنشاء حساب</h2>
+          <p class="text-gray-400 text-sm">انضم إلى إثراء في خطوات بسيطة</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 mb-4" autocomplete="off">
+          <div class="space-y-4" autocomplete="off">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >الاسم الكامل</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-user absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+                <input
+                  type="text"
+                  id="register-name"
+                  class="premium-input w-full pr-12"
+                  placeholder="أحمد محمد"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >البريد الإلكتروني</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-envelope absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+                <input
+                  type="email"
+                  id="register-email"
+                  class="premium-input w-full pr-12"
+                  placeholder="example@email.com"
+                  dir="ltr"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">رقم الجوال</label>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <!-- Custom Country Selector -->
+                <div
+                  class="relative w-full sm:w-auto"
+                  id="country-dropdown-container"
+                >
+                  <button
+                    type="button"
+                    onclick="toggleCountryDropdown()"
+                    id="country-selector-btn"
+                    class="premium-input w-full sm:w-auto text-sm flex items-center justify-between gap-3 min-w-[160px]"
+                  >
+                    <span id="selected-country-text">السعودية +966</span>
+                    <i class="fas fa-chevron-down text-xs opacity-50"></i>
+                  </button>
+
+                  <div
+                    id="country-options-list"
+                    class="absolute top-full right-0 left-0 mt-2 border border-white/20 rounded-xl z-[100] hidden"
+                    style="
+                      background-color: #0a0a0f !important;
+                      opacity: 1 !important;
+                      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+                    "
+                  >
+                    <div
+                      class="custom-scrollbar py-1"
+                      style="
+                        background-color: #0a0a0f !important;
+                        max-height: 140px;
+                        overflow-y: scroll;
+                        -webkit-overflow-scrolling: touch;
+                      "
+                    >
+                      <div
+                        class="px-3 py-2 text-[10px] uppercase tracking-wider text-gray-500 border-b border-white/5 mb-1 sticky top-0"
+                        style="background-color: #0a0a0f !important"
+                      >
+                        اختر الدولة
+                      </div>
+                      <div
+                        onclick="selectCountry('+966', 'السعودية +966')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        السعودية <span style="opacity: 0.5">+966</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+967', 'اليمن +967')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        اليمن <span style="opacity: 0.5">+967</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+971', 'الإمارات +971')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        الإمارات <span style="opacity: 0.5">+971</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+965', 'الكويت +965')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        الكويت <span style="opacity: 0.5">+965</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+974', 'قطر +974')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        قطر <span style="opacity: 0.5">+974</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+973', 'البحرين +973')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        البحرين <span style="opacity: 0.5">+973</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+968', 'عُمان +968')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        عُمان <span style="opacity: 0.5">+968</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+20', 'مصر +20')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        مصر <span style="opacity: 0.5">+20</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+962', 'الأردن +962')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        الأردن <span style="opacity: 0.5">+962</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+961', 'لبنان +961')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        لبنان <span style="opacity: 0.5">+961</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+964', 'العراق +964')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        العراق <span style="opacity: 0.5">+964</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+963', 'سوريا +963')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        سوريا <span style="opacity: 0.5">+963</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+218', 'ليبيا +218')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        ليبيا <span style="opacity: 0.5">+218</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+216', 'تونس +216')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        تونس <span style="opacity: 0.5">+216</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+213', 'الجزائر +213')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        الجزائر <span style="opacity: 0.5">+213</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+212', 'المغرب +212')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        المغرب <span style="opacity: 0.5">+212</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+249', 'السودان +249')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        السودان <span style="opacity: 0.5">+249</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+970', 'فلسطين +970')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        فلسطين <span style="opacity: 0.5">+970</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+222', 'موريتانيا +222')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        موريتانيا <span style="opacity: 0.5">+222</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+252', 'الصومال +252')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        الصومال <span style="opacity: 0.5">+252</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+253', 'جيبوتي +253')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        جيبوتي <span style="opacity: 0.5">+253</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+269', 'جزر القمر +269')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        جزر القمر <span style="opacity: 0.5">+269</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+1', 'أمريكا +1')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        أمريكا <span style="opacity: 0.5">+1</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+44', 'بريطانيا +44')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        بريطانيا <span style="opacity: 0.5">+44</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+90', 'تركيا +90')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        تركيا <span style="opacity: 0.5">+90</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+91', 'الهند +91')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer border-b border-white/5"
+                        style="background-color: #0a0a0f"
+                      >
+                        الهند <span style="opacity: 0.5">+91</span>
+                      </div>
+                      <div
+                        onclick="selectCountry('+92', 'باكستان +92')"
+                        class="w-full text-right px-4 py-3 text-sm cursor-pointer"
+                        style="background-color: #0a0a0f"
+                      >
+                        باكستان <span style="opacity: 0.5">+92</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Hidden input to maintain compatibility with existing JS -->
+                  <input
+                    type="hidden"
+                    id="register-country-code"
+                    value="+966"
+                  />
+                </div>
+                <input
+                  type="tel"
+                  id="register-phone"
+                  class="premium-input w-full sm:flex-1"
+                  placeholder="رقم الجوال"
+                  autocomplete="off"
+                  dir="ltr"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >كلمة المرور</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-lock absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+                <input
+                  type="password"
+                  id="register-password"
+                  class="premium-input w-full pr-12"
+                  placeholder="8 أحرف على الأقل"
+                  autocomplete="off"
+                />
+                <button
+                  type="button"
+                  onclick="togglePasswordVisibility('register-password', this)"
+                  class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >تأكيد كلمة المرور</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-lock absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+                <input
+                  type="password"
+                  id="register-confirm"
+                  class="premium-input w-full pr-12"
+                  placeholder="أعد كتابة كلمة المرور"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >رمز PIN (اختياري — 4 أرقام)</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-key absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+                <input
+                  type="password"
+                  id="register-pin"
+                  maxlength="6"
+                  inputmode="numeric"
+                  class="premium-input w-full pr-12"
+                  placeholder="PIN خاص بك (سيُولَّد عشوائياً إن تركته)"
+                  autocomplete="off"
+                  dir="ltr"
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="w-full py-4 mt-6 rounded-2xl bg-gradient-to-r from-emerald to-cyan-500 text-white font-bold text-lg hover:shadow-lg hover:shadow-emerald/25 transition-all duration-300 active:scale-[0.98]"
+            onclick="handleRegister()"
+          >
+            <i class="fas fa-check-circle ml-2"></i>
+            إنشاء الحساب
+          </button>
+        </div>
+
+        <p class="text-center text-sm text-gray-400">
+          لديك حساب بالفعل؟
+          <button
+            type="button"
+            onclick="showAuthScreen('login')"
+            class="text-ethereal-violet font-semibold hover:underline"
+          >
+            تسجيل الدخول
+          </button>
+        </p>
+      </div>
+
+      <!-- Forgot Password Screen -->
+      <div
+        id="forgot-screen"
+        class="relative z-10 w-full max-w-md hidden pt-8 pb-12"
+      >
+        <!-- Back Button -->
+        <button
+          onclick="showAuthScreen('login')"
+          class="absolute top-2 right-0 w-10 h-10 flex items-center justify-center rounded-full glass hover:bg-white/10 transition z-20"
+          title="العودة"
+        >
+          <i class="fas fa-chevron-right text-sm text-gray-400"></i>
+        </button>
+
+        <div class="text-center mb-8">
+          <div
+            class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30"
+          >
+            <i class="fas fa-key text-3xl text-white"></i>
+          </div>
+          <h1 class="text-2xl font-bold mb-1">إعادة تعيين كلمة المرور</h1>
+          <p class="text-gray-400 text-sm">أدخل بريدك وكلمة مرور جديدة</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 mb-4">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >البريد الإلكتروني</label
+              >
+              <input
+                type="email"
+                id="forgot-email"
+                class="premium-input w-full"
+                placeholder="example@email.com"
+                dir="ltr"
+                autocomplete="off"
+              />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >كلمة المرور الجديدة</label
+              >
+              <input
+                type="password"
+                id="forgot-new-password"
+                class="premium-input w-full"
+                placeholder="8 أحرف على الأقل"
+                autocomplete="off"
+              />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2"
+                >تأكيد كلمة المرور</label
+              >
+              <input
+                type="password"
+                id="forgot-confirm-password"
+                class="premium-input w-full"
+                placeholder="أعد كتابة كلمة المرور"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <button
+            class="w-full py-4 mt-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg"
+            onclick="handleForgotPassword()"
+          >
+            <i class="fas fa-redo ml-2"></i> إعادة تعيين
+          </button>
+          <button
+            class="w-full py-3 mt-3 rounded-2xl glass border border-white/10"
+            onclick="showAuthScreen('login')"
+          >
+            العودة لتسجيل الدخول
+          </button>
+        </div>
+      </div>
+
+      <!-- PIN Screen (shown after login) -->
+      <div
+        id="pin-screen"
+        class="relative z-10 text-center w-full max-w-sm hidden"
+      >
+        <div
+          class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-ethereal-violet to-ethereal-cyan flex items-center justify-center shadow-lg shadow-purple-500/30"
+        >
+          <i class="fas fa-shield-alt text-3xl text-white"></i>
+        </div>
+        <h2 class="text-2xl font-bold mb-1" id="pin-title">أدخل رمز PIN</h2>
+        <p class="text-gray-400 text-sm mb-8" id="pin-subtitle">
+          للحفاظ على أمان حسابك
+        </p>
+
+        <div class="flex justify-center gap-4 mb-10" id="pin-dots">
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 max-w-xs mx-auto">
+          <button class="pin-key" onclick="enterPin(1)">1</button>
+          <button class="pin-key" onclick="enterPin(2)">2</button>
+          <button class="pin-key" onclick="enterPin(3)">3</button>
+          <button class="pin-key" onclick="enterPin(4)">4</button>
+          <button class="pin-key" onclick="enterPin(5)">5</button>
+          <button class="pin-key" onclick="enterPin(6)">6</button>
+          <button class="pin-key" onclick="enterPin(7)">7</button>
+          <button class="pin-key" onclick="enterPin(8)">8</button>
+          <button class="pin-key" onclick="enterPin(9)">9</button>
+          <button class="pin-key" onclick="clearPin()">
+            <i class="fas fa-backspace text-lg"></i>
+          </button>
+          <button class="pin-key" onclick="enterPin(0)">0</button>
+          <button class="pin-key" onclick="checkPin()">
+            <i class="fas fa-fingerprint text-lg text-ethereal-violet"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar (Desktop) -->
+    <aside
+      class="desktop-only fixed right-0 top-0 h-full w-[280px] glass-strong z-40 border-l border-white/5 auth-hidden overflow-y-auto custom-scrollbar pb-10"
+    >
+      <div class="p-6">
+        <div class="flex items-center gap-3 mb-10">
+          <div
+            class="p-2 rounded-2xl bg-white/5 border border-white/10 shadow-sm logo-display-container"
+          >
+            <img
+              src="img/logo.png"
+              alt="إثراء"
+              class="h-10 w-auto rounded-xl"
+            />
+          </div>
+        </div>
+
+        <nav class="space-y-1">
+          <div class="sidebar-item active" onclick="navigateTo('dashboard')">
+            <i class="fas fa-home w-6"></i>
+            <span class="mr-3">الرئيسية</span>
+          </div>
+          <div class="sidebar-item" onclick="navigateTo('wallet')">
+            <i class="fas fa-wallet w-6"></i>
+            <span class="mr-3">المحفظة</span>
+          </div>
+          <div class="sidebar-item" onclick="navigateTo('transfers')">
+            <i class="fas fa-exchange-alt w-6"></i>
+            <span class="mr-3">التحويلات</span>
+          </div>
+          <div class="sidebar-item" onclick="navigateTo('bills')">
+            <i class="fas fa-file-invoice w-6"></i>
+            <span class="mr-3">الفواتير</span>
+            <span class="badge static mr-auto" id="sidebar-bills-badge">3</span>
+          </div>
+
+          <div class="h-2"></div>
+
+          <!-- Money Management Accordion -->
+          <div>
+            <div
+              class="sidebar-item justify-between opacity-80 hover:opacity-100"
+              onclick="toggleSubmenu('submenu-money')"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-chart-pie w-6"></i>
+                <span class="mr-3">إدارة الأموال</span>
+              </div>
+              <i
+                class="fas fa-chevron-down text-[10px] transition-transform duration-300"
+                id="icon-money"
+              ></i>
+            </div>
+            <div id="submenu-money" class="hidden pr-8 mt-1 space-y-1">
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('budget')"
+              >
+                الميزانية
+              </div>
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('analytics')"
+              >
+                التحليلات
+              </div>
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('cashflow-radar')"
+              >
+                رادار التدفق
+                <span
+                  class="badge static mr-auto bg-emerald/20 text-emerald text-[8px] py-0.5 px-1.5 min-w-0"
+                  >AI</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="h-1"></div>
+
+          <!-- Smart Products Accordion -->
+          <div>
+            <div
+              class="sidebar-item justify-between opacity-80 hover:opacity-100"
+              onclick="toggleSubmenu('submenu-smart')"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-robot w-6"></i>
+                <span class="mr-3">المنتجات الذكية</span>
+              </div>
+              <i
+                class="fas fa-chevron-down text-[10px] transition-transform duration-300"
+                id="icon-smart"
+              ></i>
+            </div>
+            <div id="submenu-smart" class="hidden pr-8 mt-1 space-y-1">
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('ai-chat')"
+              >
+                المستشار الذكي
+              </div>
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('vault')"
+              >
+                الحصالة
+                <span
+                  class="badge static mr-auto bg-gold/20 text-gold text-[8px] py-0.5 px-1.5 min-w-0"
+                  >جديد</span
+                >
+              </div>
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('escrow')"
+              >
+                الضمان
+                <span
+                  class="badge static mr-auto bg-cyan-400/20 text-cyan-400 text-[8px] py-0.5 px-1.5 min-w-0"
+                  >جديد</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="h-1"></div>
+
+          <!-- Other Accordion -->
+          <div>
+            <div
+              class="sidebar-item justify-between opacity-80 hover:opacity-100"
+              onclick="toggleSubmenu('submenu-other')"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-ellipsis-h w-6"></i>
+                <span class="mr-3">المزيد</span>
+              </div>
+              <i
+                class="fas fa-chevron-down text-[10px] transition-transform duration-300"
+                id="icon-other"
+              ></i>
+            </div>
+            <div id="submenu-other" class="hidden pr-8 mt-1 space-y-1">
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('rewards')"
+              >
+                المكافآت
+              </div>
+              <div
+                class="sidebar-item opacity-80 hover:opacity-100"
+                onclick="navigateTo('education')"
+              >
+                التثقيف المالي
+              </div>
+            </div>
+          </div>
+
+          <div class="h-4"></div>
+
+          <!-- PRO Upgrade CTA -->
+          <div
+            class="sidebar-item rounded-xl cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+            onclick="navigateTo('subscriptions')"
+            style="
+              background: linear-gradient(
+                135deg,
+                rgba(245, 158, 11, 0.15) 0%,
+                rgba(139, 92, 246, 0.15) 100%
+              );
+              border: 1px solid rgba(245, 158, 11, 0.25);
+              padding: 12px;
+            "
+          >
+            <i class="fas fa-crown text-gold w-6"></i>
+            <span
+              class="mr-3 text-sm font-bold bg-gradient-to-r from-gold to-ethereal-violet bg-clip-text text-transparent"
+              >إثراء PRO 👑</span
+            >
+          </div>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content mobile-padding auth-hidden">
+      <!-- Header (Mobile) -->
+      <header
+        class="mobile-only glass-strong sticky top-0 z-30 px-4 py-3 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <div
+            class="p-1 rounded-xl bg-white/5 border border-white/10 logo-display-container"
+          >
+            <img src="img/logo.png" alt="إثراء" class="h-7 w-auto rounded-lg" />
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            class="relative w-9 h-9 rounded-full glass flex items-center justify-center"
+            onclick="toggleTheme()"
+          >
+            <i class="fas fa-moon text-sm" id="mobile-theme-icon"></i>
+          </button>
+          <button
+            class="relative w-9 h-9 rounded-full glass flex items-center justify-center"
+            onclick="showNotifications()"
+          >
+            <i class="fas fa-bell text-sm"></i>
+            <span class="badge" id="mobile-notif-badge">5</span>
+          </button>
+          <button
+            class="relative w-9 h-9 rounded-full glass flex items-center justify-center"
+            onclick="showSettings()"
+          >
+            <i class="fas fa-cog text-sm"></i>
+          </button>
+          <img
+            id="mobile-header-avatar"
+            src="https://ui-avatars.com/api/?name=User&amp;background=8b5cf6&amp;color=fff"
+            class="w-9 h-9 rounded-full border-2 border-ethereal-violet/30 cursor-pointer"
+            alt="User"
+            onclick="showAccountInfo()"
+          />
+        </div>
+      </header>
+
+      <!-- Desktop Header -->
+      <header
+        class="desktop-only glass-strong sticky top-0 z-30 px-8 py-4 flex items-center justify-between"
+      >
+        <div>
+          <h2 id="page-title" class="text-xl font-bold">الرئيسية</h2>
+          <p id="page-subtitle" class="text-sm page-subtitle">
+            نظرة عامة على حسابك
+          </p>
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            class="relative w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-white/5 transition"
+            onclick="showNotifications()"
+          >
+            <i class="fas fa-bell"></i>
+            <span class="badge" id="desktop-notif-badge">5</span>
+          </button>
+          <button
+            class="relative w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-white/5 transition"
+            onclick="toggleTheme()"
+          >
+            <i class="fas fa-moon" id="theme-icon"></i>
+          </button>
+          <button
+            class="relative w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-white/5 transition"
+            onclick="showSettings()"
+          >
+            <i class="fas fa-cog"></i>
+          </button>
+          <div
+            class="flex items-center gap-3 glass rounded-xl px-4 py-2 cursor-pointer hover:bg-white/5 transition"
+            onclick="showAccountInfo()"
+          >
+            <img
+              id="header-avatar"
+              src="https://ui-avatars.com/api/?name=User&amp;background=8b5cf6&amp;color=fff"
+              class="w-8 h-8 rounded-full"
+              alt="User"
+            />
+            <div>
+              <p class="text-sm font-semibold" id="header-user-name">
+                المستخدم
+              </p>
+              <p class="text-xs page-subtitle" id="header-user-tier">
+                عضو ذهبي
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Page -->
+
+      <!-- Wallet Page -->
+
+      <!-- Transfers Page -->
+
+      <!-- Bills Page -->
+
+      <!-- Smart Vault Page -->
+
+      <!-- Budget Page -->
+
+      <!-- AI Chat Page -->
+
+      <!-- Analytics Page -->
+
+      <!-- Security Page -->
+
+      <!-- Rewards Page -->
+
+      <!-- Education Page -->
+
+      <!-- Subscriptions Page -->
+
+      <!-- Cash Flow Radar Page -->
+
+      <!-- Smart Escrow Page -->
+
+      <!-- Container for dynamic pages -->
+      <div id="app-container"></div>
+    </main>
+
+    <!-- More Menu Overlay (Mobile) -->
+    <div id="more-menu" class="fixed inset-0 z-50 hidden auth-hidden">
+      <div
+        class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeMoreMenu()"
+      ></div>
+      <div
+        class="absolute bottom-0 left-0 right-0 glass-strong rounded-t-3xl p-6 animate-slide-up"
+      >
+        <div class="w-10 h-1 bg-gray-600 rounded-full mx-auto mb-6"></div>
+        <h3 class="font-bold text-lg mb-4">الأقسام</h3>
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('vault');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-gold/20 flex items-center justify-center"
+            >
+              <i class="fas fa-lock text-gold"></i>
+            </div>
+            <span class="text-[10px]">الحصالة</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('budget');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-chart-pie text-cyan-400"></i>
+            </div>
+            <span class="text-[10px]">الميزانية</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('analytics');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-chart-line text-ethereal-violet"></i>
+            </div>
+            <span class="text-[10px]">التحليلات</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('ai-chat');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-robot text-pink-400"></i>
+            </div>
+            <span class="text-[10px]">المستشار</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('rewards');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-gift text-yellow-400"></i>
+            </div>
+            <span class="text-[10px]">المكافآت</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('education');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-emerald/20 flex items-center justify-center"
+            >
+              <i class="fas fa-graduation-cap text-emerald"></i>
+            </div>
+            <span class="text-[10px]">التثقيف</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('cashflow-radar');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-teal-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-satellite-dish text-teal-400"></i>
+            </div>
+            <span class="text-[10px]">رادار التدفق</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl glass hover:bg-white/5 transition"
+            onclick="
+              navigateTo('escrow');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-handshake text-cyan-400"></i>
+            </div>
+            <span class="text-[10px]">الضمان الذكي</span>
+          </button>
+          <button
+            class="flex flex-col items-center gap-2 p-3 rounded-2xl transition"
+            style="
+              background: linear-gradient(
+                135deg,
+                rgba(245, 158, 11, 0.15) 0%,
+                rgba(139, 92, 246, 0.15) 100%
+              );
+              border: 1px solid rgba(245, 158, 11, 0.2);
+            "
+            onclick="
+              navigateTo('subscriptions');
+              closeMoreMenu();
+            "
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-gold/20 flex items-center justify-center"
+            >
+              <i class="fas fa-crown text-gold"></i>
+            </div>
+            <span class="text-[10px] font-bold text-gold">PRO 👑</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav
+      class="mobile-only fixed bottom-0 left-0 right-0 glass-strong border-t border-white/5 z-40 px-2 py-2 auth-hidden"
+    >
+      <div class="flex justify-around items-center">
+        <button
+          class="bottom-nav-item active flex flex-col items-center gap-1 p-2 text-gray-400"
+          onclick="navigateTo('dashboard')"
+        >
+          <i class="fas fa-home text-lg"></i>
+          <span class="text-[10px]">الرئيسية</span>
+        </button>
+        <button
+          class="bottom-nav-item flex flex-col items-center gap-1 p-2 text-gray-400"
+          onclick="navigateTo('wallet')"
+        >
+          <i class="fas fa-wallet text-lg"></i>
+          <span class="text-[10px]">المحفظة</span>
+        </button>
+        <button
+          class="bottom-nav-item flex flex-col items-center gap-1 p-2 text-gray-400"
+          onclick="navigateTo('transfers')"
+        >
+          <i class="fas fa-exchange-alt text-lg"></i>
+          <span class="text-[10px]">التحويلات</span>
+        </button>
+        <button
+          class="bottom-nav-item flex flex-col items-center gap-1 p-2 text-gray-400 relative"
+          onclick="navigateTo('bills')"
+        >
+          <i class="fas fa-file-invoice text-lg"></i>
+          <span class="text-[10px]">الفواتير</span>
+          <span class="badge" id="mobile-bills-badge">3</span>
+        </button>
+        <button
+          class="bottom-nav-item flex flex-col items-center gap-1 p-2 text-gray-400"
+          onclick="showMoreMenu()"
+        >
+          <i class="fas fa-th-large text-lg"></i>
+          <span class="text-[10px]">المزيد</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Deposit Wallet Modal (Enhanced) -->
+    <div
+      id="deposit-wallet-modal"
+      class="fixed inset-0 z-50 hidden flex items-end md:items-center justify-center p-0 md:p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('deposit-wallet-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-t-3xl md:rounded-3xl p-6 w-full max-w-md animate-fade-in-up max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-emerald/20 flex items-center justify-center"
+            >
+              <i class="fas fa-download text-emerald"></i>
+            </div>
+            <h3 class="font-bold text-lg">إيداع في المحفظة</h3>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('deposit-wallet-modal')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="space-y-4">
+          <!-- مصدر الإيداع -->
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">مصدر الإيداع</label>
+            <div class="grid grid-cols-4 gap-2">
+              <button
+                class="deposit-method-btn p-3 rounded-xl glass text-center active bg-emerald/20 border border-emerald/30"
+                onclick="selectDepositMethod(this, 'apple')"
+              >
+                <i class="fa-brands fa-apple text-lg mb-1"></i>
+                <p class="text-[9px]">Apple Pay</p>
+              </button>
+              <button
+                class="deposit-method-btn p-3 rounded-xl glass text-center"
+                onclick="selectDepositMethod(this, 'mada')"
+              >
+                <div
+                  class="w-8 h-5 mx-auto mb-1 rounded bg-gradient-to-r from-blue-600 to-green-500 flex items-center justify-center"
+                >
+                  <span class="text-white text-[7px] font-bold">مدى</span>
+                </div>
+                <p class="text-[9px]">بطاقة مدى</p>
+              </button>
+              <button
+                class="deposit-method-btn p-3 rounded-xl glass text-center"
+                onclick="selectDepositMethod(this, 'credit')"
+              >
+                <i class="fas fa-credit-card text-lg mb-1"></i>
+                <p class="text-[9px]">بطاقة ائتمان</p>
+              </button>
+              <button
+                class="deposit-method-btn p-3 rounded-xl glass text-center"
+                onclick="selectDepositMethod(this, 'bank')"
+              >
+                <i class="fas fa-university text-lg mb-1"></i>
+                <p class="text-[9px]">حساب بنكي</p>
+              </button>
+            </div>
+          </div>
+          <!-- تفاصيل البطاقة/الحساب -->
+          <div id="deposit-card-details">
+            <label class="text-sm text-gray-400 block mb-2"
+              >تفاصيل البطاقة / الحساب</label
+            >
+            <select class="premium-input w-full" id="deposit-source-select">
+              <option value="card-1">بطاقة الراتب **** 4582</option>
+              <option value="card-2">بطاقة التوفير **** 7891</option>
+              <option value="new">+ إضافة بطاقة/حساب جديد</option>
+            </select>
+          </div>
+          <!-- المبلغ -->
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">المبلغ (ر.س)</label>
+            <input
+              type="number"
+              class="premium-input w-full"
+              placeholder="0.00"
+              id="deposit-wallet-amount"
+              oninput="updateDepositFees()"
+            />
+          </div>
+          <div class="grid grid-cols-4 gap-2">
+            <button
+              class="py-2 rounded-lg glass text-sm font-bold"
+              onclick="
+                document.getElementById('deposit-wallet-amount').value = '100';
+                updateDepositFees();
+              "
+            >
+              100
+            </button>
+            <button
+              class="py-2 rounded-lg glass text-sm font-bold"
+              onclick="
+                document.getElementById('deposit-wallet-amount').value = '500';
+                updateDepositFees();
+              "
+            >
+              500
+            </button>
+            <button
+              class="py-2 rounded-lg glass text-sm font-bold"
+              onclick="
+                document.getElementById('deposit-wallet-amount').value = '1000';
+                updateDepositFees();
+              "
+            >
+              1,000
+            </button>
+            <button
+              class="py-2 rounded-lg glass text-sm font-bold"
+              onclick="
+                document.getElementById('deposit-wallet-amount').value = '5000';
+                updateDepositFees();
+              "
+            >
+              5,000
+            </button>
+          </div>
+          <!-- رسوم الإيداع -->
+          <div class="glass rounded-xl p-3 space-y-2" id="deposit-fees-box">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-gray-400">رسوم الإيداع</span>
+              <span
+                class="text-xs font-bold text-emerald"
+                id="deposit-fee-amount"
+                >مجاناً</span
+              >
+            </div>
+            <div
+              class="flex justify-between items-center border-t border-white/10 pt-2"
+            >
+              <span class="text-xs font-bold">المبلغ المضاف للمحفظة</span>
+              <span class="text-sm font-bold text-white" id="deposit-net-amount"
+                >0.00 ر.س</span
+              >
+            </div>
+          </div>
+          <button
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald to-cyan-400 text-white font-bold"
+            onclick="confirmWalletDeposit()"
+          >
+            <i class="fas fa-check ml-2"></i>
+            تأكيد الإيداع
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdraw Modal (Enhanced) -->
+    <div
+      id="withdraw-modal"
+      class="fixed inset-0 z-50 hidden flex items-end md:items-center justify-center p-0 md:p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('withdraw-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-t-3xl md:rounded-3xl p-6 w-full max-w-md animate-fade-in-up max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-rose/20 flex items-center justify-center"
+            >
+              <i class="fas fa-upload text-rose"></i>
+            </div>
+            <h3 class="font-bold text-lg">سحب من المحفظة</h3>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('withdraw-modal')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="space-y-4">
+          <!-- الرصيد المتاح -->
+          <div class="glass rounded-xl p-4">
+            <p class="text-xs text-gray-400 mb-1">الرصيد المتاح للسحب</p>
+            <p class="text-xl font-bold text-emerald" id="withdraw-available">
+              0.00 ر.س
+            </p>
+          </div>
+          <!-- وجهة السحب -->
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">وجهة السحب</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                class="withdraw-dest-btn p-3 rounded-xl glass text-center active bg-rose-500/10 border border-rose-500/20"
+                onclick="selectWithdrawDest(this, 'bank')"
+              >
+                <i class="fas fa-university text-lg mb-1"></i>
+                <p class="text-[10px]">حساب بنكي</p>
+              </button>
+              <button
+                class="withdraw-dest-btn p-3 rounded-xl glass text-center"
+                onclick="selectWithdrawDest(this, 'card')"
+              >
+                <i class="fas fa-credit-card text-lg mb-1"></i>
+                <p class="text-[10px]">بطاقة مدى/ائتمان</p>
+              </button>
+            </div>
+          </div>
+          <!-- تفاصيل الحساب/البطاقة -->
+          <div>
+            <label class="text-sm text-gray-400 block mb-2"
+              >الحساب البنكي</label
+            >
+            <select class="premium-input w-full" id="withdraw-dest-select">
+              <option value="rajhi">مصرف الراجحي — SA88 8000 **** 4582</option>
+              <option value="ahli">البنك الأهلي — SA55 1000 **** 7891</option>
+              <option value="custom">حساب آخر (إدخال IBAN)</option>
+            </select>
+          </div>
+          <!-- حقل IBAN مخصص -->
+          <div id="withdraw-custom-iban" class="hidden">
+            <label class="text-sm text-gray-400 block mb-2">رقم IBAN</label>
+            <input
+              type="text"
+              class="premium-input w-full"
+              placeholder="SA00 0000 0000 0000 0000 0000"
+              id="withdraw-iban-input"
+              dir="ltr"
+              maxlength="24"
+            />
+          </div>
+          <!-- مبلغ السحب -->
+          <div>
+            <label class="text-sm text-gray-400 block mb-2"
+              >مبلغ السحب (ر.س)</label
+            >
+            <input
+              type="number"
+              class="premium-input w-full"
+              placeholder="0.00"
+              id="withdraw-amount"
+              oninput="updateWithdrawFees()"
+            />
+          </div>
+          <!-- رسوم ووقت السحب -->
+          <div class="glass rounded-xl p-3 space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-gray-400">رسوم السحب</span>
+              <span
+                class="text-xs font-bold text-emerald"
+                id="withdraw-fee-display"
+                >مجاناً</span
+              >
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-gray-400">وقت التنفيذ المتوقع</span>
+              <span
+                class="text-xs font-bold text-cyan-400"
+                id="withdraw-time-display"
+                >1-3 ساعات</span
+              >
+            </div>
+            <div
+              class="flex justify-between items-center border-t border-white/10 pt-2"
+            >
+              <span class="text-xs font-bold">المبلغ المستلم</span>
+              <span
+                class="text-sm font-bold text-white"
+                id="withdraw-net-amount"
+                >0.00 ر.س</span
+              >
+            </div>
+          </div>
+          <button
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-rose to-pink-500 text-white font-bold"
+            onclick="confirmWithdraw()"
+          >
+            <i class="fas fa-paper-plane ml-2"></i>
+            تأكيد السحب
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div
+      id="toast"
+      class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] glass-strong px-6 py-4 rounded-2xl border border-white/10 shadow-2xl transition-all duration-300 translate-y-20 opacity-0 pointer-events-none"
+    >
+      <div class="flex items-center gap-4">
+        <div
+          id="toast-icon"
+          class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center"
+        >
+          <i class="fas fa-info-circle text-ethereal-violet"></i>
+        </div>
+        <div>
+          <p id="toast-title" class="font-bold text-sm">تنبيه</p>
+          <p id="toast-message" class="text-xs text-gray-400">رسالة توضيحية</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Modal -->
+    <div
+      id="notifications-modal"
+      class="fixed inset-0 z-50 hidden flex items-start md:items-center justify-center p-0 md:p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('notifications-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-b-3xl md:rounded-3xl p-6 w-full max-w-md animate-fade-in-up max-h-[90vh] flex flex-col"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-bell text-ethereal-violet"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">الإشعارات</h3>
+              <p class="text-xs text-gray-400" id="notifications-count">
+                لديك 2 إشعارات غير مقروءة
+              </p>
+            </div>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('notifications-modal')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div
+          id="notifications-list"
+          class="space-y-4 overflow-y-auto pr-1 flex-1 hide-scroll"
+        >
+          <!-- Injected via JS -->
+        </div>
+
+        <button
+          class="w-full py-3 mt-6 text-sm text-ethereal-violet font-medium border border-ethereal-violet/20 rounded-xl hover:bg-purple-500/10 transition"
+          onclick="markAllNotificationsAsRead()"
+        >
+          تمييز الكل كمقروء
+        </button>
+      </div>
+    </div>
+
+    <!-- Modals (Confirm, Success, etc.) -->
+    <div
+      id="confirm-modal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('confirm-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-3xl p-6 w-full max-w-md animate-fade-in-up"
+      >
+        <div class="text-center mb-6">
+          <div
+            class="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/20 flex items-center justify-center"
+          >
+            <i class="fas fa-question text-ethereal-violet text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2" id="confirm-title">
+            تأكيد العملية
+          </h3>
+          <p class="text-sm text-gray-400" id="confirm-message">
+            هل أنت متأكد من إتمام هذه العملية؟
+          </p>
+        </div>
+        <div class="flex gap-3" id="confirm-btn-wrap">
+          <button
+            class="flex-1 py-3 rounded-xl glass text-sm"
+            onclick="closeModal('confirm-modal')"
+          >
+            إلغاء
+          </button>
+          <button
+            class="flex-1 py-3 rounded-xl bg-gradient-to-r from-ethereal-violet to-ethereal-cyan text-obsidian-base text-sm font-bold"
+            onclick="executeConfirmed()"
+          >
+            تأكيد
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="success-modal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('success-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-3xl p-6 w-full max-w-sm animate-fade-in-up text-center"
+      >
+        <div
+          class="w-20 h-20 mx-auto mb-4 rounded-full bg-emerald/20 flex items-center justify-center"
+        >
+          <i class="fas fa-check text-emerald text-3xl"></i>
+        </div>
+        <h3 class="font-bold text-xl mb-2" id="success-title">تم بنجاح!</h3>
+        <p class="text-sm text-gray-400 mb-6" id="success-message">
+          تمت العملية بنجاح
+        </p>
+        <button
+          class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald to-teal-500 text-obsidian-base font-bold"
+          onclick="closeModal('success-modal')"
+        >
+          حسناً
+        </button>
+      </div>
+    </div>
+
+    <!-- Transaction Details Modal -->
+    <div
+      id="transaction-details-modal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('transaction-details-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-3xl p-6 w-full max-w-sm animate-fade-in-up"
+      >
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold">تفاصيل العملية</h3>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('transaction-details-modal')"
+          >
+            <i class="fas fa-times text-gray-400"></i>
+          </button>
+        </div>
+        <div class="text-center mb-6">
+          <div
+            id="tx-modal-bg"
+            class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
+          >
+            <i id="tx-modal-icon" class="text-2xl"></i>
+          </div>
+          <h2 id="tx-modal-title" class="font-bold text-lg mb-1"></h2>
+          <p id="tx-modal-date" class="text-xs text-gray-400 mb-4"></p>
+          <p
+            id="tx-modal-amount"
+            class="text-3xl font-bold mb-2 tracking-wide"
+          ></p>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-[10px] font-bold"
+            style="background: rgba(255, 255, 255, 0.05)"
+            id="tx-modal-category"
+          ></span>
+        </div>
+
+        <div class="space-y-3 p-4 rounded-xl glass border border-white/5">
+          <div class="flex justify-between items-center text-sm">
+            <span class="text-gray-400">الحالة</span>
+            <span class="text-emerald-400 font-bold"
+              ><i class="fas fa-check-circle ml-1"></i> مكتملة</span
+            >
+          </div>
+          <div
+            class="flex justify-between items-center text-sm border-t border-white/5 pt-3"
+          >
+            <span class="text-gray-400">الرقم المرجعي</span>
+            <span class="font-mono text-xs opacity-80" id="tx-modal-ref"></span>
+          </div>
+        </div>
+
+        <button
+          class="w-full py-4 mt-4 rounded-2xl border border-white/10 hover:bg-white/5 text-white font-bold transition"
+          onclick="closeModal('transaction-details-modal')"
+        >
+          موافق
+        </button>
+      </div>
+    </div>
+
+    <!-- Bill Details Modal -->
+    <div
+      id="bill-details-modal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('bill-details-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-3xl p-6 w-full max-w-sm animate-fade-in-up"
+      >
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold">تفاصيل الفاتورة</h3>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('bill-details-modal')"
+          >
+            <i class="fas fa-times text-gray-400"></i>
+          </button>
+        </div>
+        <div class="text-center mb-6">
+          <div
+            id="bill-modal-bg"
+            class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 scale-110"
+          >
+            <i id="bill-modal-icon"></i>
+          </div>
+          <h2 id="bill-modal-title" class="font-bold text-xl mb-1"></h2>
+          <p
+            id="bill-modal-amount"
+            class="text-4xl font-bold mb-4 tracking-wide mt-2 text-white"
+          ></p>
+        </div>
+
+        <div class="space-y-4 p-5 rounded-2xl glass border border-white/5">
+          <div class="flex justify-between items-center text-sm">
+            <span class="text-gray-400">تاريخ الاستحقاق</span>
+            <span class="font-bold text-white" id="bill-modal-date"></span>
+          </div>
+          <div
+            class="flex justify-between items-center text-sm border-t border-white/5 pt-3"
+          >
+            <span class="text-gray-400">الحالة</span>
+            <span id="bill-modal-status"></span>
+          </div>
+        </div>
+
+        <button
+          class="w-full py-4 mt-5 rounded-2xl bg-gradient-to-r from-ethereal-violet to-ethereal-cyan text-obsidian-base font-bold transition"
+          onclick="closeModal('bill-details-modal')"
+        >
+          إغلاق
+        </button>
+      </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div
+      id="deposit-modal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('deposit-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-3xl p-6 w-full max-w-sm animate-fade-in-up"
+      >
+        <div class="text-center mb-6">
+          <div
+            class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/20 flex items-center justify-center"
+          >
+            <i class="fas fa-coins text-gold text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">إيداع في الحصالة</h3>
+          <p class="text-sm text-gray-400 mb-4" id="deposit-vault-name">
+            حصالة
+          </p>
+          <div class="relative">
+            <input
+              type="number"
+              id="deposit-amount-input"
+              class="premium-input text-center text-2xl font-bold"
+              placeholder="0.00"
+            />
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+              >ر.س</span
+            >
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <button
+            class="flex-1 py-3 rounded-xl glass text-sm"
+            onclick="closeModal('deposit-modal')"
+          >
+            إلغاء
+          </button>
+          <button
+            class="flex-1 py-3 rounded-xl bg-gradient-to-r from-ethereal-violet to-ethereal-cyan text-obsidian-base text-sm font-bold"
+            id="confirm-deposit-btn"
+          >
+            تأكيد الإيداع
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="add-card-modal"
+      class="fixed inset-0 z-50 hidden flex items-end md:items-center justify-center p-0 md:p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('add-card-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-t-3xl md:rounded-3xl p-6 w-full max-w-md animate-fade-in-up max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-bold text-lg">إضافة بطاقة جديدة</h3>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('add-card-modal')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">اسم البطاقة</label>
+            <input
+              type="text"
+              class="premium-input w-full"
+              placeholder="مثال: بطاقة العمل"
+            />
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">رقم البطاقة</label>
+            <div class="grid grid-cols-4 gap-2">
+              <input
+                type="text"
+                class="premium-input text-center"
+                maxlength="4"
+                placeholder="0000"
+              />
+              <input
+                type="text"
+                class="premium-input text-center"
+                maxlength="4"
+                placeholder="0000"
+              />
+              <input
+                type="text"
+                class="premium-input text-center"
+                maxlength="4"
+                placeholder="0000"
+              />
+              <input
+                type="text"
+                class="premium-input text-center"
+                maxlength="4"
+                placeholder="0000"
+              />
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-1">
+              <label class="text-sm text-gray-400 block mb-2"
+                >تاريخ الانتهاء</label
+              >
+              <input
+                type="text"
+                class="premium-input w-full"
+                placeholder="MM/YY"
+              />
+            </div>
+            <div class="flex-1">
+              <label class="text-sm text-gray-400 block mb-2">CVV</label>
+              <input
+                type="text"
+                class="premium-input w-full"
+                maxlength="3"
+                placeholder="123"
+              />
+            </div>
+          </div>
+          <button
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-ethereal-violet to-ethereal-cyan text-obsidian-base font-bold mt-4"
+            onclick="addCard()"
+          >
+            <i class="fas fa-plus ml-2"></i>
+            إضافة البطاقة
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Link Bank Modal -->
+    <div
+      id="link-bank-modal"
+      class="fixed inset-0 z-50 hidden flex items-end md:items-center justify-center p-0 md:p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('link-bank-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-t-3xl md:rounded-3xl p-6 w-full max-w-md animate-fade-in-up max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-bold text-lg">ربط حساب بنكي</h3>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('link-bank-modal')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">اختر البنك</label>
+            <select class="premium-input w-full" id="link-bank-select">
+              <!-- Injected via JS -->
+            </select>
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2"
+              >الاسم الكامل (كما هو في البنك)</label
+            >
+            <input
+              type="text"
+              class="premium-input w-full"
+              placeholder="الاسم الكامل"
+            />
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2"
+              >رقم الحساب (IBAN)</label
+            >
+            <input
+              type="text"
+              class="premium-input w-full"
+              placeholder="SA00 0000 0000 0000 0000 0000"
+              dir="ltr"
+              maxlength="24"
+            />
+          </div>
+          <button
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-ethereal-violet to-ethereal-cyan text-obsidian-base font-bold mt-4"
+            id="btn-link-bank"
+            onclick="confirmLinkBank()"
+          >
+            <i class="fas fa-link ml-2"></i>
+            ربط الحساب
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bridge Finance Modal -->
+    <div
+      id="bridge-finance-modal"
+      class="fixed inset-0 z-50 hidden flex items-end md:items-center justify-center p-0 md:p-4"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('bridge-finance-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-t-3xl md:rounded-3xl p-6 w-full max-w-md animate-fade-in-up max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center"
+            >
+              <i class="fas fa-hand-holding-usd text-white"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">تمويل الجسر المصغّر</h3>
+              <p class="text-xs text-gray-400">متوافق مع الشريعة (مرابحة)</p>
+            </div>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('bridge-finance-modal')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="escrow-amount-locked mb-4">
+          <p class="text-[10px] text-gray-400 mb-1">المبلغ المتاح للتمويل</p>
+          <p class="text-2xl font-bold text-gold">5,000 ر.س</p>
+          <p class="text-[10px] text-gray-400 mt-1">بدون فوائد — نظام مرابحة</p>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm text-gray-400 block mb-2"
+              >مبلغ التمويل (ر.س)</label
+            >
+            <input
+              type="number"
+              class="premium-input w-full"
+              placeholder="1,000 - 5,000"
+              id="bridge-amount"
+              min="500"
+              max="5000"
+            />
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">مدة السداد</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button
+                class="bridge-term-btn py-3 rounded-xl glass text-sm text-center active"
+                onclick="selectBridgeTerm(this, 15)"
+                data-days="15"
+              >
+                15 يوم
+              </button>
+              <button
+                class="bridge-term-btn py-3 rounded-xl glass text-sm text-center"
+                onclick="selectBridgeTerm(this, 30)"
+                data-days="30"
+              >
+                30 يوم
+              </button>
+              <button
+                class="bridge-term-btn py-3 rounded-xl glass text-sm text-center"
+                onclick="selectBridgeTerm(this, 45)"
+                data-days="45"
+              >
+                45 يوم
+              </button>
+            </div>
+          </div>
+
+          <div class="glass rounded-xl p-4 space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-400">مبلغ التمويل</span>
+              <span class="font-bold" id="bridge-display-amount">0 ر.س</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-400">هامش المرابحة (1.5%)</span>
+              <span class="font-bold text-amber-400" id="bridge-markup"
+                >0 ر.س</span
+              >
+            </div>
+            <div
+              class="border-t border-white/10 pt-2 flex justify-between text-sm"
+            >
+              <span class="text-gray-400">إجمالي السداد</span>
+              <span class="font-bold text-emerald" id="bridge-total"
+                >0 ر.س</span
+              >
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-400">موعد السداد</span>
+              <span class="font-bold" id="bridge-repay-date">—</span>
+            </div>
+          </div>
+
+          <div class="smart-alert info">
+            <i class="fas fa-mosque text-emerald"></i>
+            <span class="text-xs"
+              >هذا التمويل يعتمد على عقد المرابحة المتوافق مع أحكام الشريعة
+              الإسلامية</span
+            >
+          </div>
+
+          <button
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold"
+            onclick="executeBridgeFinance()"
+          >
+            <i class="fas fa-bolt ml-2"></i>
+            تحويل فوري
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Goal Modal -->
+    <div
+      id="add-goal-modal"
+      class="modal fixed inset-0 z-50 hidden p-4 flex items-center justify-center"
+    >
+      <div
+        class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeModal('add-goal-modal')"
+      ></div>
+      <div
+        class="relative glass-strong rounded-3xl p-6 w-full max-w-md mx-auto animate-fade-in-up overflow-y-auto max-h-[90vh]"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center"
+            >
+              <i class="fas fa-bullseye text-purple-400"></i>
+            </div>
+            <h3 class="font-bold text-lg">إضافة هدف جديد</h3>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full glass flex items-center justify-center"
+            onclick="closeModal('add-goal-modal')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">اسم الهدف</label>
+            <input
+              type="text"
+              id="goal-title"
+              class="premium-input w-full"
+              placeholder="مثلاً: رحلة سياحية، سيارة جديدة..."
+            />
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2"
+              >المبلغ المستهدف (ر.س)</label
+            >
+            <input
+              type="number"
+              id="goal-target"
+              class="premium-input w-full"
+              placeholder="0.00"
+            />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">الأيقونة</label>
+              <select id="goal-icon" class="premium-input w-full">
+                <option value="fa-car">🚗 سيارة</option>
+                <option value="fa-plane">✈️ سفر</option>
+                <option value="fa-home">🏠 منزل</option>
+                <option value="fa-graduation-cap">🎓 تعليم</option>
+                <option value="fa-gift">🎁 هدية</option>
+                <option value="fa-laptop">💻 إلكترونيات</option>
+                <option value="fa-heart">❤️ زواج</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">اللون</label>
+              <select id="goal-color" class="premium-input w-full">
+                <option value="purple">بنفسجي</option>
+                <option value="cyan">سماوي</option>
+                <option value="emerald">أخضر</option>
+                <option value="amber">ذهبي</option>
+                <option value="rose">وردي</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">تاريخ الهدف</label>
+            <input
+              type="text"
+              id="goal-deadline"
+              class="premium-input w-full"
+              placeholder="مثلاً: ديسمبر 2026"
+            />
+          </div>
+
+          <button
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-cyan-500 text-white font-bold mt-2"
+            onclick="addNewGoal()"
+          >
+            إنشاء الهدف
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Load Router will inject app inside #app-container -->
+  </body>
+</html>

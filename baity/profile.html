@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>الملف الشخصي - بيتي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="search-box"><input type="text" placeholder="ابحث عن منتج..."><button><i
+                        class="fas fa-search"></i></button></div>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <a href="cart.html" class="header-btn"><i class="fas fa-shopping-cart"></i><span class="badge"
+                        id="cartCount">0</span></a>
+                <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <a href="login.html" class="user-menu"><i class="fas fa-user"></i> حسابي</a>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content full">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="avatar"><img
+                    src="https://ui-avatars.com/api/?name=أحمد+محمد&background=ffffff&color=2E7D32&size=100" alt=""
+                    style="width:100%;height:100%;object-fit:cover"></div>
+            <div class="info">
+                <h2>أحمد محمد</h2>
+                <p>ahmed@email.com | 777-123-456</p>
+                <div style="display:flex;gap:8px;margin-top:8px"><span class="loyalty-level level-gold">عضوية ذهبية
+                        ⭐</span><span
+                        style="background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:.78rem">1,250
+                        نقطة</span></div>
+            </div>
+            <button class="btn" style="background:rgba(255,255,255,.2);color:#fff;margin-right:auto"><i
+                    class="fas fa-edit"></i> تعديل</button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="profile-tabs">
+            <div class="profile-tab active" onclick="showTab('orders')"><i class="fas fa-box"></i> طلباتي</div>
+            <div class="profile-tab" onclick="showTab('wishlist')"><i class="fas fa-heart"></i> المفضلة</div>
+            <div class="profile-tab" onclick="showTab('addresses')"><i class="fas fa-map-marker-alt"></i> العناوين</div>
+            <div class="profile-tab" onclick="showTab('loyalty')"><i class="fas fa-crown"></i> النقاط</div>
+            <div class="profile-tab" onclick="showTab('settings')"><i class="fas fa-cog"></i> الإعدادات</div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="ordersTab">
+            <div id="ordersList">
+                <!-- Dynamic orders -->
+            </div>
+            <div id="noOrders"
+                style="display:none;text-align:center;padding:60px 20px;background:var(--bg-card);border-radius:var(--radius-lg)">
+                <i class="fas fa-shopping-bag" style="font-size:3rem;color:var(--cream-dark);margin-bottom:16px"></i>
+                <p style="color:var(--text-muted)">لا توجد طلبات سابقة حتى الآن.</p>
+                <a href="products.html" class="btn btn-outline btn-sm" style="margin-top:12px">ابدأ التسوق</a>
+            </div>
+        </div>
+
+        <!-- Wishlist Tab -->
+        <div id="wishlistTab" style="display:none">
+            <div class="products-grid" id="wishlistGrid"></div>
+            <div id="emptyWishlist"
+                style="display:none;text-align:center;padding:60px 20px;background:var(--bg-card);border-radius:var(--radius-lg)">
+                <i class="fas fa-heart-broken" style="font-size:3rem;color:var(--cream-dark);margin-bottom:16px"></i>
+                <p style="color:var(--text-muted)">قائمة المفضلة فارغة حالياً.</p>
+            </div>
+        </div>
+
+        <!-- Addresses Tab -->
+        <div id="addressesTab" style="display:none">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                <div
+                    style="background:var(--bg-card);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);border:2px solid var(--green-400)">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:12px"><span
+                            class="status-badge"
+                            style="background:var(--green-50);color:var(--green-500)">الافتراضي</span>
+                        <div><button class="btn btn-ghost btn-sm"><i class="fas fa-edit"></i></button><button
+                                class="btn btn-ghost btn-sm" style="color:var(--danger)"><i
+                                    class="fas fa-trash"></i></button></div>
+                    </div>
+                    <h4 style="font-size:.95rem;margin-bottom:8px">🏠 المنزل</h4>
+                    <p style="font-size:.85rem;color:var(--text-secondary);line-height:1.7">أحمد محمد<br>شارع الستين،
+                        بجوار مسجد الرحمة<br>صنعاء، اليمن<br>📞 777-123-456</p>
+                </div>
+            </div>
+            <button class="btn btn-outline" style="margin-top:16px"><i class="fas fa-plus"></i> إضافة عنوان
+                جديد</button>
+        </div>
+
+        <!-- Loyalty Tab -->
+        <div id="loyaltyTab" style="display:none">
+            <div class="loyalty-banner" style="margin-bottom:24px">
+                <div class="info">
+                    <h3>🏆 العضوية الذهبية</h3>
+                    <p>أنت على بعد 750 نقطة من العضوية البلاتينية!</p>
+                    <div
+                        style="background:rgba(255,255,255,.2);border-radius:var(--radius-full);height:8px;margin-top:12px;width:300px">
+                        <div style="background:#fff;border-radius:var(--radius-full);height:100%;width:62%"></div>
+                    </div>
+                </div>
+                <div class="points"><span class="num">1,250</span><span class="label">نقطة</span></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+                <div
+                    style="background:var(--bg-card);border-radius:var(--radius-lg);padding:20px;text-align:center;box-shadow:var(--shadow-sm)">
+                    <div style="font-size:2rem;margin-bottom:8px">🎫</div>
+                    <h4 style="font-size:.9rem;margin-bottom:4px">خصم 10%</h4>
+                    <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:12px">500 نقطة</p><button
+                        class="btn btn-primary btn-sm">استبدال</button>
+                </div>
+                <div
+                    style="background:var(--bg-card);border-radius:var(--radius-lg);padding:20px;text-align:center;box-shadow:var(--shadow-sm)">
+                    <div style="font-size:2rem;margin-bottom:8px">🚚</div>
+                    <h4 style="font-size:.9rem;margin-bottom:4px">شحن مجاني</h4>
+                    <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:12px">300 نقطة</p><button
+                        class="btn btn-primary btn-sm">استبدال</button>
+                </div>
+                <div
+                    style="background:var(--bg-card);border-radius:var(--radius-lg);padding:20px;text-align:center;box-shadow:var(--shadow-sm)">
+                    <div style="font-size:2rem;margin-bottom:8px">🎁</div>
+                    <h4 style="font-size:.9rem;margin-bottom:4px">خصم 25%</h4>
+                    <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:12px">1000 نقطة</p><button
+                        class="btn btn-primary btn-sm">استبدال</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settingsTab" style="display:none">
+            <div
+                style="background:var(--bg-card);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)">
+                <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px"><i class="fas fa-cog"
+                        style="color:var(--green-500)"></i> إعدادات الحساب</h3>
+                <div class="form-group"><label class="form-label">الاسم الكامل</label><input type="text"
+                        class="form-control" value="أحمد محمد"></div>
+                <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input type="email"
+                        class="form-control" value="ahmed@email.com"></div>
+                <div class="form-group"><label class="form-label">رقم الهاتف</label><input type="tel"
+                        class="form-control" value="777-123-456"></div>
+                <hr style="border:none;border-top:1px solid var(--cream-dark);margin:20px 0">
+                <h4 style="font-size:.95rem;font-weight:600;margin-bottom:12px">تغيير كلمة المرور</h4>
+                <div class="form-group"><label class="form-label">كلمة المرور الحالية</label><input type="password"
+                        class="form-control"></div>
+                <div class="form-group"><label class="form-label">كلمة المرور الجديدة</label><input type="password"
+                        class="form-control"></div>
+                <div class="form-group"><label class="form-label">تأكيد كلمة المرور</label><input type="password"
+                        class="form-control"></div>
+                <div style="display:flex;gap:12px;margin-top:20px"><button class="btn btn-primary"><i
+                            class="fas fa-save"></i> حفظ التغييرات</button><button class="btn btn-ghost"
+                        style="color:var(--danger)"><i class="fas fa-trash-alt"></i> حذف الحساب</button></div>
+            </div>
+        </div>
+    </main>
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderOrders();
+            renderWishlist();
+        });
+
+        function showTab(t) {
+            ['orders', 'wishlist', 'addresses', 'loyalty', 'settings'].forEach(tab => {
+                const el = document.getElementById(tab + 'Tab'); if (el) el.style.display = tab === t ? 'block' : 'none';
+            });
+            document.querySelectorAll('.profile-tab').forEach(el => {
+                const icon = el.querySelector('i');
+                const isMatch = el.getAttribute('onclick').includes(t);
+                el.classList.toggle('active', isMatch);
+            });
+        }
+
+        function renderOrders() {
+            const list = document.getElementById('ordersList');
+            const empty = document.getElementById('noOrders');
+            const orders = JSON.parse(localStorage.getItem('bayti-orders') || '[]');
+
+            if (orders.length === 0) {
+                list.style.display = 'none';
+                empty.style.display = 'block';
+                return;
+            }
+
+            list.style.display = 'block';
+            empty.style.display = 'none';
+
+            list.innerHTML = orders.reverse().map(o => `
+            <div class="order-card animate-in">
+                <div class="order-head">
+                    <div><span style="font-weight:700;color:var(--green-500)">#${o.id}</span>
+                    <span style="font-size:.82rem;color:var(--text-muted);margin-right:12px">${o.date}</span></div>
+                    <span class="status-badge status-${o.status}">${o.status === 'pending' ? 'قيد الانتظار' : 'تم'}</span>
+                </div>
+                <div class="order-items">
+                    ${o.items.map(i => {
+                const p = productsData.find(x => x.id === i.id) || i;
+                return `
+                        <div class="order-item">
+                            <img src="${p.img}" alt="">
+                            <div><p style="font-size:.85rem;font-weight:500">${p.name}</p>
+                            <span style="font-size:.78rem;color:var(--text-muted)">×${i.qty} | ${p.price.toLocaleString()} ر.ي</span></div>
+                        </div>`;
+            }).join('')}
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--cream-dark)">
+                    <span style="font-weight:700;font-size:1.05rem">الإجمالي: <span style="color:var(--green-500)">${o.total}</span></span>
+                    <div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm">تتبع</button></div>
+                </div>
+            </div>`).join('');
+        }
+
+        function renderWishlist() {
+            const grid = document.getElementById('wishlistGrid');
+            const empty = document.getElementById('emptyWishlist');
+            const wishlistIds = JSON.parse(localStorage.getItem('bayti-wishlist') || '[]');
+
+            if (wishlistIds.length === 0) {
+                grid.style.display = 'none';
+                empty.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            empty.style.display = 'none';
+
+            const wishlistItems = productsData.filter(p => wishlistIds.includes(p.id));
+            grid.innerHTML = wishlistItems.map(p => renderProductCard(p)).join('');
+        }
+    </script>
+</body>
+
+</html>

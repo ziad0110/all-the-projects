@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header mb-4">
+    <h2 class="mb-0"><i class="bi bi-arrow-counterclockwise me-2"></i>مرتجع مبيعات ذكي</h2>
+</div>
+
+<div class="card p-4 mb-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-6">
+            <label class="form-label">البحث عن فاتورة (رقم الفاتورة أو الكود)</label>
+            <div class="input-group">
+                <input type="text" id="invoice-query" class="form-control" placeholder="مثال: SINV001...">
+                <button class="btn btn-primary" type="button" onclick="searchInvoice()">
+                    <i class="bi bi-search me-1"></i> استدعاء
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6 text-end">
+            <span class="text-muted small">أو اختر من القائمة السريعة:</span>
+            <select class="form-select form-select-sm d-inline-block w-auto ms-2" onchange="searchInvoice(this.value)">
+                <option value="">-- الفواتير الأخيرة --</option>
+                {% for x in invoices %}
+                <option value="{{ x.invoice_id }}">{{ x.invoice_number }} - {{ x.customer_name or 'عميل نقدي' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
+<form method="post" id="return-form" class="card p-4 d-none">
+    <input type="hidden" name="original_invoice_id" id="original_invoice_id">
+    
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label class="form-label">تفاصيل الفاتورة</label>
+            <div id="invoice-info" class="p-2 border rounded bg-light small"></div>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">تاريخ المرتجع</label>
+            <input class="form-control" type="date" name="return_date" id="today-date" required>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">طريقة التسوية</label>
+            <select class="form-select" name="refund_method">
+                <option value="ACCOUNT">على الحساب (رصيد العميل)</option>
+                <option value="CASH">نقدي (من الصندوق)</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">السبب</label>
+            <input class="form-control" name="reason" placeholder="اختياري">
+        </div>
+    </div>
+
+    <h6 class="mb-3 border-bottom pb-2">أصناف الفاتورة (حدد الكمية المراد إرجاعها)</h6>
+    <div id="return-lines" class="row g-3"></div>
+
+    <div class="mt-4 text-end">
+        <button type="button" class="btn btn-outline-secondary me-2" onclick="location.reload()">إلغاء</button>
+        <button class="btn btn-success px-5"><i class="bi bi-check-circle me-1"></i>حفظ المرتجع</button>
+    </div>
+</form>
+
+<div id="search-msg" class="text-center py-5 text-muted">
+    <i class="bi bi-receipt" style="font-size: 3rem; opacity: 0.3;"></i>
+    <p class="mt-3">ادخل رقم الفاتورة للبدء في عملية المرتجع</p>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('today-date').valueAsDate = new Date();
+
+function searchInvoice(val) {
+    const query = val || document.getElementById('invoice-query').value.trim();
+    if (!query) return;
+
+    fetch(`/api/invoice/${query}`)
+        .then(r => {
+            if (!r.ok) throw new Error('الفاتورة غير موجودة');
+            return r.json();
+        })
+        .then(data => {
+            renderInvoice(data);
+            document.getElementById('search-msg').classList.add('d-none');
+            document.getElementById('return-form').classList.remove('d-none');
+        })
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: err.message
+            });
+        });
+}
+
+function renderInvoice(data) {
+    document.getElementById('original_invoice_id').value = data.invoice.invoice_id;
+    document.getElementById('invoice-info').innerHTML = `
+        <strong>رقم:</strong> ${data.invoice.invoice_number}<br>
+        <strong>التاريخ:</strong> ${data.invoice.invoice_date}
+    `;
+
+    const holder = document.getElementById('return-lines');
+    holder.innerHTML = '';
+    
+    data.lines.forEach(line => {
+        const col = document.createElement('div');
+        col.className = 'col-12';
+        col.innerHTML = `
+            <div class="line-card row g-2 align-items-end p-3 border rounded mb-2">
+                <div class="col-md-4">
+                    <label class="form-label small">الصنف</label>
+                    <div class="fw-bold">${line.item_name}</div>
+                    <input type="hidden" name="original_line_id[]" value="${line.line_id}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small">الكمية المباعة</label>
+                    <input class="form-control form-control-sm" value="${line.quantity}" disabled>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small">سعر البيع</label>
+                    <input class="form-control form-control-sm" value="${line.unit_price.toFixed(2)}" disabled>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small text-primary">الكمية المرتجعة</label>
+                    <input class="form-control border-primary" type="number" min="0" max="${line.quantity}" step="0.01" name="quantity[]" value="0">
+                </div>
+            </div>
+        `;
+        holder.appendChild(col);
+    });
+}
+</script>
+<style>
+.line-card { transition: all 0.2s; }
+.line-card:hover { border-color: var(--accent) !important; background: rgba(59,130,246, 0.02); }
+</style>
+{% endblock %}

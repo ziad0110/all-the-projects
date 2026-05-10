@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>المنتجات - بيتي</title>
+    <meta name="description" content="تصفح جميع المنتجات في بيتي">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="search-box"><input type="text" placeholder="ابحث عن منتج..."
+                    onkeypress="handleSearch(event)"><button
+                    onclick="document.querySelector('.search-box input').dispatchEvent(new KeyboardEvent('keypress',{key:'Enter'}))"><i
+                        class="fas fa-search"></i></button></div>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <a href="cart.html" class="header-btn"><i class="fas fa-shopping-cart"></i><span class="badge"
+                        id="cartCount">0</span></a>
+                <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <a href="login.html" class="user-menu"><i class="fas fa-user"></i> حسابي</a>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content full">
+        <!-- Breadcrumb -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:.9rem;color:var(--text-muted)"
+            id="breadcrumb">
+            <a href="index.html" style="color:var(--green-500)">الرئيسية</a>
+            <i class="fas fa-chevron-left" style="font-size:.6rem"></i>
+            <span id="breadcrumbText">جميع المنتجات</span>
+        </div>
+
+        <!-- Page Title -->
+        <div
+            style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+            <h1 style="font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:10px" id="pageTitle">
+                <i class="fas fa-boxes" style="color:var(--green-500)"></i> <span>جميع المنتجات</span>
+            </h1>
+            <span style="color:var(--text-muted);font-size:.9rem" id="resultCount"></span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:260px 1fr;gap:24px">
+            <!-- Filters -->
+            <div class="filters">
+                <h3
+                    style="font-size:1.05rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+                    <i class="fas fa-filter" style="color:var(--green-500)"></i> تصفية النتائج
+                </h3>
+
+                <!-- Category Filter -->
+                <div class="filter-group">
+                    <h4>القسم <i class="fas fa-chevron-down" style="font-size:.7rem"></i></h4>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="" checked
+                            onchange="applyFilters()"> الكل</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="home"
+                            onchange="applyFilters()"> 🏠 أدوات منزلية</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="kitchen"
+                            onchange="applyFilters()"> 🍽️ أدوات المطبخ</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="food"
+                            onchange="applyFilters()"> 🥬 طعام وبقالة</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="fashion"
+                            onchange="applyFilters()"> 👗 ملابس وأزياء</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="electronics"
+                            onchange="applyFilters()"> 📱 إلكترونيات</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="used"
+                            onchange="applyFilters()"> ♻️ مستعمل ومجدد</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="beauty"
+                            onchange="applyFilters()"> 🧴 عناية شخصية</label>
+                    <label class="filter-option"><input type="radio" name="catFilter" value="toys"
+                            onchange="applyFilters()"> 🎮 ألعاب وترفيه</label>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="filter-group">
+                    <h4>السعر</h4>
+                    <div class="price-range">
+                        <input type="number" id="minPrice" placeholder="من" value="0" onchange="applyFilters()">
+                        <span>-</span>
+                        <input type="number" id="maxPrice" placeholder="إلى" value="5000" onchange="applyFilters()">
+                    </div>
+                    <input type="range" min="0" max="5000" value="5000" id="priceSlider"
+                        style="width:100%;margin-top:8px;accent-color:var(--green-500)"
+                        oninput="document.getElementById('maxPrice').value=this.value;applyFilters()">
+                </div>
+
+                <!-- Condition Filter -->
+                <div class="filter-group">
+                    <h4>الحالة</h4>
+                    <label class="filter-option"><input type="radio" name="condFilter" value="all" checked
+                            onchange="applyFilters()"> الكل</label>
+                    <label class="filter-option"><input type="radio" name="condFilter" value="new"
+                            onchange="applyFilters()"> جديد</label>
+                    <label class="filter-option"><input type="radio" name="condFilter" value="used"
+                            onchange="applyFilters()"> مستعمل</label>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="filter-group">
+                    <h4>التقييم الأدنى</h4>
+                    <label class="filter-option"><input type="radio" name="ratingFilter" value="0" checked
+                            onchange="applyFilters()"> الكل</label>
+                    <label class="filter-option"><input type="radio" name="ratingFilter" value="5"
+                            onchange="applyFilters()"> ⭐⭐⭐⭐⭐ (5 فقط)</label>
+                    <label class="filter-option"><input type="radio" name="ratingFilter" value="4"
+                            onchange="applyFilters()"> ⭐⭐⭐⭐ وأعلى</label>
+                    <label class="filter-option"><input type="radio" name="ratingFilter" value="3"
+                            onchange="applyFilters()"> ⭐⭐⭐ وأعلى</label>
+                </div>
+
+                <button class="btn btn-outline" style="width:100%" onclick="resetFilters()"><i class="fas fa-undo"></i>
+                    إعادة ضبط</button>
+            </div>
+
+            <!-- Products -->
+            <div>
+                <div
+                    style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <select class="form-control" id="sortSelect"
+                            style="width:auto;padding:8px 36px 8px 12px;font-size:.85rem" onchange="applyFilters()">
+                            <option value="">الأحدث</option>
+                            <option value="cheap">الأرخص</option>
+                            <option value="expensive">الأغلى</option>
+                            <option value="popular">الأكثر مبيعاً</option>
+                            <option value="rating">الأعلى تقييماً</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="products-grid" id="productsGrid"></div>
+
+                <!-- No Results -->
+                <div id="noResults" style="display:none;text-align:center;padding:60px 20px">
+                    <i class="fas fa-search"
+                        style="font-size:3rem;color:var(--text-muted);margin-bottom:16px;display:block"></i>
+                    <h3 style="color:var(--text-muted);margin-bottom:8px">لم يتم العثور على منتجات</h3>
+                    <p style="color:var(--text-muted);font-size:.9rem">حاول تغيير معايير البحث أو التصفية</p>
+                    <button class="btn btn-primary" style="margin-top:16px" onclick="resetFilters()">عرض جميع
+                        المنتجات</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="compare-bar" id="compareBar"><strong>المقارنة:</strong>
+        <div class="items" id="compareItems"></div><button class="btn btn-primary btn-sm" onclick="openCompare()">قارن
+            الآن</button><button class="btn btn-ghost btn-sm" onclick="clearCompare()">مسح</button>
+    </div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Read URL params on load
+        document.addEventListener('DOMContentLoaded', function () {
+            const cat = getParam('cat');
+            const sub = getParam('sub');
+            const filter = getParam('filter');
+            const search = getParam('search');
+
+            // Set active category in filter sidebar
+            if (cat) {
+                const radio = document.querySelector(`input[name="catFilter"][value="${cat}"]`);
+                if (radio) radio.checked = true;
+            }
+
+            // Update page title and breadcrumb
+            if (cat && categoryNames[cat]) {
+                document.querySelector('#pageTitle span').textContent = categoryNames[cat];
+                document.getElementById('breadcrumbText').textContent = categoryNames[cat];
+            }
+            if (sub && subCategoryNames[sub]) {
+                document.querySelector('#pageTitle span').textContent = subCategoryNames[sub];
+                document.getElementById('breadcrumbText').innerHTML =
+                    (cat ? '<a href="products.html?cat=' + cat + '" style="color:var(--green-500)">' + categoryNames[cat] + '</a> <i class="fas fa-chevron-left" style="font-size:.6rem"></i> ' : '') +
+                    subCategoryNames[sub];
+            }
+            if (filter) {
+                const filterNames = { deals: 'عروض اليوم 🔥', trending: 'الأكثر مبيعاً 📈', new: 'وصل حديثاً ✨', featured: 'منتجات مميزة ⭐' };
+                document.querySelector('#pageTitle span').textContent = filterNames[filter] || 'المنتجات';
+                document.getElementById('breadcrumbText').textContent = filterNames[filter] || 'المنتجات';
+            }
+            if (search) {
+                document.querySelector('#pageTitle span').textContent = 'نتائج البحث: "' + search + '"';
+                document.getElementById('breadcrumbText').textContent = 'بحث: ' + search;
+                document.querySelector('.search-box input').value = search;
+            }
+
+            applyFilters();
+        });
+
+        function applyFilters() {
+            const catRadio = document.querySelector('input[name="catFilter"]:checked');
+            const cat = catRadio ? catRadio.value : '';
+
+            // Get URL params but override if cat changed
+            const urlCat = getParam('cat') || '';
+            let sub = getParam('sub') || '';
+            let filter = getParam('filter') || '';
+            const search = getParam('search') || '';
+
+            // If user selected a different category in UI than URL, clear sub/filter/search
+            if (cat !== '' && urlCat !== '' && cat !== urlCat) {
+                // Clear URL-based filtering if UI category changed
+                sub = '';
+                filter = '';
+            }
+
+            const cond = document.querySelector('input[name="condFilter"]:checked').value;
+            const minRating = parseFloat(document.querySelector('input[name="ratingFilter"]:checked').value) || 0;
+            const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseInt(document.getElementById('maxPrice').value) || 99999;
+            const sort = document.getElementById('sortSelect').value;
+
+            const results = filterProducts({
+                cat: cat, sub: sub, condition: cond,
+                minPrice: minPrice, maxPrice: maxPrice,
+                minRating: minRating, sort: sort,
+                search: search, filter: filter
+            });
+
+            const grid = document.getElementById('productsGrid');
+            const noResults = document.getElementById('noResults');
+            const countEl = document.getElementById('resultCount');
+
+            if (results.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                countEl.textContent = '0 منتج';
+
+                // Specific empty messages
+                let msg = 'لم يتم العثور على منتجات تناسب معاييرك';
+                if (filter === 'deals') msg = 'لا توجد عروض متاحة اليوم في هذا القسم';
+                else if (filter === 'new') msg = 'لا توجد منتجات جديدة حالياً';
+                else if (filter === 'trending') msg = 'لا توجد منتجات رائدة حالياً';
+                else if (search) msg = `لا توجد نتائج للبحث عن "${search}"`;
+                else if (sub) msg = `لا توجد منتجات في قسم ${subCategoryNames[sub] || sub}`;
+                else if (cat) msg = `لا توجد منتجات في قسم ${categoryNames[cat] || cat}`;
+
+                noResults.querySelector('h3').textContent = msg;
+            } else {
+                noResults.style.display = 'none';
+                grid.innerHTML = results.map(p => renderProductCard(p)).join('');
+                countEl.textContent = results.length + ' منتج';
+            }
+        }
+
+        function resetFilters() {
+            // Clear URL params
+            window.history.replaceState({}, '', window.location.pathname);
+            document.querySelector('input[name="catFilter"][value=""]').checked = true;
+            document.querySelector('input[name="condFilter"][value="all"]').checked = true;
+            document.querySelector('input[name="ratingFilter"][value="0"]').checked = true;
+            document.getElementById('minPrice').value = 0;
+            document.getElementById('maxPrice').value = 5000;
+            document.getElementById('priceSlider').value = 5000;
+            document.getElementById('sortSelect').value = '';
+            document.querySelector('#pageTitle span').textContent = 'جميع المنتجات';
+            document.getElementById('breadcrumbText').textContent = 'جميع المنتجات';
+            applyFilters();
+        }
+    </script>
+</body>
+
+</html>

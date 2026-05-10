@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>سجل كبائع - بيتي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <a href="login.html" class="user-menu"><i class="fas fa-user"></i> حسابي</a>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content full" style="max-width:900px;margin:calc(var(--header-h) + 24px) auto 0">
+        <div style="text-align:center;margin-bottom:40px">
+            <div
+                style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--green-500),var(--green-400));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem;color:#fff">
+                <i class="fas fa-store"></i>
+            </div>
+            <h1 style="font-size:1.8rem;font-weight:800;margin-bottom:8px">سجل كبائع في بيتي 🏪</h1>
+            <p style="color:var(--text-muted);max-width:500px;margin:0 auto">ابدأ رحلتك في البيع عبر الإنترنت - بدون
+                رسوم تسجيل وعمولة تنافسية. انضم لأكثر من 500 بائع ناجح!</p>
+        </div>
+
+        <!-- Benefits -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px">
+            <div
+                style="background:var(--bg-card);border-radius:var(--radius-lg);padding:24px;text-align:center;box-shadow:var(--shadow-sm)">
+                <div style="font-size:2rem;margin-bottom:8px">💰</div>
+                <h4 style="font-size:.9rem;margin-bottom:4px">بدون رسوم تسجيل</h4>
+                <p style="font-size:.78rem;color:var(--text-muted)">سجل مجاناً وابدأ البيع فوراً</p>
+            </div>
+            <div
+                style="background:var(--bg-card);border-radius:var(--radius-lg);padding:24px;text-align:center;box-shadow:var(--shadow-sm)">
+                <div style="font-size:2rem;margin-bottom:8px">📊</div>
+                <h4 style="font-size:.9rem;margin-bottom:4px">لوحة تحكم متقدمة</h4>
+                <p style="font-size:.78rem;color:var(--text-muted)">تتبع مبيعاتك وأرباحك بسهولة</p>
+            </div>
+            <div
+                style="background:var(--bg-card);border-radius:var(--radius-lg);padding:24px;text-align:center;box-shadow:var(--shadow-sm)">
+                <div style="font-size:2rem;margin-bottom:8px">🚚</div>
+                <h4 style="font-size:.9rem;margin-bottom:4px">شحن وتوصيل</h4>
+                <p style="font-size:.78rem;color:var(--text-muted)">خدمة شحن متكاملة لجميع المناطق</p>
+            </div>
+        </div>
+
+        <!-- Registration Steps -->
+        <div style="display:flex;justify-content:center;gap:0;margin-bottom:32px">
+            <div style="text-align:center;flex:1" class="reg-step active">
+                <div
+                    style="width:40px;height:40px;border-radius:50%;background:var(--green-500);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:700;font-size:.9rem">
+                    1</div><span style="font-size:.78rem">بيانات المتجر</span>
+            </div>
+            <div style="flex:2;height:3px;background:var(--cream-dark);margin-top:16px"></div>
+            <div style="text-align:center;flex:1">
+                <div
+                    style="width:40px;height:40px;border-radius:50%;background:var(--cream-dark);color:var(--text-muted);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:700;font-size:.9rem">
+                    2</div><span style="font-size:.78rem;color:var(--text-muted)">البيانات الشخصية</span>
+            </div>
+            <div style="flex:2;height:3px;background:var(--cream-dark);margin-top:16px"></div>
+            <div style="text-align:center;flex:1">
+                <div
+                    style="width:40px;height:40px;border-radius:50%;background:var(--cream-dark);color:var(--text-muted);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:700;font-size:.9rem">
+                    3</div><span style="font-size:.78rem;color:var(--text-muted)">المستندات</span>
+            </div>
+        </div>
+
+        <form id="sellerForm"
+            style="background:var(--bg-card);border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow-md)">
+            <!-- Step 1: Store Info -->
+            <div id="step1">
+                <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px">
+                    <i class="fas fa-store" style="color:var(--green-500)"></i> بيانات المتجر
+                </h2>
+                <div class="form-group"><label class="form-label">اسم المتجر *</label><input type="text"
+                        class="form-control" placeholder="مثال: متجر الأصالة" required></div>
+                <div class="form-group"><label class="form-label">وصف المتجر *</label><textarea class="form-control"
+                        rows="3" placeholder="صف متجرك ونوع المنتجات التي تبيعها..." required></textarea></div>
+                <div class="form-group"><label class="form-label">الأقسام التي ستبيع فيها *</label>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                        <label class="form-check"><input type="checkbox"> 🏠 أدوات منزلية</label>
+                        <label class="form-check"><input type="checkbox"> 🍽️ أدوات المطبخ</label>
+                        <label class="form-check"><input type="checkbox"> 🥬 طعام وبقالة</label>
+                        <label class="form-check"><input type="checkbox"> 👗 ملابس وأزياء</label>
+                        <label class="form-check"><input type="checkbox"> 📱 إلكترونيات</label>
+                        <label class="form-check"><input type="checkbox"> ♻️ مستعمل ومجدد</label>
+                        <label class="form-check"><input type="checkbox"> 🧴 عناية شخصية</label>
+                        <label class="form-check"><input type="checkbox"> 🎮 ألعاب وترفيه</label>
+                    </div>
+                </div>
+                <div class="form-group"><label class="form-label">شعار المتجر</label>
+                    <div style="border:2px dashed var(--cream-dark);border-radius:var(--radius-md);padding:40px;text-align:center;cursor:pointer;transition:var(--transition)"
+                        onclick="document.getElementById('logoInput').click()">
+                        <i class="fas fa-cloud-upload-alt"
+                            style="font-size:2rem;color:var(--green-400);margin-bottom:8px;display:block"></i>
+                        <p style="font-size:.88rem;color:var(--text-muted)">انقر لرفع الشعار أو اسحب الملف هنا</p>
+                        <span style="font-size:.75rem;color:var(--text-muted)">PNG, JPG - حد أقصى 2MB</span>
+                    </div>
+                    <input type="file" id="logoInput" accept="image/*" style="display:none">
+                </div>
+                <button type="button" class="btn btn-primary btn-lg" style="width:100%" onclick="nextStep(2)">التالي <i
+                        class="fas fa-arrow-left"></i></button>
+            </div>
+
+            <!-- Step 2: Personal Info -->
+            <div id="step2" style="display:none">
+                <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px">
+                    <i class="fas fa-user" style="color:var(--green-500)"></i> البيانات الشخصية
+                </h2>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                    <div class="form-group"><label class="form-label">الاسم الأول *</label><input type="text"
+                            class="form-control" required></div>
+                    <div class="form-group"><label class="form-label">اسم العائلة *</label><input type="text"
+                            class="form-control" required></div>
+                </div>
+                <div class="form-group"><label class="form-label">البريد الإلكتروني *</label><input type="email"
+                        class="form-control" placeholder="seller@email.com" required></div>
+                <div class="form-group"><label class="form-label">رقم الهاتف *</label><input type="tel"
+                        class="form-control" placeholder="777-123-456" required></div>
+                <div class="form-group"><label class="form-label">المدينة *</label><select class="form-control">
+                        <option>صنعاء</option>
+                        <option>عدن</option>
+                        <option>تعز</option>
+                        <option>الحديدة</option>
+                        <option>إب</option>
+                    </select></div>
+                <div class="form-group"><label class="form-label">العنوان التفصيلي</label><input type="text"
+                        class="form-control" placeholder="الحي، الشارع"></div>
+                <div style="display:flex;gap:12px"><button type="button" class="btn btn-ghost btn-lg"
+                        onclick="nextStep(1)"><i class="fas fa-arrow-right"></i> السابق</button><button type="button"
+                        class="btn btn-primary btn-lg" style="flex:1" onclick="nextStep(3)">التالي <i
+                            class="fas fa-arrow-left"></i></button></div>
+            </div>
+
+            <!-- Step 3: Documents -->
+            <div id="step3" style="display:none">
+                <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px">
+                    <i class="fas fa-file-alt" style="color:var(--green-500)"></i> المستندات والتأكيد
+                </h2>
+                <div class="form-group"><label class="form-label">صورة الهوية الشخصية (اختياري)</label>
+                    <div
+                        style="border:2px dashed var(--cream-dark);border-radius:var(--radius-md);padding:30px;text-align:center;cursor:pointer">
+                        <i class="fas fa-id-card"
+                            style="font-size:1.5rem;color:var(--text-muted);margin-bottom:8px;display:block"></i>
+                        <p style="font-size:.85rem;color:var(--text-muted)">رفع صورة الهوية</p>
+                    </div>
+                </div>
+                <div class="form-group"><label class="form-label">السجل التجاري (اختياري)</label>
+                    <div
+                        style="border:2px dashed var(--cream-dark);border-radius:var(--radius-md);padding:30px;text-align:center;cursor:pointer">
+                        <i class="fas fa-file-contract"
+                            style="font-size:1.5rem;color:var(--text-muted);margin-bottom:8px;display:block"></i>
+                        <p style="font-size:.85rem;color:var(--text-muted)">رفع السجل التجاري</p>
+                    </div>
+                </div>
+                <div
+                    style="background:var(--cream-dark);border-radius:var(--radius-md);padding:16px;margin-bottom:20px;font-size:.85rem;line-height:1.8;max-height:150px;overflow-y:auto">
+                    <strong>الشروط والأحكام:</strong><br>
+                    1. يلتزم البائع بتوفير منتجات بالمواصفات المعلنة<br>
+                    2. يحق للمشتري إرجاع المنتج خلال 14 يوماً<br>
+                    3. عمولة المنصة 5% من كل عملية بيع<br>
+                    4. يتم تحويل المستحقات خلال 7 أيام عمل<br>
+                    5. يحظر بيع المنتجات المحظورة قانونياً
+                </div>
+                <label class="form-check" style="margin-bottom:20px"><input type="checkbox" required> أوافق على <a
+                        href="#" style="color:var(--green-500)">الشروط والأحكام</a> وسياسة البائعين</label>
+                <div style="display:flex;gap:12px"><button type="button" class="btn btn-ghost btn-lg"
+                        onclick="nextStep(2)"><i class="fas fa-arrow-right"></i> السابق</button><button type="submit"
+                        class="btn btn-primary btn-lg" style="flex:1"><i class="fas fa-check-circle"></i> إتمام
+                        التسجيل</button></div>
+            </div>
+        </form>
+    </main>
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/app.js"></script>
+    <script>
+        function nextStep(n) {
+            [1, 2, 3].forEach(i => document.getElementById('step' + i).style.display = i === n ? 'block' : 'none');
+            document.querySelectorAll('.reg-step,.header-inner div[style*="text-align"]').forEach((el, i) => {
+                // simple step indicator update
+            });
+            window.scrollTo({ top: 200, behavior: 'smooth' });
+        }
+        document.getElementById('sellerForm').onsubmit = function (e) {
+            e.preventDefault();
+            showToast('تم تسجيلك كبائع بنجاح! 🎉', 'success');
+            setTimeout(() => window.location.href = 'seller-dashboard.html', 2000);
+        };
+    </script>
+</body>
+
+</html>

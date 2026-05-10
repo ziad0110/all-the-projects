@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>إيصال #{{ header.invoice_number }}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+    @page { size: 80mm auto; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Tajawal', sans-serif; font-size: 11px; color: #000; width: 72mm; margin: 0 auto; padding: 5mm 2mm; background: #fff; line-height: 1.3; }
+    
+    .center { text-align: center; }
+    .bold { font-weight: 700; }
+    .extra-bold { font-weight: 900; }
+    
+    .company-name { font-size: 16px; font-weight: 900; margin-bottom: 3px; letter-spacing: 0.5px; }
+    .company-info { font-size: 9px; margin-bottom: 2px; }
+    
+    .sep { border-top: 1px dashed #000; margin: 8px 0; }
+    .thick-sep { border-top: 2px solid #000; margin: 8px 0; }
+    
+    .receipt-title { font-size: 13px; font-weight: 900; background: #000; color: #fff; padding: 4px; margin: 10px 0; display: inline-block; width: 100%; }
+    
+    .meta-row { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 10px; }
+    
+    .items-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    .items-table th { font-size: 10px; text-align: right; border-bottom: 1px solid #000; padding-bottom: 4px; }
+    .items-table td { padding: 5px 0; vertical-align: top; border-bottom: 0.5px solid #eee; }
+    .item-name { font-weight: 700; display: block; margin-bottom: 2px; }
+    .item-meta { font-size: 9px; color: #444; }
+    
+    .totals-area { margin-top: 10px; }
+    .total-line { display: flex; justify-content: space-between; padding: 2px 0; font-size: 11px; }
+    .grand-total { font-size: 18px; font-weight: 900; border-top: 1px solid #000; margin-top: 5px; padding-top: 8px; }
+    
+    .qr-code { margin: 15px 0; }
+    .footer-msg { font-size: 9px; margin-top: 10px; line-height: 1.4; }
+    
+    .no-print { text-align: center; padding: 15px; background: #f0f0f0; border-radius: 8px; margin-bottom: 20px; }
+    .no-print button { padding: 10px 20px; cursor: pointer; border: none; background: #000; color: #fff; font-weight: bold; border-radius: 5px; }
+
+    @media print { .no-print { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="no-print">
+    <button onclick="window.print()">طباعة الإيصال الحراري 🧾</button>
+    <a href="{{ url_for('sales_view', invoice_id=header.invoice_id) }}" style="display:block; margin-top:10px; font-size:11px;">إغلاق</a>
+  </div>
+
+  <div class="center">
+    {% if company.receipt_logo %}
+    <img src="{{ url_for('uploaded_file', filename=company.receipt_logo) }}" alt="Logo" style="max-height: 70px; max-width: 80%; margin-bottom: 8px; filter: grayscale(100%) contrast(150%);">
+    {% endif %}
+    <div class="company-name">{{ company.receipt_header or company.name_ar or 'Smart Accounting' }}</div>
+    <div class="company-info">{{ company.address_ar or '' }}</div>
+    <div class="company-info">هاتف: {{ company.phone or '-' }}</div>
+    {% if company.tax_number %}<div class="company-info">الرقم الضريبي: {{ company.tax_number }}</div>{% endif %}
+  </div>
+
+  <div class="center">
+    <div class="receipt-title">{{ 'إيصال مبيعات' if kind == 'sale' else 'إيصال مشتريات' }}</div>
+  </div>
+
+  <div class="meta-row">
+    <span class="bold">رقم الفاتورة:</span>
+    <span>{{ header.invoice_number }}</span>
+  </div>
+  <div class="meta-row">
+    <span class="bold">التاريخ:</span>
+    <span>{{ header.invoice_date[:16] }}</span>
+  </div>
+  <div class="meta-row">
+    <span class="bold">الكاشير:</span>
+    <span>{{ header.cashier_name or 'المسؤول' }}</span>
+  </div>
+  {% if header.customer_name and header.customer_name != 'عميل نقدي' %}
+  <div class="meta-row">
+    <span class="bold">العميل:</span>
+    <span>{{ header.customer_name }}</span>
+  </div>
+  {% endif %}
+
+  <div class="thick-sep"></div>
+
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th style="width: 50%;">الصنف</th>
+        <th style="text-align: center;">الكمية</th>
+        <th style="text-align: left;">المجموع</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in lines %}
+      <tr>
+        <td>
+          <span class="item-name">{{ line.item_name }}</span>
+          <span class="item-meta">{{ "%.2f"|format(line.unit_price) }} x {{ line.unit_name }}</span>
+        </td>
+        <td style="text-align: center; vertical-align: middle;">{{ line.quantity }}</td>
+        <td style="text-align: left; vertical-align: middle;" class="bold">{{ "%.2f"|format(line.line_total) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="totals-area">
+    <div class="total-line">
+      <span>المجموع الفرعي:</span>
+      <span>{{ "%.2f"|format(header.subtotal) }}</span>
+    </div>
+    {% if header.discount_amount > 0 %}
+    <div class="total-line">
+      <span>إجمالي الخصم:</span>
+      <span>-{{ "%.2f"|format(header.discount_amount) }}</span>
+    </div>
+    {% endif %}
+    {% if header.tax_amount > 0 %}
+    <div class="total-line">
+      <span>الضريبة:</span>
+      <span>{{ "%.2f"|format(header.tax_amount) }}</span>
+    </div>
+    {% endif %}
+    
+    <div class="total-line grand-total">
+      <span class="extra-bold">الإجمالي النهائي:</span>
+      <span class="extra-bold">{{ "%.2f"|format(header.total) }}</span>
+    </div>
+
+    <div class="sep"></div>
+    <div class="total-line">
+      <span>المبلغ المدفوع:</span>
+      <span>{{ "%.2f"|format(header.paid_amount) }}</span>
+    </div>
+    {% set change = (header.paid_amount or 0) - (header.total or 0) %}
+    {% if change > 0 %}
+    <div class="total-line bold">
+      <span>المبلغ المتبقي (الخردة):</span>
+      <span>{{ "%.2f"|format(change) }}</span>
+    </div>
+    {% endif %}
+    {% if header.remaining > 0 %}
+    <div class="total-line bold" style="color:#000;">
+      <span>المتبقي ذمة (آجل):</span>
+      <span>{{ "%.2f"|format(header.remaining) }}</span>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="thick-sep"></div>
+
+  <div class="center qr-code">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data={{ header.invoice_number }}" alt="QR">
+    <div style="font-size: 8px; margin-top: 5px;">امسح للتحقق من الفاتورة</div>
+  </div>
+
+  <div class="center footer-msg">
+    {{ company.receipt_footer or 'شكراً لزيارتكم، نأمل رؤيتكم قريباً!' }}
+  </div>
+
+  <div class="center" style="margin-top: 15px; font-size: 8px; opacity: 0.6;">
+    SAS Accounting Suite v2.0
+  </div>
+
+  <script>
+    {% if auto_print %}
+    window.onload = function() { setTimeout(function() { window.print(); }, 500); }
+    {% endif %}
+  </script>
+</body>
+</html>

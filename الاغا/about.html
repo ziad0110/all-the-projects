@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="تعرف على شركة نبع الريحان للتجارة والصناعة - قصة نجاح يمنية في مجال الصناعات الغذائية">
+    <meta name="keywords" content="نبع الريحان, من نحن, الأغا, دريم, اليمن">
+
+    <title>من نحن | نبع الريحان</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        .page-hero {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+
+        .timeline {
+            position: relative;
+            padding: var(--space-2xl) 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold-primary), var(--gold-dark));
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-3xl);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-year {
+            flex: 1;
+            text-align: left;
+            padding-left: var(--space-2xl);
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            text-align: right;
+            padding-left: 0;
+            padding-right: var(--space-2xl);
+        }
+
+        .timeline-year h3 {
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: var(--bg-card);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            border: 4px solid var(--bg-primary);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                right: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                flex-direction: column;
+                padding-right: 50px;
+            }
+
+            .timeline-year,
+            .timeline-item:nth-child(even) .timeline-year {
+                text-align: right;
+                padding: 0;
+            }
+
+            .timeline-dot {
+                right: 20px;
+            }
+        }
+
+        .team-card {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+
+        .team-avatar {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto var(--space-lg);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-tertiary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--gold-primary);
+        }
+
+        .team-avatar i {
+            font-size: 4rem;
+            color: var(--gold-primary);
+        }
+
+        .vision-mission {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+        }
+
+        .vision-card {
+            background: var(--bg-card);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .vision-card:hover {
+            border-color: var(--border-gold);
+        }
+
+        .vision-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto var(--space-lg);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vision-icon i {
+            font-size: 3rem;
+            color: var(--gold-primary);
+        }
+
+        @media (max-width: 768px) {
+            .vision-mission {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-text">
+                        <span class="text-gold">نبع الريحان</span>
+                    </div>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="about.html" class="nav-link active">من نحن</a></li>
+                    <li><a href="index.html#brands" class="nav-link">علاماتنا</a></li>
+                    <li><a href="quality.html" class="nav-link">الجودة</a></li>
+                    <li><a href="news.html" class="nav-link">الأخبار</a></li>
+                    <li><a href="contact.html" class="nav-link">تواصل معنا</a></li>
+                </ul>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="القائمة">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="reveal">من <span class="text-gold">نحن</span></h1>
+            <div class="divider"></div>
+            <p class="lead reveal reveal-delay-1"
+                style="max-width: 700px; margin: 0 auto; color: var(--text-secondary);">
+                قصة نجاح يمنية في مجال الصناعات الغذائية
+            </p>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="section">
+        <div class="container">
+            <div class="story-grid"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: center;">
+                <div class="reveal">
+                    <h2 class="mb-lg">
+                        قصة <span class="text-gold">نبع الريحان</span>
+                    </h2>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-lg); line-height: 1.9;">
+                        تأسست شركة نبع الريحان للتجارة والصناعة بهدف واضح: أن نكون رواداً في مجال الصناعات الغذائية في
+                        اليمن والمنطقة العربية، مع الحفاظ على أعلى معايير الجودة والأصالة.
+                    </p>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-lg); line-height: 1.9;">
+                        بدأنا رحلتنا بحلم بسيط وطموح كبير، وها نحن اليوم نفتخر بإدارة مجموعة من العلامات التجارية
+                        الرائدة التي تحمل اسم اليمن إلى العالم.
+                    </p>
+                    <p style="color: var(--text-secondary); line-height: 1.9;">
+                        نؤمن بأن الجودة ليست خياراً بل هي التزام، ونعمل يومياً على تقديم منتجات تفوق توقعات عملائنا
+                        وتعكس إرثنا الغني.
+                    </p>
+                </div>
+                <div class="reveal reveal-delay-2"
+                    style="background: linear-gradient(135deg, var(--bg-card), var(--bg-tertiary)); height: 400px; border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; position: relative;">
+                    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" opacity="0.3">
+                        <circle cx="100" cy="100" r="90" stroke="#d4af37" stroke-width="2" />
+                        <path d="M100 40 C60 60, 60 140, 100 160 C140 140, 140 60, 100 40" stroke="#d4af37"
+                            stroke-width="2" fill="none" />
+                        <circle cx="100" cy="100" r="15" fill="#d4af37" />
+                    </svg>
+                    <div
+                        style="position: absolute; top: 20px; right: 20px; bottom: 20px; left: 20px; border: 2px solid var(--gold-primary); border-radius: var(--radius-lg);">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision & Mission -->
+    <section class="section" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>رؤيتنا <span class="text-gold">ورسالتنا</span></h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="vision-mission">
+                <div class="vision-card reveal reveal-delay-1">
+                    <div class="vision-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="mb-md">رؤيتنا</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        أن نكون الخيار الأول في مجال الصناعات الغذائية في اليمن والمنطقة العربية، وأن نحمل منتجاتنا
+                        اليمنية إلى العالمية بجودة لا تضاهى.
+                    </p>
+                </div>
+
+                <div class="vision-card reveal reveal-delay-2">
+                    <div class="vision-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="mb-md">رسالتنا</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        تقديم منتجات غذائية عالية الجودة تجمع بين الأصالة اليمنية والمعايير العالمية، مع الالتزام
+                        بالمسؤولية الاجتماعية وتطوير المجتمع المحلي.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>قيمنا <span class="text-gold">الأساسية</span></h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-item reveal reveal-delay-1">
+                    <div class="value-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4 class="value-title">الجودة</h4>
+                    <p class="value-text">لا نساوم على الجودة، ونلتزم بأعلى المعايير في كل منتجاتنا</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-2">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4 class="value-title">النزاهة</h4>
+                    <p class="value-text">نبني علاقاتنا على الصدق والشفافية مع جميع شركائنا</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-3">
+                    <div class="value-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4 class="value-title">الابتكار</h4>
+                    <p class="value-text">نسعى دائماً للتطوير والابتكار لتلبية احتياجات السوق</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-4">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4 class="value-title">المسؤولية</h4>
+                    <p class="value-text">نشعر بمسؤوليتنا تجاه مجتمعنا وبيئتنا ونعمل على خدمتهما</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="section" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>مسيرتنا <span class="text-gold">عبر السنين</span></h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">
+                        <h3>2010</h3>
+                    </div>
+                    <div class="timeline-content">
+                        <h4 class="mb-sm">البداية</h4>
+                        <p style="color: var(--text-secondary);">
+                            تأسيس شركة نبع الريحان للتجارة والصناعة في صنعاء، اليمن
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal reveal-delay-1">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">
+                        <h3>2013</h3>
+                    </div>
+                    <div class="timeline-content">
+                        <h4 class="mb-sm">إطلاق الأغا</h4>
+                        <p style="color: var(--text-secondary);">
+                            إطلاق علامة الأغا لعصائر المانجو الطبيعية
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal reveal-delay-2">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">
+                        <h3>2016</h3>
+                    </div>
+                    <div class="timeline-content">
+                        <h4 class="mb-sm">إطلاق دريم</h4>
+                        <p style="color: var(--text-secondary);">
+                            إطلاق علامة دريم للصلصات والكتشب الفاخر
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal reveal-delay-3">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">
+                        <h3>2019</h3>
+                    </div>
+                    <div class="timeline-content">
+                        <h4 class="mb-sm">التوسع الإقليمي</h4>
+                        <p style="color: var(--text-secondary);">
+                            بدء التصدير للأسواق الإقليمية في دول الخليج
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal reveal-delay-4">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">
+                        <h3>2024</h3>
+                    </div>
+                    <div class="timeline-content">
+                        <h4 class="mb-sm">نحو العالمية</h4>
+                        <p style="color: var(--text-secondary);">
+                            إطلاق المنصة الرقمية الجديدة والتوسع في الأسواق الدولية
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section"
+        style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, var(--bg-primary) 100%);">
+        <div class="container text-center">
+            <h2 class="reveal mb-lg">
+                هل تريد أن تكون <span class="text-gold">شريكنا</span>؟
+            </h2>
+            <p class="lead reveal mb-xl"
+                style="color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-xl);">
+                نرحب بالتعاون مع الموزعين والشركاء التجاريين في جميع أنحاء العالم
+            </p>
+            <div class="reveal">
+                <a href="contact.html" class="btn btn-primary btn-lg">
+                    <span>تواصل معنا</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-text">نبع الريحان</span>
+                    </div>
+                    <p class="footer-desc">
+                        شركة نبع الريحان للتجارة والصناعة - رائدة في مجال الصناعات الغذائية في اليمن.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="footer-link">الرئيسية</a></li>
+                        <li><a href="about.html" class="footer-link">من نحن</a></li>
+                        <li><a href="quality.html" class="footer-link">الجودة</a></li>
+                        <li><a href="contact.html" class="footer-link">تواصل معنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">علاماتنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="brands/al-agha/index.html" class="footer-link">شركة الأغا</a></li>
+                        <li><a href="brands/dream/index.html" class="footer-link">شركة دريم</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">تواصل معنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+967123456789" class="footer-link"><i class="fas fa-phone-alt"
+                                    style="margin-left: 8px; color: var(--gold-primary);"></i>+967 123 456 789</a></li>
+                        <li><a href="mailto:info@nabalrehan.com" class="footer-link"><i class="fas fa-envelope"
+                                    style="margin-left: 8px; color: var(--gold-primary);"></i>info@nabalrehan.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 شركة نبع الريحان. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

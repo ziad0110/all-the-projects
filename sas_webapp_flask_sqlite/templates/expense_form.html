@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeIn">
+                <div>
+                    <h2 class="fw-bold text-primary mb-1">
+                        <i class="bi bi-wallet2 me-2"></i>تسجيل مصروف
+                    </h2>
+                    <p class="text-muted small">إضافة مصروفات تشغيلية أو إدارية جديدة للنظام</p>
+                </div>
+                <a href="{{ url_for('expenses_list') }}" class="btn btn-outline-secondary rounded-3 shadow-sm px-4">
+                    <i class="bi bi-list-ul me-2"></i>سجل المصروفات
+                </a>
+            </div>
+
+            <!-- Form Card -->
+            <div class="card border-0 shadow-lg animate__animated animate__fadeInUp" style="border-radius: 20px; overflow: hidden;">
+                <div class="card-header bg-primary text-white py-3 px-4 border-0">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-plus-circle me-2"></i>بيانات المصروف الجديد</h5>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form method="post">
+                        <!-- Primary Info -->
+                        <div class="row g-4 mb-5">
+                            <div class="col-12">
+                                <div class="section-title mb-3">
+                                    <span class="badge bg-soft-primary text-primary px-3 py-2 rounded-pill">1. معلومات المصروف</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-muted small">تاريخ المصروف</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check"></i></span>
+                                    <input type="date" name="expense_date" class="form-control border-0 bg-light" required value="{{ today }}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-muted small">الفرع</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-geo-alt"></i></span>
+                                    <select name="branch_id" class="form-select border-0 bg-light" required>
+                                        {% for b in branches %}
+                                        <option value="{{ b.branch_id }}">{{ b.name_ar }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-muted small">حساب المصروف</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-tags"></i></span>
+                                    <select name="expense_account_id" class="form-select border-0 bg-light select2" required>
+                                        <option value="">-- اختر نوع المصروف --</option>
+                                        {% for a in expense_accounts %}
+                                        <option value="{{ a.account_id }}">{{ a.label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financial Info -->
+                        <div class="row g-4 mb-5">
+                            <div class="col-12">
+                                <div class="section-title mb-3">
+                                    <span class="badge bg-soft-success text-success px-3 py-2 rounded-pill">2. التفاصيل المالية والدفع</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-muted small">مبلغ المصروف</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-success-soft border-0 text-success fw-bold"><i class="bi bi-cash-stack"></i></span>
+                                    <input type="number" name="amount" step="0.01" class="form-control border-0 bg-light fw-bold text-success" required placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-muted small">طريقة الدفع</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-credit-card"></i></span>
+                                    <select name="payment_method" class="form-select border-0 bg-light">
+                                        <option value="CASH">نقدي (الصندوق)</option>
+                                        <option value="BANK">تحويل بنكي</option>
+                                        <option value="CHECK">شيك</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold text-muted small">المستفيد من الصرف</label>
+                                <input type="text" name="beneficiary" class="form-control border-0 bg-light" placeholder="اسم الشخص أو الجهة المستلمة">
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-muted small">وصف وتفاصيل المصروف</label>
+                                <textarea name="description" class="form-control border-0 bg-light" rows="3" placeholder="اكتب بياناً مفصلاً للمصروف..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-end gap-3 pt-4 border-top">
+                            <button type="reset" class="btn btn-light rounded-3 px-4 shadow-sm fw-bold">إلغاء</button>
+                            <button type="submit" class="btn btn-primary rounded-3 px-5 shadow-sm fw-bold transition-all hover-lift">
+                                <i class="bi bi-check-circle-fill me-2"></i>حفظ المصروف
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-soft: rgba(37, 99, 235, 0.1);
+        --success-soft: rgba(22, 163, 74, 0.1);
+    }
+    .bg-soft-primary { background-color: var(--primary-soft); }
+    .bg-soft-success { background-color: var(--success-soft); }
+    .bg-success-soft { background-color: rgba(22, 163, 74, 0.05); }
+
+    .hover-lift:hover { transform: translateY(-3px); }
+    .transition-all { transition: all 0.3s ease; }
+
+    .form-control:focus, .form-select:focus {
+        background-color: #fff !important;
+        box-shadow: 0 0 0 0.25rem var(--primary-soft);
+        border: none;
+    }
+
+    [data-theme='dark'] .card { background-color: #1e293b; color: #fff; }
+    [data-theme='dark'] .bg-light { background-color: #0f172a !important; color: #cbd5e1; }
+    [data-theme='dark'] .form-control, [data-theme='dark'] .form-select { color: #fff; }
+</style>
+{% endblock %}

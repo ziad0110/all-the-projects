@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>تفاصيل المنتج - بيتي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="search-box"><input type="text" placeholder="ابحث عن منتج..."><button><i
+                        class="fas fa-search"></i></button></div>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <a href="cart.html" class="header-btn"><i class="fas fa-shopping-cart"></i><span class="badge"
+                        id="cartCount">0</span></a>
+                <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <a href="login.html" class="user-menu"><i class="fas fa-user"></i> حسابي</a>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content full">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:.9rem;color:var(--text-muted)">
+            <a href="index.html" style="color:var(--green-500)">الرئيسية</a><i class="fas fa-chevron-left"
+                style="font-size:.6rem"></i>
+            <a href="products.html" style="color:var(--green-500)">المنتجات</a><i class="fas fa-chevron-left"
+                style="font-size:.6rem"></i>
+            <span id="breadcrumbName">تفاصيل المنتج</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px">
+            <!-- Gallery -->
+            <div class="product-gallery">
+                <div class="gallery-thumbs" id="thumbs">
+                    <div class="gallery-thumb active"><img
+                            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100&h=100&fit=crop" alt="">
+                    </div>
+                    <div class="gallery-thumb"><img
+                            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100&h=100&fit=crop&sat=-100"
+                            alt=""></div>
+                    <div class="gallery-thumb"><img
+                            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100&h=100&fit=crop&blur=2"
+                            alt=""></div>
+                </div>
+                <div class="gallery-main"><img id="mainImg"
+                        src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=600&fit=crop" alt="">
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="product-info">
+                <span class="condition condition-new">جديد</span>
+                <h1>كنبة عصرية 3 مقاعد - قماش فاخر</h1>
+                <div class="rating" style="margin-bottom:12px"><i class="fas fa-star" style="color:var(--gold)"></i><i
+                        class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star"
+                        style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i
+                        class="fas fa-star-half-alt" style="color:var(--gold)"></i><span
+                        style="color:var(--text-muted);margin-right:4px">4.5 (127 تقييم) | 250+ تم بيعه</span></div>
+                <div class="price-block"><span class="current-price">2,500 ر.ي</span><span class="original-price">3,200
+                        ر.ي</span><span class="save-badge">وفر 700 ر.ي (22%)</span></div>
+                <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:20px">كنبة عصرية مصنوعة من أجود
+                    أنواع الأقمشة الفاخرة، تتسع لـ 3 أشخاص بأريحية تامة. تصميم مودرن يناسب جميع الديكورات. هيكل خشبي
+                    متين مع حشوة إسفنجية عالية الكثافة لراحة مثالية.</p>
+
+                <div class="product-options">
+                    <span class="option-label">اللون:</span>
+                    <div class="option-values"><span class="option-val active">رمادي</span><span
+                            class="option-val">بيج</span><span class="option-val">أزرق</span><span
+                            class="option-val">أخضر</span></div>
+                </div>
+                <div class="product-options">
+                    <span class="option-label">الكمية:</span>
+                    <div class="quantity-selector"><button onclick="changeQty(-1)">-</button><input type="number"
+                            value="1" min="1" id="qty"><button onclick="changeQty(1)">+</button></div>
+                </div>
+                <div class="action-btns">
+                    <button class="btn btn-primary btn-lg" onclick="addToCart(1)"><i class="fas fa-shopping-cart"></i>
+                        أضف للسلة</button>
+                    <button class="btn btn-secondary btn-lg">اشتري الآن</button>
+                    <button class="btn btn-outline btn-icon" onclick="toggleWishlist(1)"><i
+                            class="fas fa-heart"></i></button>
+                    <button class="btn btn-outline btn-icon" onclick="addToCompare(1,'كنبة','')"><i
+                            class="fas fa-balance-scale"></i></button>
+                </div>
+
+                <!-- Seller Info -->
+                <div
+                    style="margin-top:24px;padding:16px;background:var(--cream-dark);border-radius:var(--radius-md);display:flex;align-items:center;gap:16px">
+                    <img src="https://ui-avatars.com/api/?name=أحمد&background=2E7D32&color=fff&size=50"
+                        style="width:50px;height:50px;border-radius:50%" alt="">
+                    <div style="flex:1">
+                        <h4 style="font-size:.95rem;font-weight:600">متجر الأصالة <i class="fas fa-check-circle"
+                                style="color:var(--green-500);font-size:.8rem"></i></h4><span
+                            style="font-size:.8rem;color:var(--text-muted)">⭐ 4.8 | 520 منتج | عضو منذ 2024</span>
+                    </div>
+                    <a href="#" class="btn btn-outline btn-sm">زيارة المتجر</a>
+                </div>
+
+                <!-- Features -->
+                <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                    <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary)"><i
+                            class="fas fa-truck" style="color:var(--green-500)"></i> شحن مجاني</div>
+                    <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary)"><i
+                            class="fas fa-undo" style="color:var(--green-500)"></i> إرجاع خلال 14 يوم</div>
+                    <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary)"><i
+                            class="fas fa-shield-alt" style="color:var(--green-500)"></i> ضمان سنة</div>
+                    <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary)"><i
+                            class="fas fa-credit-card" style="color:var(--green-500)"></i> دفع آمن</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews -->
+        <div
+            style="background:var(--bg-card);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm);margin-bottom:32px">
+            <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:24px"><i class="fas fa-comments"
+                    style="color:var(--green-500)"></i> التقييمات والمراجعات (127)</h2>
+            <div style="display:grid;grid-template-columns:200px 1fr;gap:32px">
+                <div style="text-align:center">
+                    <div style="font-size:3rem;font-weight:900;color:var(--green-500)">4.5</div>
+                    <div class="rating" style="justify-content:center"><i class="fas fa-star"
+                            style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i
+                            class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star"
+                            style="color:var(--gold)"></i><i class="fas fa-star-half-alt" style="color:var(--gold)"></i>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:.85rem;margin-top:4px">من 127 تقييم</p>
+                </div>
+                <div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span
+                            style="font-size:.85rem;width:20px">5</span>
+                        <div style="flex:1;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden">
+                            <div style="width:60%;height:100%;background:var(--gold);border-radius:4px"></div>
+                        </div><span style="font-size:.78rem;color:var(--text-muted)">76</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span
+                            style="font-size:.85rem;width:20px">4</span>
+                        <div style="flex:1;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden">
+                            <div style="width:25%;height:100%;background:var(--gold);border-radius:4px"></div>
+                        </div><span style="font-size:.78rem;color:var(--text-muted)">32</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span
+                            style="font-size:.85rem;width:20px">3</span>
+                        <div style="flex:1;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden">
+                            <div style="width:10%;height:100%;background:var(--gold);border-radius:4px"></div>
+                        </div><span style="font-size:.78rem;color:var(--text-muted)">13</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span
+                            style="font-size:.85rem;width:20px">2</span>
+                        <div style="flex:1;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden">
+                            <div style="width:3%;height:100%;background:var(--gold);border-radius:4px"></div>
+                        </div><span style="font-size:.78rem;color:var(--text-muted)">4</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px"><span
+                            style="font-size:.85rem;width:20px">1</span>
+                        <div style="flex:1;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden">
+                            <div style="width:2%;height:100%;background:var(--gold);border-radius:4px"></div>
+                        </div><span style="font-size:.78rem;color:var(--text-muted)">2</span>
+                    </div>
+                </div>
+            </div>
+            <hr style="border:none;border-top:1px solid var(--cream-dark);margin:24px 0">
+            <!-- Review items -->
+            <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--cream-dark)">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                    <img src="https://ui-avatars.com/api/?name=عبدالله&background=2E7D32&color=fff&size=40"
+                        style="width:40px;height:40px;border-radius:50%" alt="">
+                    <div><strong style="font-size:.9rem">عبدالله محمد</strong>
+                        <div class="rating" style="gap:2px"><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i></div>
+                    </div>
+                    <span style="margin-right:auto;font-size:.78rem;color:var(--text-muted)">منذ 3 أيام</span>
+                </div>
+                <p style="font-size:.9rem;color:var(--text-secondary);line-height:1.7">كنبة ممتازة جداً! الخامة فاخرة
+                    والألوان حقيقية كما في الصورة. التوصيل كان سريع والتغليف محكم. أنصح بها بشدة 👍</p>
+            </div>
+            <div style="margin-bottom:20px">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                    <img src="https://ui-avatars.com/api/?name=سمية&background=8d6e63&color=fff&size=40"
+                        style="width:40px;height:40px;border-radius:50%" alt="">
+                    <div><strong style="font-size:.9rem">سمية أحمد</strong>
+                        <div class="rating" style="gap:2px"><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="fas fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i><i class="far fa-star"
+                                style="color:var(--gold);font-size:.7rem"></i></div>
+                    </div>
+                    <span style="margin-right:auto;font-size:.78rem;color:var(--text-muted)">منذ أسبوع</span>
+                </div>
+                <p style="font-size:.9rem;color:var(--text-secondary);line-height:1.7">جودة ممتازة والشكل أنيق. فقط
+                    تمنيت لو كانت أكبر قليلاً. بشكل عام راضية عن الشراء.</p>
+            </div>
+            <button class="btn btn-outline" style="width:100%">عرض جميع التقييمات</button>
+        </div>
+
+        <!-- Similar Products -->
+        <div class="section-header">
+            <h2><i class="fas fa-th-large"></i> منتجات مشابهة</h2>
+        </div>
+        <div class="products-grid" id="similarProducts"></div>
+    </main>
+
+    <div class="compare-bar" id="compareBar"><strong>المقارنة:</strong>
+        <div class="items" id="compareItems"></div><button class="btn btn-primary btn-sm" onclick="openCompare()">قارن
+            الآن</button><button class="btn btn-ghost btn-sm" onclick="clearCompare()">مسح</button>
+    </div>
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/app.js"></script>
+    <script>
+        function changeQty(d) { const i = document.getElementById('qty'); i.value = Math.max(1, +i.value + d) }
+        document.querySelectorAll('.option-val').forEach(v => v.onclick = function () { this.parentElement.querySelectorAll('.option-val').forEach(x => x.classList.remove('active')); this.classList.add('active') });
+        document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.onclick = function () { document.querySelectorAll('.gallery-thumb').forEach(x => x.classList.remove('active')); this.classList.add('active'); document.getElementById('mainImg').src = this.querySelector('img').src.replace('w=100&h=100', 'w=600&h=600') });
+
+        // Load product dynamically from URL
+        document.addEventListener('DOMContentLoaded', function () {
+            const pid = parseInt(getParam('id'));
+            if (pid && window.productsData) {
+                const p = productsData.find(x => x.id === pid);
+                if (p) {
+                    document.title = p.name + ' - بيتي';
+                    document.getElementById('breadcrumbName').textContent = p.name;
+                    document.querySelector('.product-info h1').textContent = p.name;
+                    document.querySelector('.product-info .condition').textContent = p.condition === 'used' ? 'مستعمل' : 'جديد';
+                    document.querySelector('.product-info .condition').className = 'condition ' + (p.condition === 'used' ? 'condition-used' : 'condition-new');
+                    document.querySelector('.current-price').textContent = p.price.toLocaleString() + ' ر.ي';
+                    if (p.oldPrice) {
+                        document.querySelector('.original-price').textContent = p.oldPrice.toLocaleString() + ' ر.ي';
+                        document.querySelector('.save-badge').textContent = 'وفر ' + (p.oldPrice - p.price).toLocaleString() + ' ر.ي (' + Math.round((1 - p.price / p.oldPrice) * 100) + '%)';
+                    } else {
+                        document.querySelector('.original-price').style.display = 'none';
+                        document.querySelector('.save-badge').style.display = 'none';
+                    }
+                    // Gallery images
+                    document.getElementById('mainImg').src = p.img.replace('w=400&h=300', 'w=600&h=600');
+                    document.querySelectorAll('.gallery-thumb img').forEach(img => {
+                        img.src = p.img.replace('w=400&h=300', 'w=100&h=100');
+                    });
+                    // Add to cart button
+                    const addBtn = document.querySelector('.action-btns .btn-primary');
+                    addBtn.setAttribute('onclick', 'addToCart(' + p.id + ')');
+                    const wishBtn = document.querySelector('.action-btns .btn-icon');
+                    if (wishBtn) wishBtn.setAttribute('onclick', 'toggleWishlist(' + p.id + ')');
+                    // Seller
+                    const sellerInfo = document.querySelector('.product-info [style*="cream-dark"]');
+                    if (sellerInfo) {
+                        sellerInfo.querySelector('img').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(p.seller) + '&background=2E7D32&color=fff&size=50';
+                        sellerInfo.querySelector('h4').innerHTML = p.seller + ' <i class="fas fa-check-circle" style="color:var(--green-500);font-size:.8rem"></i>';
+                    }
+                    // Similar products from same category
+                    const similar = productsData.filter(x => x.cat === p.cat && x.id !== p.id).slice(0, 4);
+                    const sp = document.getElementById('similarProducts');
+                    if (sp) sp.innerHTML = similar.map(s => renderProductCard(s)).join('');
+                }
+            } else {
+                // Default similar products
+                const sp = document.getElementById('similarProducts');
+                if (sp && window.productsData) sp.innerHTML = productsData.slice(0, 4).map(s => renderProductCard(s)).join('');
+            }
+        });
+    </script>
+</body>
+
+</html>

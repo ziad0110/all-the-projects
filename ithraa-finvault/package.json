@@ -1,0 +1,13 @@
+{
+  "name": "ithraa-finvault",
+  "version": "2.0.0",
+  "description": "إثراء FinVault — محفظة مالية ذكية (Frontend Demo)",
+  "scripts": {
+    "build:css": "npx tailwindcss -i css/tailwind-input.css -o css/tailwind-built.css --minify",
+    "dev": "npx tailwindcss -i css/tailwind-input.css -o css/tailwind-built.css --watch",
+    "start": "npx serve . -p 3000"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.0"
+  }
+}

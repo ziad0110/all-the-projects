@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header & Summary Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-table me-2"></i>ميزان المراجعة</h2>
+            <p class="text-muted">نظرة شاملة على أرصدة الحسابات وحركات المدين والدائن</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-dark rounded-pill px-4 shadow-sm" onclick="window.print()">
+                <i class="bi bi-printer me-2"></i>طباعة التقرير
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    {% set ns = namespace(td=0, tc=0, tob=0) %}
+    {% for r in data %}
+        {% if not r.is_parent %}
+            {% set ns.td = ns.td + r.total_debit %}
+            {% set ns.tc = ns.tc + r.total_credit %}
+            {% set ns.tob = ns.tob + r.opening_balance %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="row mb-4 no-print">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-white" style="border-radius: 20px; background: linear-gradient(45deg, #3b82f6, #2563eb) !important;">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">إجمالي الحركات المدينة</div>
+                        <div class="h3 fw-bold mb-0">{{ ns.td|currency }}</div>
+                    </div>
+                    <i class="bi bi-arrow-up-right-circle h1 opacity-25"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-white" style="border-radius: 20px; background: linear-gradient(45deg, #10b981, #059669) !important;">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">إجمالي الحركات الدائنة</div>
+                        <div class="h3 fw-bold mb-0">{{ ns.tc|currency }}</div>
+                    </div>
+                    <i class="bi bi-arrow-down-left-circle h1 opacity-25"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-white" style="border-radius: 20px; background: linear-gradient(45deg, #6366f1, #4f46e5) !important;">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">توازن الميزان (الفرق)</div>
+                        <div class="h3 fw-bold mb-0">{{ (ns.td - ns.tc)|abs|currency }}</div>
+                    </div>
+                    <i class="bi bi-scale h1 opacity-25"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Card -->
+    <div class="card border-0 shadow-sm mb-4 no-print" style="border-radius: 20px;">
+        <div class="card-body p-4">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small text-muted">من تاريخ</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-event"></i></span>
+                        <input type="date" name="date_from" value="{{ date_from or '' }}" class="form-control border-0 bg-light">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small text-muted">إلى تاريخ</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check"></i></span>
+                        <input type="date" name="date_to" value="{{ date_to or '' }}" class="form-control border-0 bg-light">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100 py-2 rounded-pill fw-bold shadow-sm">
+                        <i class="bi bi-search me-1"></i> تحديث التقرير
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Trial Balance Table -->
+    <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">رقم الحساب</th>
+                        <th>اسم الحساب</th>
+                        <th>النوع</th>
+                        <th class="text-end">رصيد افتتاحي</th>
+                        <th class="text-end">مدين</th>
+                        <th class="text-end">دائن</th>
+                        <th class="text-end pe-4">الرصيد النهائي</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in data %}
+                    <tr class="{{ 'table-light fw-bold text-primary' if r.is_parent else '' }}">
+                        <td class="ps-4">
+                            <span class="badge bg-{{ 'primary' if r.is_parent else 'secondary' }} opacity-75">
+                                {{ r.account_code }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if r.is_parent %}<i class="bi bi-folder2-open me-1"></i>{% endif %}
+                            {{ r.name_ar }}
+                        </td>
+                        <td><small class="text-muted">{{ r.account_type }}</small></td>
+                        <td class="text-end">{{ r.opening_balance|currency }}</td>
+                        <td class="text-end text-primary">{{ r.total_debit|currency }}</td>
+                        <td class="text-end text-danger">{{ r.total_credit|currency }}</td>
+                        <td class="text-end pe-4 fw-bold {{ 'text-success' if r.balance >= 0 else 'text-danger' }}">
+                            {{ r.balance|currency }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="bg-dark text-white">
+                    <tr class="fw-bold">
+                        <td colspan="4" class="ps-4 py-3">الإجمالي العام</td>
+                        <td class="text-end py-3">{{ ns.td|currency }}</td>
+                        <td class="text-end py-3">{{ ns.tc|currency }}</td>
+                        <td class="text-end pe-4 py-3">---</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- Print Header (Visible only on print) -->
+    <div class="print-only-header text-center mb-4 d-none d-print-block">
+        <h1 class="fw-bold mb-0">Smart Accounting Suite (SAS)</h1>
+        <h3 class="text-muted">تقرير ميزان المراجعة</h3>
+        <p class="mb-0">الفترة من: {{ date_from or 'البداية' }} إلى: {{ date_to or 'اليوم' }}</p>
+        <p>تاريخ الاستخراج: <span id="printDate"></span></p>
+        <hr style="border-top: 3px double #333;">
+    </div>
+</div>
+
+<style>
+    @media print {
+        .no-print, .btn, .btn-group, .sidebar, .app-header { display: none !important; }
+        .main-content { margin: 0 !important; padding: 0 !important; }
+        body { background: white !important; }
+        .card { border: 1px solid #eee !important; box-shadow: none !important; }
+        .table-primary { background-color: #f8f9fa !important; color: black !important; }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const pDate = document.getElementById('printDate');
+        if (pDate) pDate.textContent = new Date().toLocaleString('ar-YE');
+    });
+</script>
+{% endblock %}

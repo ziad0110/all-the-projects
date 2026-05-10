@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+
+# Databases
+instance/*.db
+*.db
+!schema.sql
+
+# Node / Electron
+node_modules/
+dist/*.exe
+dist/win-unpacked/
+build/
+
+# Obfuscation & Security
+obf_dist/
+pyarmor.bug.log
+# Keep the key maker secret!
+SAS_Key_Maker.py
+SAS_Admin_Generator.html
+
+# IDEs
+.vscode/
+.idea/

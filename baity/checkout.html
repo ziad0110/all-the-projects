@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>إتمام الطلب - بيتي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <a href="cart.html" class="header-btn"><i class="fas fa-shopping-cart"></i><span class="badge"
+                        id="cartCount">3</span></a>
+                <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+    <main class="main-content full">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:.9rem;color:var(--text-muted)">
+            <a href="index.html" style="color:var(--green-500)">الرئيسية</a><i class="fas fa-chevron-left"
+                style="font-size:.6rem"></i><a href="cart.html" style="color:var(--green-500)">السلة</a><i
+                class="fas fa-chevron-left" style="font-size:.6rem"></i><span>إتمام الطلب</span>
+        </div>
+        <!-- Steps -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:32px">
+            <div style="text-align:center;flex:1">
+                <div
+                    style="width:36px;height:36px;border-radius:50%;background:var(--green-500);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:700">
+                    1</div><span style="font-size:.82rem;font-weight:600;color:var(--green-500)">العنوان</span>
+            </div>
+            <div style="flex:2;height:3px;background:var(--green-500);margin-top:-20px"></div>
+            <div style="text-align:center;flex:1">
+                <div
+                    style="width:36px;height:36px;border-radius:50%;background:var(--green-500);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:700">
+                    2</div><span style="font-size:.82rem;font-weight:600;color:var(--green-500)">الدفع</span>
+            </div>
+            <div style="flex:2;height:3px;background:var(--cream-dark);margin-top:-20px"></div>
+            <div style="text-align:center;flex:1">
+                <div
+                    style="width:36px;height:36px;border-radius:50%;background:var(--cream-dark);color:var(--text-muted);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:700">
+                    3</div><span style="font-size:.82rem;color:var(--text-muted)">التأكيد</span>
+            </div>
+        </div>
+
+        <div class="checkout-layout">
+            <div>
+                <!-- Shipping -->
+                <div class="checkout-section">
+                    <h3><span class="step">1</span> عنوان الشحن</h3>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                        <div class="form-group"><label class="form-label">الاسم الأول</label><input type="text"
+                                class="form-control" placeholder="أحمد"></div>
+                        <div class="form-group"><label class="form-label">اسم العائلة</label><input type="text"
+                                class="form-control" placeholder="محمد"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">العنوان التفصيلي</label><input type="text"
+                            class="form-control" placeholder="الشارع، المبنى، الشقة"></div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                        <div class="form-group"><label class="form-label">المدينة</label><select class="form-control">
+                                <option>صنعاء</option>
+                                <option>عدن</option>
+                                <option>تعز</option>
+                                <option>الحديدة</option>
+                                <option>إب</option>
+                                <option>ذمار</option>
+                                <option>المكلا</option>
+                            </select></div>
+                        <div class="form-group"><label class="form-label">رقم الهاتف</label><input type="tel"
+                                class="form-control" placeholder="777-123-456"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">ملاحظات (اختياري)</label><textarea
+                            class="form-control" rows="2" placeholder="تعليمات إضافية للتوصيل..."></textarea></div>
+                </div>
+
+                <!-- Shipping Method -->
+                <div class="checkout-section">
+                    <h3><span class="step">2</span> طريقة الشحن</h3>
+                    <label class="payment-option active" style="margin-bottom:12px"><input type="radio" name="shipping"
+                            checked style="display:none">
+                        <div class="icon" style="background:var(--green-50);color:var(--green-500)"><i
+                                class="fas fa-truck-fast"></i></div>
+                        <div>
+                            <h4>توصيل سريع (1-2 يوم)</h4>
+                            <p>مجاني للطلبات أكثر من 1000 ر.ي</p>
+                        </div><strong style="margin-right:auto;color:var(--green-500)">مجاني</strong>
+                    </label>
+                    <label class="payment-option"><input type="radio" name="shipping" style="display:none">
+                        <div class="icon"><i class="fas fa-truck"></i></div>
+                        <div>
+                            <h4>توصيل عادي (3-5 أيام)</h4>
+                            <p>شحن اقتصادي</p>
+                        </div><strong style="margin-right:auto">200 ر.ي</strong>
+                    </label>
+                </div>
+
+                <!-- Payment -->
+                <div class="checkout-section">
+                    <h3><span class="step">3</span> طريقة الدفع</h3>
+                    <div class="payment-methods-grid">
+                        <label class="payment-option active" onclick="showPayment('card')"><input type="radio"
+                                name="payment" value="card" checked style="display:none">
+                            <div class="icon" style="background:var(--green-50);color:var(--green-500)"><i
+                                    class="fas fa-credit-card"></i></div>
+                            <div>
+                                <h4>بطاقة ائتمان/خصم</h4>
+                                <p>Visa, MasterCard, Mada</p>
+                            </div>
+                        </label>
+                        <label class="payment-option" onclick="showPayment('cash')"><input type="radio" name="payment"
+                                value="cash" style="display:none">
+                            <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div>
+                                <h4>الدفع عند الاستلام</h4>
+                                <p>كاش عند التوصيل</p>
+                            </div>
+                        </label>
+                        <label class="payment-option" onclick="showPayment('wallet')"><input type="radio" name="payment"
+                                value="wallet" style="display:none">
+                            <div class="icon"><i class="fas fa-wallet"></i></div>
+                            <div>
+                                <h4>محفظة إلكترونية</h4>
+                                <p>Apple Pay, PayPal, STC Pay</p>
+                            </div>
+                        </label>
+                        <label class="payment-option" onclick="showPayment('bank')"><input type="radio" name="payment"
+                                value="bank" style="display:none">
+                            <div class="icon"><i class="fas fa-university"></i></div>
+                            <div>
+                                <h4>تحويل بنكي</h4>
+                                <p>تحويل مباشر لحسابنا</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Card Details -->
+                    <div id="cardDetails"
+                        style="margin-top:20px;padding:20px;background:var(--cream-dark);border-radius:var(--radius-md)">
+                        <div class="form-group"><label class="form-label">رقم البطاقة</label><input type="text"
+                                class="form-control" placeholder="1234 5678 9012 3456" maxlength="19"></div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                            <div class="form-group"><label class="form-label">تاريخ الانتهاء</label><input type="text"
+                                    class="form-control" placeholder="MM/YY"></div>
+                            <div class="form-group"><label class="form-label">CVV</label><input type="text"
+                                    class="form-control" placeholder="123" maxlength="4"></div>
+                        </div>
+                        <div class="form-group"><label class="form-label">الاسم على البطاقة</label><input type="text"
+                                class="form-control" placeholder="الاسم كما هو مطبوع على البطاقة"></div>
+                    </div>
+
+                    <!-- Wallet -->
+                    <div id="walletDetails" style="margin-top:20px;display:none">
+                        <div style="display:flex;gap:12px;flex-wrap:wrap">
+                            <button class="btn btn-outline" style="flex:1;min-width:120px"><i class="fab fa-apple-pay"
+                                    style="font-size:1.5rem"></i> Apple Pay</button>
+                            <button class="btn btn-outline" style="flex:1;min-width:120px"><i class="fab fa-paypal"
+                                    style="font-size:1.5rem;color:#003087"></i> PayPal</button>
+                            <button class="btn btn-outline" style="flex:1;min-width:120px"><i class="fas fa-mobile-alt"
+                                    style="color:var(--green-500)"></i> STC Pay</button>
+                        </div>
+                    </div>
+
+                    <!-- Bank -->
+                    <div id="bankDetails"
+                        style="margin-top:20px;display:none;padding:20px;background:var(--cream-dark);border-radius:var(--radius-md)">
+                        <p style="font-size:.9rem;margin-bottom:12px"><strong>معلومات التحويل:</strong></p>
+                        <p style="font-size:.88rem;color:var(--text-secondary);line-height:2">🏦 البنك: البنك الأهلي
+                            اليمني<br>📋 رقم الحساب: 1234567890<br>👤 اسم الحساب: شركة بيتي للتجارة الإلكترونية<br>💰
+                            المبلغ: 4,536 ر.ي</p>
+                        <div class="form-group" style="margin-top:12px"><label class="form-label">رقم إيصال
+                                التحويل</label><input type="text" class="form-control"
+                                placeholder="أدخل رقم الإيصال بعد التحويل"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="cart-summary">
+                <h3><i class="fas fa-receipt"></i> ملخص الطلب</h3>
+                <div id="checkoutItemsList" style="margin-bottom:16px">
+                    <!-- Dynamic items -->
+                </div>
+                <div class="summary-row"><span>المجموع الفرعي</span><span id="subtotal">0 ر.ي</span></div>
+                <div class="summary-row"><span>الشحن</span><span id="shipping">مجاني</span></div>
+                <div class="summary-row"><span>الضريبة (5%)</span><span id="tax">0 ر.ي</span></div>
+                <div class="summary-row total"><span>الإجمالي</span><span id="grandTotal">0 ر.ي</span></div>
+                <button class="btn btn-primary btn-lg" style="width:100%;margin-top:16px" onclick="placeOrder()"><i
+                        class="fas fa-check-circle"></i> تأكيد الطلب</button>
+                <div
+                    style="margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:.78rem;color:var(--text-muted)">
+                    <i class="fas fa-lock"></i> معاملة آمنة ومشفرة
+                </div>
+                <div style="margin-top:16px;display:flex;gap:8px;justify-content:center">
+                    <span style="font-size:1.5rem;color:var(--text-muted)"><i class="fab fa-cc-visa"></i></span>
+                    <span style="font-size:1.5rem;color:var(--text-muted)"><i class="fab fa-cc-mastercard"></i></span>
+                    <span style="font-size:1.5rem;color:var(--text-muted)"><i class="fab fa-cc-apple-pay"></i></span>
+                    <span style="font-size:1.5rem;color:var(--text-muted)"><i class="fab fa-paypal"></i></span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal" style="text-align:center">
+            <div
+                style="width:80px;height:80px;border-radius:50%;background:var(--green-50);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2.5rem;color:var(--green-500)">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 style="color:var(--green-500)">تم تأكيد طلبك بنجاح! 🎉</h2>
+            <p style="color:var(--text-muted);margin:12px 0 8px">رقم الطلب: <strong style="color:var(--text-primary)"
+                    id="orderNum">#BYT-2026-1234</strong></p>
+            <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:24px">سيتم إرسال تأكيد إلى بريدك
+                الإلكتروني. يمكنك تتبع طلبك من صفحة الملف الشخصي.</p>
+            <div style="display:flex;gap:12px;justify-content:center"><a href="index.html"
+                    class="btn btn-primary">العودة للرئيسية</a><a href="profile.html" class="btn btn-outline">تتبع
+                    الطلب</a></div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (cart.length === 0) {
+                window.location.href = 'cart.html';
+                return;
+            }
+            renderSummary();
+        });
+
+        function renderSummary() {
+            const list = document.getElementById('checkoutItemsList');
+            let sub = 0;
+
+            list.innerHTML = cart.map(item => {
+                const p = productsData.find(x => x.id === item.id) || item;
+                sub += p.price * item.qty;
+                return `
+                <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--cream-dark)">
+                    <img src="${p.img}" style="width:50px;height:50px;border-radius:8px;object-fit:cover" alt="">
+                    <div style="flex:1">
+                        <p style="font-size:.82rem;font-weight:500">${p.name}</p>
+                        <span style="font-size:.78rem;color:var(--text-muted)">×${item.qty}</span>
+                    </div>
+                    <span style="font-size:.88rem;font-weight:600">${(p.price * item.qty).toLocaleString()} ر.ي</span>
+                </div>`;
+            }).join('');
+
+            const tax = Math.round(sub * 0.05);
+            const shipping = sub > 5000 ? 0 : 500;
+            const total = sub + tax + shipping;
+
+            document.getElementById('subtotal').textContent = sub.toLocaleString() + ' ر.ي';
+            document.getElementById('tax').textContent = tax.toLocaleString() + ' ر.ي';
+            document.getElementById('shipping').textContent = shipping === 0 ? 'مجاني' : shipping.toLocaleString() + ' ر.ي';
+            document.getElementById('grandTotal').textContent = total.toLocaleString() + ' ر.ي';
+
+            // Update bank details amount if shown
+            const bankMsg = document.querySelector('#bankDetails p[style*="line-height:2"]');
+            if (bankMsg) bankMsg.innerHTML = bankMsg.innerHTML.replace(/\d+,?\d+ ر\.ي$/, total.toLocaleString() + ' ر.ي');
+        }
+
+        function showPayment(t) {
+            document.querySelectorAll('.payment-option').forEach(el => {
+                el.classList.remove('active');
+                const radio = el.querySelector('input');
+                if (radio && radio.value === t) {
+                    el.classList.add('active');
+                    radio.checked = true;
+                }
+            });
+            document.getElementById('cardDetails').style.display = t === 'card' ? 'block' : 'none';
+            document.getElementById('walletDetails').style.display = t === 'wallet' ? 'block' : 'none';
+            document.getElementById('bankDetails').style.display = t === 'bank' ? 'block' : 'none';
+        }
+
+        function placeOrder() {
+            const randOrder = 'BYT-' + Math.floor(Math.random() * 900000 + 100000);
+            document.getElementById('orderNum').textContent = '#' + randOrder;
+            document.getElementById('successModal').classList.add('open');
+
+            // Save order to history (simulated)
+            const orders = JSON.parse(localStorage.getItem('bayti-orders') || '[]');
+            orders.push({
+                id: randOrder,
+                date: new Date().toLocaleDateString('ar-EG'),
+                total: document.getElementById('grandTotal').textContent,
+                status: 'pending',
+                items: cart
+            });
+            localStorage.setItem('bayti-orders', JSON.stringify(orders));
+
+            // Clear cart
+            localStorage.setItem('bayti-cart', '[]');
+            cart = [];
+            updateCartBadge();
+        }
+    </script>
+</body>
+
+</html>

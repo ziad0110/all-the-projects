@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-xl-10">
+            <!-- Header Section -->
+            <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeIn">
+                <div class="d-flex align-items-center">
+                    <div class="icon-shape bg-soft-primary rounded-4 p-3 me-3 shadow-sm">
+                        <i class="bi bi-box-seam-fill fs-2 text-primary"></i>
+                    </div>
+                    <div>
+                        <h2 class="fw-bold mb-1">{{ 'تعديل بيانات الصنف' if item else 'إضافة صنف جديد' }}</h2>
+                        <p class="text-muted small mb-0">إدارة تفاصيل المنتج، الأسعار، وإعدادات المخزون المتقدمة</p>
+                    </div>
+                </div>
+                <a href="{{ url_for('items_list') }}" class="btn btn-outline-secondary rounded-pill px-4 transition-all hover-lift shadow-sm">
+                    <i class="bi bi-arrow-right me-2"></i>العودة للقائمة
+                </a>
+            </div>
+
+            <form method="post" class="animate__animated animate__fadeInUp">
+                <div class="row g-4">
+                    <!-- Right Column: Basic & Pricing -->
+                    <div class="col-lg-8">
+                        <!-- Basic Info Card -->
+                        <div class="card border-0 shadow-lg mb-4" style="border-radius: 20px;">
+                            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                                <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-info-circle-fill me-2"></i>البيانات الأساسية</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">كود الصنف <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0"><i class="bi bi-hash"></i></span>
+                                            <input class="form-control border-0 bg-light" name="item_code" value="{{ item.item_code if item else '' }}" required placeholder="ITEM-100">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label class="form-label fw-bold text-muted small">اسم الصنف (عربي) <span class="text-danger">*</span></label>
+                                        <input class="form-control border-0 bg-light fw-bold" name="name_ar" value="{{ item.name_ar if item else '' }}" required placeholder="اسم المنتج باللغة العربية">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-muted small">الاسم بالإنجليزية</label>
+                                        <input class="form-control border-0 bg-light" name="name_en" value="{{ item.name_en if item else '' }}" placeholder="Product English Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-muted small">الباركود (Barcode)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0"><i class="bi bi-upc-scan"></i></span>
+                                            <input class="form-control border-0 bg-light" name="barcode" value="{{ item.barcode if item else '' }}" placeholder="امسح أو أدخل الباركود">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">التصنيف الرئيسي</label>
+                                        <select class="form-select border-0 bg-light select2" name="category_id">
+                                            <option value="">-- اختر التصنيف --</option>
+                                            {% for x in categories %}
+                                            <option value="{{ x.category_id }}" {% if item and item.category_id == x.category_id %}selected{% endif %}>{{ x.name_ar }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">وحدة القياس <span class="text-danger">*</span></label>
+                                        <select class="form-select border-0 bg-light" name="base_unit_id" required>
+                                            <option value="">-- اختر الوحدة --</option>
+                                            {% for x in units %}
+                                            <option value="{{ x.unit_id }}" {% if item and item.base_unit_id == x.unit_id %}selected{% endif %}>{{ x.name_ar }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">المورد الافتراضي</label>
+                                        <select class="form-select border-0 bg-light select2" name="default_supplier_id">
+                                            <option value="">-- مورد عام --</option>
+                                            {% for x in suppliers %}
+                                            <option value="{{ x.supplier_id }}" {% if item and item.default_supplier_id == x.supplier_id %}selected{% endif %}>{{ x.name_ar }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Card -->
+                        <div class="card border-0 shadow-lg mb-4" style="border-radius: 20px;">
+                            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                                <h5 class="fw-bold mb-0 text-success"><i class="bi bi-currency-dollar me-2"></i>الأسعار والضرائب</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">سعر التكلفة</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-soft-secondary border-0 text-secondary"><i class="bi bi-tag"></i></span>
+                                            <input class="form-control border-0 bg-light fw-bold" type="number" step="0.01" name="cost_price" value="{{ item.cost_price if item else 0 }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">سعر البيع</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-soft-success border-0 text-success"><i class="bi bi-cash-stack"></i></span>
+                                            <input class="form-control border-0 bg-soft-success fw-bold text-success" type="number" step="0.01" name="sale_price" value="{{ item_price.price if item_price else '' }}" placeholder="0.00">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-muted small">الضريبة %</label>
+                                        <div class="input-group">
+                                            <input class="form-control border-0 bg-light text-center fw-bold" type="number" step="0.01" name="tax_rate" value="{{ item.tax_rate if item else 0 }}">
+                                            <span class="input-group-text bg-light border-0 text-muted">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description Card -->
+                        <div class="card border-0 shadow-lg mb-4" style="border-radius: 20px;">
+                            <div class="card-body p-4">
+                                <label class="form-label fw-bold text-muted small">وصف الصنف / ملاحظات إضافية</label>
+                                <textarea class="form-control border-0 bg-light" name="description" rows="3" placeholder="أدخل أي تفاصيل إضافية عن الصنف هنا...">{{ item.description if item else '' }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Left Column: Settings & Actions -->
+                    <div class="col-lg-4">
+                        <!-- Inventory Settings Card -->
+                        <div class="card border-0 shadow-lg mb-4" style="border-radius: 20px;">
+                            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                                <h5 class="fw-bold mb-0 text-warning"><i class="bi bi-shield-check me-2"></i>إعدادات المخزون</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold text-muted small">حد الطلب (الحد الأدنى)</label>
+                                    <input class="form-control border-0 bg-light text-center fw-bold" type="number" step="0.01" name="min_stock" value="{{ item.min_stock if item else 0 }}">
+                                    <p class="text-muted xx-small mt-2 mb-0">سيقوم النظام بتنبيهك عند وصول المخزون لهذا الحد.</p>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <div class="setting-item p-3 border rounded-4 transition-all">
+                                        <div class="form-check form-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" name="has_expiry" id="has_expiry" {% if item and item.has_expiry %}checked{% endif %}>
+                                            <label class="form-check-label fw-bold small" for="has_expiry">تتبع تاريخ الصلاحية</label>
+                                        </div>
+                                    </div>
+                                    <div class="setting-item p-3 border rounded-4 transition-all">
+                                        <div class="form-check form-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" name="track_batches" id="track_batches" {% if item and item.track_batches %}checked{% endif %}>
+                                            <label class="form-check-label fw-bold small" for="track_batches">إدارة الدفعات (Batches)</label>
+                                        </div>
+                                    </div>
+                                    <div class="setting-item p-3 border rounded-4 transition-all">
+                                        <div class="form-check form-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" name="is_service" id="is_service" {% if item and item.is_service %}checked{% endif %}>
+                                            <label class="form-check-label fw-bold small" for="is_service">صنف خدمي (لا يخزن)</label>
+                                        </div>
+                                    </div>
+                                    <hr class="my-2 opacity-10">
+                                    <div class="setting-item p-3 border border-success border-opacity-25 bg-soft-success rounded-4 transition-all">
+                                        <div class="form-check form-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" name="is_active" id="is_active" {% if not item or item.is_active %}checked{% endif %}>
+                                            <label class="form-check-label fw-bold small text-success" for="is_active">الحالة: صنف نشط</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions Card -->
+                        <div class="card border-0 shadow-lg p-3 sticky-top" style="border-radius: 20px; top: 100px; z-index: 10;">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 rounded-4 py-3 fw-bold mb-2 shadow-sm transition-all hover-lift">
+                                <i class="bi bi-save2-fill me-2"></i>حفظ البيانات
+                            </button>
+                            <button type="reset" class="btn btn-light w-100 rounded-4 py-2 text-muted fw-bold transition-all">
+                                إعادة تعيين
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-soft: rgba(37, 99, 235, 0.1);
+        --success-soft: rgba(22, 163, 74, 0.1);
+        --warning-soft: rgba(245, 158, 11, 0.1);
+        --secondary-soft: rgba(100, 116, 139, 0.1);
+    }
+    .bg-soft-primary { background-color: var(--primary-soft); }
+    .bg-soft-success { background-color: var(--success-soft); }
+    .bg-soft-warning { background-color: var(--warning-soft); }
+    .bg-soft-secondary { background-color: var(--secondary-soft); }
+
+    .hover-lift:hover { transform: translateY(-3px); }
+    .transition-all { transition: all 0.3s ease; }
+
+    .form-control:focus, .form-select:focus {
+        background-color: #fff !important;
+        box-shadow: 0 0 0 0.25rem var(--primary-soft);
+        border: none;
+    }
+
+    .setting-item:hover { background-color: #f8fafc; border-color: #cbd5e1 !important; }
+    .xx-small { font-size: 0.65rem; }
+
+    [data-theme='dark'] .card { background-color: #1e293b; color: #fff; }
+    [data-theme='dark'] .bg-light { background-color: #0f172a !important; color: #cbd5e1; }
+    [data-theme='dark'] .form-control, [data-theme='dark'] .form-select { color: #fff; }
+    [data-theme='dark'] .setting-item:hover { background-color: #334155; }
+</style>
+{% endblock %}

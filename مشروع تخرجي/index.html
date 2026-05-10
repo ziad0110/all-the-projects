@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مختبر كمومي تفاعلي - محاكاة الدوائر الكمومية، التشفير الكمومي BB84، وسباق خوارزمية Grover">
+    <title>Quantum Lab | مختبر كمومي تفاعلي</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loader-content">
+            <div class="atom-loader">
+                <div class="nucleus"></div>
+                <div class="orbit orbit-1"><div class="electron"></div></div>
+                <div class="orbit orbit-2"><div class="electron"></div></div>
+                <div class="orbit orbit-3"><div class="electron"></div></div>
+            </div>
+            <h2 class="loader-title">QUANTUM LAB</h2>
+            <p class="loader-subtitle">جارٍ تهيئة المحاكي الكمومي...</p>
+            <div class="loader-bar"><div class="loader-bar-fill" id="loader-bar-fill"></div></div>
+            <div class="loader-facts" id="loader-facts">الكيوبت يمكنه أن يكون 0 و 1 في نفس الوقت!</div>
+        </div>
+    </div>
+
+    <!-- Particle Background Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="app-container">
+        <!-- ============================================================
+             HEADER & NAVIGATION
+             ============================================================ -->
+        <header class="app-header">
+            <div class="logo-section">
+                <div class="logo-icon">⚛️</div>
+                <div>
+                    <div class="logo-text">QUANTUM LAB</div>
+                    <div class="logo-subtitle">مختبر كمومي تفاعلي</div>
+                </div>
+            </div>
+
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-section="landing" id="nav-landing">
+                    <span class="tab-icon">🏠</span>
+                    <span>الرئيسية</span>
+                </button>
+                <button class="nav-tab" data-section="circuit" id="nav-circuit">
+                    <span class="tab-icon">🔬</span>
+                    <span>محاكي الدوائر</span>
+                    <span class="tab-number">01</span>
+                </button>
+                <button class="nav-tab" data-section="qkd" id="nav-qkd">
+                    <span class="tab-icon">🔐</span>
+                    <span>التشفير الكمومي</span>
+                    <span class="tab-number">02</span>
+                </button>
+                <button class="nav-tab" data-section="grover" id="nav-grover">
+                    <span class="tab-icon">🏎️</span>
+                    <span>سباق Grover</span>
+                    <span class="tab-number">03</span>
+                </button>
+                <button class="nav-tab" data-section="quantum-world" id="nav-quantum-world">
+                    <span class="tab-icon">🌌</span>
+                    <span>عالم الكم</span>
+                    <span class="tab-number">04</span>
+                </button>
+                <button class="nav-tab" data-section="quiz" id="nav-quiz">
+                    <span class="tab-icon">📝</span>
+                    <span>اختبار ذاتي</span>
+                    <span class="tab-number">05</span>
+                </button>
+                <button class="nav-tab" data-section="about" id="nav-about">
+                    <span class="tab-icon">📖</span>
+                    <span>حول المشروع</span>
+                </button>
+            </nav>
+
+            <div class="header-info">
+                <div class="qubit-counter" id="status-display">⚡ جاهز</div>
+            </div>
+        </header>
+
+        <!-- ============================================================
+             MAIN CONTENT
+             ============================================================ -->
+        <main class="main-content">
+
+            <!-- ========== LANDING PAGE ========== -->
+            <section class="section active" id="section-landing">
+                <div class="landing-section">
+                    <h1 class="landing-title animate-float">QUANTUM LAB</h1>
+                    <p class="landing-subtitle">
+                        استكشف عالم الحوسبة الكمومية من خلال ثلاث تجارب تفاعلية مذهلة.
+                        ابنِ دوائر كمومية، جرّب التشفير الكمومي، وشاهد قوة خوارزمية Grover في البحث.
+                    </p>
+
+                    <div class="landing-cards" style="grid-template-columns: repeat(2, 1fr);">
+                        <!-- Card 1: Circuit Simulator -->
+                        <div class="glass-card landing-card" data-navigate="circuit" style="--card-glow: rgba(0, 212, 255, 0.15)">
+                            <div class="card-icon">🔬</div>
+                            <div class="card-label">محاكي الدوائر الكمومية</div>
+                            <div class="card-desc">
+                                ابنِ دوائر كمومية بالسحب والإفلات. شاهد كرة بلوخ تدور والاحتمالات تتغير في الوقت الحقيقي.
+                            </div>
+                        </div>
+
+                        <!-- Card 2: QKD -->
+                        <div class="glass-card landing-card" data-navigate="qkd" style="--card-glow: rgba(168, 85, 247, 0.15)">
+                            <div class="card-icon">🔐</div>
+                            <div class="card-label">التشفير الكمومي BB84</div>
+                            <div class="card-desc">
+                                شاهد الفوتونات تنتقل بين أليس وبوب. العب دور المتنصت واكتشف كيف يُكشف التنصت كمومياً.
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Grover Race -->
+                        <div class="glass-card landing-card" data-navigate="grover" style="--card-glow: rgba(6, 214, 160, 0.15)">
+                            <div class="card-icon">🏎️</div>
+                            <div class="card-label">سباق خوارزمية Grover</div>
+                            <div class="card-desc">
+                                سباق مباشر بين البحث التقليدي والكمومي. شاهد كيف يبحث الحاسوب الكمومي بسرعة √N.
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Quantum World -->
+                        <div class="glass-card landing-card" data-navigate="quantum-world" style="--card-glow: rgba(233, 196, 106, 0.15)">
+                            <div class="card-icon">🌌</div>
+                            <div class="card-label">عالم الكم التفاعلي</div>
+                            <div class="card-desc">
+                                استكشف ظواهر الكم بصرياً: التراكب، التشابك، النفق الكمومي، قطة شرودنغر، وانهيار الموجة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box" style="max-width: 700px; margin-top: 48px;">
+                        <span class="info-icon">💡</span>
+                        مشروع تخرج يجمع بين الفيزياء الكمومية وعلوم الحاسب. كل المحاكاة تعمل في المتصفح بدون خادم خارجي.
+                        التقنيات المستخدمة: JavaScript، Three.js، Canvas API، ورياضيات المصفوفات الكمومية.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== CIRCUIT SIMULATOR ========== -->
+            <section class="section" id="section-circuit">
+                <div class="section-header">
+                    <h2>🔬 QUANTUM CIRCUIT SIMULATOR</h2>
+                    <p>ابنِ دوائر كمومية وشاهد حالة الكيوبتات تتغير لحظياً على كرة بلوخ</p>
+                </div>
+
+                <!-- Controls Bar -->
+                <div class="circuit-controls">
+                    <button class="btn btn-primary" id="btn-run-circuit">
+                        <span>▶</span> تشغيل الدائرة
+                    </button>
+                    <button class="btn btn-secondary" id="btn-step-circuit">
+                        <span>⏭</span> خطوة بخطوة
+                    </button>
+                    <button class="btn btn-secondary" id="btn-measure-all">
+                        <span>📏</span> قياس الكل
+                    </button>
+                    <button class="btn btn-danger" id="btn-clear-circuit">
+                        <span>🗑</span> مسح
+                    </button>
+                    <button class="btn btn-secondary" id="btn-export-circuit" title="حفظ الدائرة كصورة">
+                        <span>📥</span> تصدير
+                    </button>
+                    <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px;">
+                        <label style="white-space: nowrap; font-size: 0.8rem;">دائرة جاهزة:</label>
+                        <select class="select-control" id="circuit-presets" style="min-width: 130px;">
+                            <option value="">— اختر —</option>
+                            <option value="bell">حالة بيل (Bell State)</option>
+                            <option value="ghz">حالة GHZ (3 كيوبت)</option>
+                            <option value="teleport">النقل الآني الكمومي</option>
+                            <option value="superpos">تراكب كامل</option>
+                            <option value="deutsch">خوارزمية Deutsch</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px; margin-right: auto;">
+                        <label style="white-space: nowrap; font-size: 0.8rem;">عدد الكيوبتات:</label>
+                        <select class="select-control" id="qubit-count" style="min-width: 100px;">
+                            <option value="1">1 كيوبت</option>
+                            <option value="2" selected>2 كيوبت</option>
+                            <option value="3">3 كيوبت</option>
+                            <option value="4">4 كيوبت</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="circuit-layout">
+                    <!-- Gate Palette -->
+                    <div class="glass-card gate-palette">
+                        <div class="card-title">⚡ البوابات الكمومية</div>
+                        <div class="gates-grid" id="gates-grid">
+                            <!-- Gates will be populated by JS -->
+                        </div>
+                        <div class="info-box" style="margin-top: 16px; font-size: 0.75rem;">
+                            <strong>💡 تلميح:</strong> اسحب البوابة وأفلتها على السلك في الدائرة
+                        </div>
+                    </div>
+
+                    <!-- Circuit Canvas -->
+                    <div class="glass-card circuit-canvas-area">
+                        <div class="card-title">📐 الدائرة الكمومية</div>
+                        <div class="circuit-canvas-wrapper">
+                            <canvas id="circuit-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Visualization Panel -->
+                    <div class="viz-panel">
+                        <!-- Bloch Sphere -->
+                        <div class="glass-card bloch-container">
+                            <div class="card-title">🌐 كرة بلوخ (Bloch Sphere)</div>
+                            <div id="bloch-canvas"></div>
+                            <div class="bloch-info" id="bloch-info">
+                                <span>θ = 0.00</span>
+                                <span>φ = 0.00</span>
+                                <span>|0⟩: 100%</span>
+                                <span>|1⟩: 0%</span>
+                            </div>
+                            <div class="form-group" style="margin-top: 8px; flex-direction: row; align-items: center; gap: 8px;">
+                                <label style="font-size: 0.75rem;">عرض كيوبت:</label>
+                                <select class="select-control" id="bloch-qubit-select" style="font-size: 0.75rem; padding: 4px 8px;">
+                                    <option value="0">q₀</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Probabilities -->
+                        <div class="glass-card probability-container">
+                            <div class="card-title">📊 احتمالات القياس</div>
+                            <div class="prob-bars" id="prob-bars">
+                                <!-- Bars populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== QKD BB84 ========== -->
+            <section class="section" id="section-qkd">
+                <div class="section-header">
+                    <h2>🔐 QUANTUM KEY DISTRIBUTION</h2>
+                    <p>بروتوكول BB84 - شاهد كيف يُوزَّع مفتاح تشفير مستحيل الاختراق باستخدام فوتونات كمومية</p>
+                </div>
+
+                <!-- Step Indicator -->
+                <div class="step-indicator" id="qkd-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <span>تحضير أليس</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <span>إرسال الفوتونات</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <span>قياس بوب</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step" data-step="4">
+                        <div class="step-number">4</div>
+                        <span>مطابقة الأساس</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step" data-step="5">
+                        <div class="step-number">5</div>
+                        <span>كشف التنصت</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step" data-step="6">
+                        <div class="step-number">6</div>
+                        <span>المفتاح النهائي</span>
+                    </div>
+                </div>
+
+                <div class="qkd-layout">
+                    <!-- Visual Area -->
+                    <div class="qkd-visual" id="qkd-visual">
+                        <div class="qkd-actors">
+                            <div class="actor alice">
+                                <div class="actor-avatar">👩‍🔬</div>
+                                <div class="actor-name" style="color: var(--accent-cyan);">أليس</div>
+                                <div class="actor-role">المُرسِلة</div>
+                            </div>
+
+                            <div class="actor eve" id="eve-actor" style="opacity: 0.3;">
+                                <div class="actor-avatar">🕵️</div>
+                                <div class="actor-name" style="color: var(--accent-red);">حوّاء</div>
+                                <div class="actor-role">المتنصتة</div>
+                            </div>
+
+                            <div class="actor bob">
+                                <div class="actor-avatar">👨‍🔬</div>
+                                <div class="actor-name" style="color: var(--accent-green);">بوب</div>
+                                <div class="actor-role">المُستقبِل</div>
+                            </div>
+                        </div>
+                        <div class="quantum-channel"></div>
+                        <!-- Photons will be injected here by JS -->
+                        <div id="photon-container"></div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="qkd-controls">
+                        <div class="form-group">
+                            <label>عدد الفوتونات:</label>
+                            <select class="select-control" id="qkd-num-bits">
+                                <option value="8">8 فوتونات</option>
+                                <option value="16" selected>16 فوتون</option>
+                                <option value="24">24 فوتون</option>
+                                <option value="32">32 فوتون</option>
+                            </select>
+                        </div>
+
+                        <div class="eve-toggle">
+                            <input type="checkbox" class="toggle-switch" id="eve-toggle">
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">🕵️ تفعيل حوّاء (المتنصتة)</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary);">ستحاول اعتراض الفوتونات</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="btn-start-qkd">
+                            <span>▶</span> بدء البروتوكول
+                        </button>
+                        <button class="btn btn-secondary" id="btn-qkd-auto">
+                            <span>⏩</span> تشغيل تلقائي
+                        </button>
+                        <button class="btn btn-danger" id="btn-reset-qkd">
+                            <span>🔄</span> إعادة
+                        </button>
+                    </div>
+
+                    <!-- QBER Meter -->
+                    <div class="glass-card qber-meter">
+                        <div class="card-title">📊 معدل الخطأ الكمومي (QBER)</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span id="qber-value" style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: var(--accent-green);">0.00%</span>
+                            <span class="status-badge secure" id="qber-status">🔒 آمن</span>
+                        </div>
+                        <div class="qber-bar-outer">
+                            <div class="qber-bar-inner" id="qber-bar" style="width: 0%;"></div>
+                        </div>
+                        <div class="qber-labels">
+                            <span>0% — آمن تماماً</span>
+                            <span>11% — حد الأمان</span>
+                            <span>25%+ — تنصت مؤكد!</span>
+                        </div>
+                    </div>
+
+                    <!-- Data Tables -->
+                    <div class="qkd-data-grid" id="qkd-data-grid">
+                        <!-- Alice's Data -->
+                        <div class="glass-card">
+                            <div class="card-title" style="color: var(--accent-cyan);">👩‍🔬 بيانات أليس</div>
+                            <table class="qkd-table" id="alice-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>البت</th>
+                                        <th>الأساس</th>
+                                        <th>الاستقطاب</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="alice-table-body">
+                                    <tr><td colspan="4" style="color: var(--text-dim);">ابدأ البروتوكول لعرض البيانات</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Bob's Data -->
+                        <div class="glass-card">
+                            <div class="card-title" style="color: var(--accent-green);">👨‍🔬 بيانات بوب</div>
+                            <table class="qkd-table" id="bob-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>الأساس</th>
+                                        <th>النتيجة</th>
+                                        <th>تطابق؟</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bob-table-body">
+                                    <tr><td colspan="4" style="color: var(--text-dim);">في انتظار القياس</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Shared Key -->
+                        <div class="glass-card">
+                            <div class="card-title" style="color: var(--accent-purple);">🔑 المفتاح المشترك</div>
+                            <div id="shared-key-display" style="font-family: var(--font-mono); font-size: 1.1rem; letter-spacing: 3px; color: var(--text-dim); text-align: center; padding: 20px;">
+                                في انتظار استخلاص المفتاح...
+                            </div>
+                            <div id="key-stats" style="display: none;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; font-size: 0.8rem;">
+                                    <div style="padding: 8px; background: var(--bg-glass); border-radius: 8px; text-align: center;">
+                                        <div style="color: var(--text-secondary);">طول المفتاح</div>
+                                        <div style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-cyan);" id="key-length">0</div>
+                                    </div>
+                                    <div style="padding: 8px; background: var(--bg-glass); border-radius: 8px; text-align: center;">
+                                        <div style="color: var(--text-secondary);">معدل الكفاءة</div>
+                                        <div style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-green);" id="key-efficiency">0%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Encrypt & Decrypt Demo (Two separate panels) -->
+                    <div id="encrypt-demo" hidden style="margin-top:24px;">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+                            <!-- ===== ENCRYPT PANEL ===== -->
+                            <div class="glass-card" style="border-color:rgba(239,71,111,0.2);">
+                                <div class="card-title" style="color:var(--accent-red);">🔒 تشفير الرسالة</div>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:14px;">
+                                    اكتب أي نص (عربي أو إنجليزي) وسيتم تشفيره بالمفتاح الكمومي
+                                </p>
+
+                                <div class="form-group" style="margin-bottom:12px;">
+                                    <label>✍️ النص الأصلي:</label>
+                                    <input type="text" class="input-control" id="encrypt-input" placeholder="مرحبا بالعالم الكمومي!" maxlength="50" style="font-size:1rem;">
+                                </div>
+                                <button class="btn btn-primary" id="btn-encrypt" style="width:100%;margin-bottom:16px;">🔒 تشفير</button>
+
+                                <div id="encrypt-output" style="display:none;">
+                                    <div class="encrypt-step">
+                                        <div class="encrypt-step-label">① النص الأصلي</div>
+                                        <div class="encrypt-step-content" id="enc-original" style="color:var(--accent-cyan);font-size:1rem;"></div>
+                                    </div>
+                                    <div class="encrypt-step">
+                                        <div class="encrypt-step-label">② البتات الثنائية (16-bit Unicode)</div>
+                                        <div class="encrypt-step-content" id="enc-binary" style="font-family:var(--font-mono);font-size:0.65rem;word-break:break-all;color:var(--text-dim);"></div>
+                                    </div>
+                                    <div class="encrypt-step">
+                                        <div class="encrypt-step-label">③ المفتاح الكمومي المُستخدم</div>
+                                        <div class="encrypt-step-content" id="enc-key" style="font-family:var(--font-mono);font-size:0.65rem;word-break:break-all;color:var(--accent-purple);"></div>
+                                    </div>
+                                    <div class="encrypt-step" style="border-color:rgba(239,71,111,0.3);background:rgba(239,71,111,0.04);">
+                                        <div class="encrypt-step-label" style="color:var(--accent-red);">④ النص المشفّر (نتيجة XOR)</div>
+                                        <div class="encrypt-step-content" id="enc-cipher" style="font-family:var(--font-mono);font-size:0.65rem;word-break:break-all;color:var(--accent-red);"></div>
+                                        <button class="btn btn-secondary" id="btn-copy-cipher" style="margin-top:8px;font-size:0.75rem;padding:4px 12px;">📋 نسخ النص المشفّر</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ===== DECRYPT PANEL ===== -->
+                            <div class="glass-card" style="border-color:rgba(6,214,160,0.2);">
+                                <div class="card-title" style="color:var(--accent-green);">🔓 فك التشفير</div>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:14px;">
+                                    الصق النص المشفّر (سلسلة 0 و 1) هنا لفك تشفيره بالمفتاح الكمومي
+                                </p>
+
+                                <div class="form-group" style="margin-bottom:12px;">
+                                    <label>📥 النص المشفّر (بتات):</label>
+                                    <textarea class="input-control" id="decrypt-input" placeholder="الصق البتات المشفّرة هنا (مثال: 01101001...)" rows="4" style="font-family:var(--font-mono);font-size:0.75rem;resize:vertical;"></textarea>
+                                </div>
+                                <button class="btn btn-success" id="btn-decrypt" style="width:100%;margin-bottom:16px;">🔓 فك التشفير</button>
+
+                                <div id="decrypt-output" style="display:none;">
+                                    <div class="encrypt-step">
+                                        <div class="encrypt-step-label">① البتات المشفّرة المُستلمة</div>
+                                        <div class="encrypt-step-content" id="dec-cipher" style="font-family:var(--font-mono);font-size:0.65rem;word-break:break-all;color:var(--accent-red);"></div>
+                                        <div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px;" id="dec-bits-count"></div>
+                                    </div>
+                                    <div class="encrypt-step">
+                                        <div class="encrypt-step-label">② المفتاح الكمومي المُستخدم</div>
+                                        <div class="encrypt-step-content" id="dec-key" style="font-family:var(--font-mono);font-size:0.65rem;word-break:break-all;color:var(--accent-purple);"></div>
+                                    </div>
+                                    <div class="encrypt-step" style="border-color:rgba(6,214,160,0.3);background:rgba(6,214,160,0.04);">
+                                        <div class="encrypt-step-label" style="color:var(--accent-green);">③ النص بعد فك التشفير ✅</div>
+                                        <div class="encrypt-step-content" id="dec-result" style="color:var(--accent-green);font-size:1.2rem;font-weight:700;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Info box -->
+                        <div class="glass-card" style="margin-top:16px;padding:14px 18px;">
+                            <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;">
+                                💡 <strong style="color:var(--accent-cyan);">كيف تتحقق؟</strong>
+                                ① اكتب نصاً في لوحة التشفير واضغط 🔒 →
+                                ② انسخ النص المشفّر بالزر 📋 →
+                                ③ الصقه في لوحة فك التشفير واضغط 🔓 →
+                                ④ يجب أن يظهر النص الأصلي! 🎉<br>
+                                <span style="color:var(--text-dim);">• كل حرف = 16 بت (Unicode) • التشفير = XOR مع المفتاح الكمومي • بدون المفتاح الصحيح، فك التشفير مستحيل!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box" style="margin-top: 24px;">
+                        <span class="info-icon">🔬</span>
+                        <strong>كيف يعمل BB84؟</strong> أليس ترسل فوتونات مستقطبة عشوائياً. بوب يقيسها بأساس عشوائي.
+                        عند تطابق الأساس، يحصلان على نفس البت. إذا تنصتت حوّاء، فإن مبدأ عدم اليقين الكمومي
+                        (Heisenberg Uncertainty Principle) يُسبب أخطاءً يمكن كشفها — ورسالياً يستحيل التنصت بدون ترك أثر!
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== GROVER'S RACE ========== -->
+            <section class="section" id="section-grover">
+                <div class="section-header">
+                    <h2>🏎️ GROVER'S ALGORITHM RACE</h2>
+                    <p>سباق بين البحث التقليدي O(N) وخوارزمية Grover الكمومية O(√N)</p>
+                </div>
+
+                <div class="grover-layout">
+                    <!-- Controls -->
+                    <div class="race-controls" style="margin-bottom: 24px;">
+                        <div class="form-group">
+                            <label>حجم قاعدة البيانات:</label>
+                            <select class="select-control" id="grover-db-size">
+                                <option value="2">4 عناصر (2 كيوبت)</option>
+                                <option value="3" selected>8 عناصر (3 كيوبت)</option>
+                                <option value="4">16 عنصر (4 كيوبت)</option>
+                                <option value="5">32 عنصر (5 كيوبت)</option>
+                                <option value="6">64 عنصر (6 كيوبت)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>سرعة الحركة:</label>
+                            <select class="select-control" id="grover-speed">
+                                <option value="500">بطيء</option>
+                                <option value="200" selected>متوسط</option>
+                                <option value="50">سريع</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" id="btn-start-race" style="font-size: 1.1rem; padding: 12px 32px;">
+                            🏁 ابدأ السباق!
+                        </button>
+                        <button class="btn btn-danger" id="btn-reset-race">
+                            🔄 إعادة
+                        </button>
+                    </div>
+
+                    <!-- Complexity Info -->
+                    <div class="glass-card" style="margin-bottom: 24px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 16px; text-align: center;">
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">حجم قاعدة البيانات (N)</div>
+                            <div style="font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--accent-cyan);" id="display-N">8</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">خطوات البحث التقليدي O(N)</div>
+                            <div style="font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--accent-orange);" id="display-classical-steps">8</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">خطوات Grover O(√N)</div>
+                            <div style="font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--accent-purple);" id="display-grover-steps">2</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">التسريع</div>
+                            <div style="font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--accent-green);" id="display-speedup">4x</div>
+                        </div>
+                    </div>
+
+                    <!-- Race Arena -->
+                    <div class="race-arena">
+                        <!-- Classical Search -->
+                        <div class="glass-card racer-card classical">
+                            <div class="racer-header">
+                                <div class="racer-title">
+                                    <span class="icon">🖥️</span>
+                                    <span>البحث التقليدي</span>
+                                </div>
+                                <span class="racer-complexity">O(N)</span>
+                            </div>
+
+                            <div class="search-grid" id="classical-grid" style="grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));">
+                                <!-- Items populated by JS -->
+                            </div>
+
+                            <div class="race-progress">
+                                <div class="progress-bar-outer">
+                                    <div class="progress-bar-inner" id="classical-progress" style="width: 0%;"></div>
+                                </div>
+                                <div class="progress-stats">
+                                    <span>الخطوة: <span id="classical-step-count">0</span></span>
+                                    <span id="classical-status">في الانتظار</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quantum Grover Search -->
+                        <div class="glass-card racer-card quantum">
+                            <div class="racer-header">
+                                <div class="racer-title">
+                                    <span class="icon">⚛️</span>
+                                    <span>خوارزمية Grover</span>
+                                </div>
+                                <span class="racer-complexity">O(√N)</span>
+                            </div>
+
+                            <div class="amplitude-bars" id="grover-amplitude-bars">
+                                <!-- Bars populated by JS -->
+                            </div>
+
+                            <div style="text-align: center; margin: 12px 0;">
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">تكبير الاتساع — Amplitude Amplification</span>
+                            </div>
+
+                            <div class="race-progress">
+                                <div class="progress-bar-outer">
+                                    <div class="progress-bar-inner" id="grover-progress" style="width: 0%;"></div>
+                                </div>
+                                <div class="progress-stats">
+                                    <span>التكرار: <span id="grover-iteration-count">0</span></span>
+                                    <span id="grover-status">في الانتظار</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Race Result -->
+                    <div class="glass-card race-result" id="race-result">
+                        <div class="winner-text quantum-win" id="winner-text">⚛️ الحاسوب الكمومي يفوز!</div>
+                        <p style="color: var(--text-secondary);" id="winner-detail"></p>
+                    </div>
+
+                    <div class="info-box" style="margin-top: 24px;">
+                        <span class="info-icon">⚛️</span>
+                        <strong>كيف تعمل خوارزمية Grover؟</strong>
+                        بدلاً من فحص كل عنصر واحداً تلو الآخر، يضع الحاسوب الكمومي جميع العناصر في <strong>تراكب كمومي</strong> (superposition).
+                        ثم يُطبّق <strong>مرآة الأوراكل</strong> (Oracle) لعكس طور العنصر المطلوب،
+                        يليها <strong>مؤثر الانتشار</strong> (Diffusion) الذي يُكبّر احتمال العنصر المطلوب.
+                        بعد تكرار هذه العملية <strong>√N</strong> مرة، يصبح احتمال القياس الصحيح قريباً من 100%!
+                    </div>
+                </div>
+            </section>
+            <!-- ========== QUANTUM WORLD EXPLORER ========== -->
+            <section class="section" id="section-quantum-world">
+                <div class="section-header">
+                    <h2>🌌 QUANTUM WORLD EXPLORER</h2>
+                    <p>استكشف ظواهر الفيزياء الكمومية من خلال تجارب تفاعلية ثلاثية الأبعاد</p>
+                </div>
+
+                <div class="quantum-world-layout">
+                    <!-- Experiments Grid -->
+                    <div class="experiments-grid" id="experiments-grid">
+                        <div class="glass-card experiment-card" data-experiment="superposition">
+                            <div class="exp-icon">🔮</div>
+                            <div class="exp-title">التراكب الكمومي</div>
+                            <div class="exp-subtitle">Superposition</div>
+                            <div class="exp-desc">الجسيم يوجد في مكانين في نفس الوقت حتى يُقاس!</div>
+                            <div class="exp-badge">تفاعلي</div>
+                        </div>
+
+                        <div class="glass-card experiment-card" data-experiment="entanglement">
+                            <div class="exp-icon">🔗</div>
+                            <div class="exp-title">التشابك الكمومي</div>
+                            <div class="exp-subtitle">Entanglement</div>
+                            <div class="exp-desc">جسيمان مرتبطان لحظياً عبر أي مسافة — الفعل المخيف عن بُعد!</div>
+                            <div class="exp-badge">تفاعلي</div>
+                        </div>
+
+                        <div class="glass-card experiment-card" data-experiment="tunneling">
+                            <div class="exp-icon">🚪</div>
+                            <div class="exp-title">النفق الكمومي</div>
+                            <div class="exp-subtitle">Quantum Tunneling</div>
+                            <div class="exp-desc">الجسيم يعبر حاجزاً يستحيل تجاوزه كلاسيكياً!</div>
+                            <div class="exp-badge">تفاعلي</div>
+                        </div>
+
+                        <div class="glass-card experiment-card" data-experiment="schrodinger">
+                            <div class="exp-icon">🐱</div>
+                            <div class="exp-title">قطة شرودنغر</div>
+                            <div class="exp-subtitle">Schrödinger's Cat</div>
+                            <div class="exp-desc">القطة حية وميتة في نفس الوقت — حتى تفتح الصندوق!</div>
+                            <div class="exp-badge">تفاعلي</div>
+                        </div>
+
+                        <div class="glass-card experiment-card" data-experiment="wave-collapse">
+                            <div class="exp-icon">📏</div>
+                            <div class="exp-title">انهيار الموجة</div>
+                            <div class="exp-subtitle">Double-Slit Experiment</div>
+                            <div class="exp-desc">تجربة الشقين: الإلكترون موجة وجسيم في نفس الوقت!</div>
+                            <div class="exp-badge">تفاعلي</div>
+                        </div>
+                    </div>
+
+                    <!-- Experiment Viewer (hidden initially) -->
+                    <div class="experiment-viewer" id="experiment-viewer" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 id="experiment-title" style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent-cyan);"></h3>
+                            <button class="btn btn-secondary" id="btn-close-experiment">✕ رجوع</button>
+                        </div>
+                        <p id="experiment-description" style="color: var(--text-secondary); margin-bottom: 16px;"></p>
+
+                        <div class="glass-card" style="margin-bottom: 16px; padding: 0; overflow: hidden;">
+                            <div id="experiment-canvas" style="width: 100%; min-height: 350px; background: #050510; border-radius: var(--radius-lg);"></div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="glass-card">
+                                <div class="card-title">🎮 التحكم</div>
+                                <div id="experiment-controls"></div>
+                            </div>
+                            <div class="glass-card">
+                                <div class="card-title">📖 النظرية</div>
+                                <div id="experiment-theory" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SECTION 5: QUIZ
+                 ============================================================ -->
+            <section class="section" id="section-quiz">
+                <div class="section-header">
+                    <h2 class="section-title">📝 اختبار ذاتي</h2>
+                    <p class="section-desc">اختبر فهمك للمفاهيم الكمومية — 12 سؤال يغطي كل أقسام المشروع</p>
+                </div>
+
+                <div class="quiz-progress glass-card" id="quiz-progress">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                        <span>التقدم: <strong id="quiz-current">0</strong> / <strong id="quiz-total">12</strong></span>
+                        <span>النتيجة: <strong id="quiz-score" style="color:var(--accent-green);">0</strong></span>
+                    </div>
+                    <div class="loader-bar"><div class="loader-bar-fill" id="quiz-bar" style="width:0%;animation:none;"></div></div>
+                </div>
+
+                <div id="quiz-container"></div>
+
+                <div class="quiz-result glass-card" id="quiz-result" style="display:none;text-align:center;padding:40px;">
+                    <div style="font-size:3rem;margin-bottom:16px;" id="quiz-emoji">🏆</div>
+                    <h3 style="font-family:var(--font-heading);font-size:1.5rem;margin-bottom:8px;" id="quiz-result-title"></h3>
+                    <p style="color:var(--text-secondary);margin-bottom:16px;" id="quiz-result-desc"></p>
+                    <div style="font-size:2rem;font-weight:bold;color:var(--accent-cyan);margin-bottom:20px;" id="quiz-final-score"></div>
+                    <button class="btn btn-primary" id="btn-quiz-restart">🔄 إعادة الاختبار</button>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SECTION 6: ABOUT
+                 ============================================================ -->
+            <section class="section" id="section-about">
+                <div class="section-header">
+                    <h2 class="section-title">📖 حول المشروع</h2>
+                    <p class="section-desc">مختبر كمومي تفاعلي — مشروع تخرج في علوم الحاسب</p>
+                </div>
+
+                <div class="about-grid">
+                    <!-- Project Overview -->
+                    <div class="glass-card about-card about-hero">
+                        <div class="about-icon">⚛️</div>
+                        <h3>Quantum Lab — المختبر الكمومي التفاعلي</h3>
+                        <p>منصة تعليمية تفاعلية تهدف إلى تبسيط مفاهيم الحوسبة الكمومية من خلال محاكاة بصرية ثلاثية الأبعاد وتجارب عملية. يتيح المشروع للمستخدمين بناء دوائر كمومية، فهم بروتوكولات التشفير الكمومي، ومقارنة أداء الخوارزميات الكمومية مع الكلاسيكية.</p>
+                    </div>
+
+                    <!-- Objectives -->
+                    <div class="glass-card about-card">
+                        <div class="card-title">🎯 أهداف المشروع</div>
+                        <ul class="about-list">
+                            <li>تصميم وتطوير بيئة محاكاة تفاعلية للدوائر الكمومية</li>
+                            <li>تطبيق عملي لبروتوكول التوزيع الكمومي للمفاتيح BB84</li>
+                            <li>بناء تصور بصري لخوارزمية Grover للبحث الكمومي</li>
+                            <li>إنشاء تجارب ثلاثية الأبعاد تفاعلية لظواهر الكم (التراكب، التشابك، النفق الكمومي)</li>
+                            <li>تقديم محتوى تعليمي باللغة العربية في مجال الحوسبة الكمومية</li>
+                            <li>توفير اختبار ذاتي لقياس استيعاب المفاهيم الكمومية</li>
+                        </ul>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="glass-card about-card">
+                        <div class="card-title">🔬 أقسام المشروع</div>
+                        <div class="about-features">
+                            <div class="about-feature">
+                                <span class="feature-icon">🔧</span>
+                                <div>
+                                    <strong>محاكي الدوائر الكمومية</strong>
+                                    <p>سحب وإفلات البوابات الكمومية (H, X, Y, Z, S, T, CNOT) على أسلاك الكيوبتات مع عرض حي لكرة بلوخ ومخططات الاحتمالات. يدعم حتى 4 كيوبتات ودوائر جاهزة مسبقاً.</p>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <span class="feature-icon">🔐</span>
+                                <div>
+                                    <strong>التشفير الكمومي BB84</strong>
+                                    <p>محاكاة كاملة لبروتوكول التوزيع الكمومي للمفاتيح مع 5 مراحل: إرسال الفوتونات → اختيار الأسس → المقارنة العلنية → التقطير → كشف التنصت (Eve).</p>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <span class="feature-icon">🏁</span>
+                                <div>
+                                    <strong>سباق خوارزمية Grover</strong>
+                                    <p>مقارنة بصرية حية بين البحث الكلاسيكي O(N) وخوارزمية Grover الكمومية O(√N) مع عداد خطوات وتصور للتسريع الكمومي.</p>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <span class="feature-icon">🌌</span>
+                                <div>
+                                    <strong>عالم الكم التفاعلي</strong>
+                                    <p>5 تجارب ثلاثية الأبعاد: التراكب الكمومي، التشابك الكمومي، النفق الكمومي، قطة شرودنغر (نموذج 3D)، وانهيار الدالة الموجية (تجربة الشقين).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <div class="glass-card about-card">
+                        <div class="card-title">💻 التقنيات المستخدمة</div>
+                        <div class="tech-grid">
+                            <div class="tech-item">
+                                <div class="tech-logo">🌐</div>
+                                <div class="tech-name">HTML5</div>
+                                <div class="tech-role">هيكلة الصفحات</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-logo">🎨</div>
+                                <div class="tech-name">CSS3</div>
+                                <div class="tech-role">التصميم والأنيميشن</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-logo">⚡</div>
+                                <div class="tech-name">JavaScript</div>
+                                <div class="tech-role">المنطق والتفاعل</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-logo">🧊</div>
+                                <div class="tech-name">Three.js</div>
+                                <div class="tech-role">الرسوم ثلاثية الأبعاد</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-logo">📐</div>
+                                <div class="tech-name">Canvas API</div>
+                                <div class="tech-role">رسم الدوائر الكمومية</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-logo">🔢</div>
+                                <div class="tech-name">خوارزميات كمومية</div>
+                                <div class="tech-role">محاكاة رياضية دقيقة</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Methodology -->
+                    <div class="glass-card about-card">
+                        <div class="card-title">📋 المنهجية</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <strong>المرحلة 1: البحث والتحليل</strong>
+                                    <p>دراسة مفاهيم الحوسبة الكمومية، مراجعة الأدبيات العلمية، وتحليل الأنظمة الموجودة (IBM Quantum, Quirk, Qiskit).</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <strong>المرحلة 2: التصميم</strong>
+                                    <p>تصميم واجهة المستخدم بأسلوب Dark Space مع دعم كامل للغة العربية (RTL) واستخدام تقنيات Glassmorphism الحديثة.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <strong>المرحلة 3: التطوير</strong>
+                                    <p>برمجة المحاكي الكمومي بـ JavaScript خالص، بناء محرك الرياضيات الكمومية (QuantumState, QuantumGates)، وتطوير التجارب التفاعلية باستخدام Three.js.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <strong>المرحلة 4: الاختبار والتقييم</strong>
+                                    <p>اختبار دقة المحاكاة الرياضية، التحقق من سلوك البوابات الكمومية، وتقييم تجربة المستخدم والأداء.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- References -->
+                    <div class="glass-card about-card">
+                        <div class="card-title">📚 المراجع العلمية</div>
+                        <ol class="references-list">
+                            <li>Nielsen, M. A., & Chuang, I. L. (2010). <em>Quantum Computation and Quantum Information</em>. Cambridge University Press.</li>
+                            <li>Bennett, C. H., & Brassard, G. (1984). "Quantum cryptography: Public key distribution and coin tossing." <em>Proceedings of IEEE ICCSSP</em>.</li>
+                            <li>Grover, L. K. (1996). "A fast quantum mechanical algorithm for database search." <em>STOC '96</em>.</li>
+                            <li>Shor, P. W. (1994). "Algorithms for quantum computation." <em>Proceedings of 35th FOCS</em>.</li>
+                            <li>Deutsch, D. (1985). "Quantum theory, the Church-Turing principle and the universal quantum computer." <em>Royal Society</em>.</li>
+                            <li>Bernstein, E., & Vazirani, U. (1997). "Quantum Complexity Theory." <em>SIAM Journal on Computing</em>.</li>
+                            <li>IBM Quantum. (2024). <em>Qiskit Textbook</em>. https://qiskit.org/textbook</li>
+                            <li>Preskill, J. (2018). "Quantum Computing in the NISQ era and beyond." <em>Quantum Journal</em>.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="glass-card about-card about-footer">
+                        <p>© 2025 Quantum Lab — مشروع تخرج أكاديمي لأغراض تعليمية وبحثية</p>
+                        <p style="font-size:0.75rem;color:var(--text-dim);margin-top:6px;">تم تطوير هذا المشروع باستخدام تقنيات الويب الحديثة بدون أي مكتبات خارجية للمحاكاة الكمومية — جميع الحسابات مبنية من الصفر</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/quantum-math.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/bloch-sphere.js"></script>
+    <script src="js/circuit-simulator.js"></script>
+    <script src="js/qkd-simulator.js"></script>
+    <script src="js/grover-race.js"></script>
+    <script src="js/quantum-world.js"></script>
+    <script src="js/quiz.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeIn">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">
+                <i class="bi bi-receipt-cutoff me-2"></i>سجل المصروفات
+            </h2>
+            <p class="text-muted small">متابعة كافة المصروفات التشغيلية والإدارية المسجلة في النظام</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('expense_create') }}" class="btn btn-primary rounded-3 px-4 shadow-sm d-flex align-items-center gap-2 transition-all hover-lift">
+                <i class="bi bi-plus-circle-fill"></i>
+                <span>تسجيل مصروف جديد</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Table Card -->
+    <div class="card border-0 shadow-sm animate__animated animate__fadeInUp" style="border-radius: 16px; overflow: hidden;">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 custom-list-table">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">المعرف</th>
+                            <th>رقم السند</th>
+                            <th>التاريخ</th>
+                            <th>الفرع</th>
+                            <th>الحساب المالي</th>
+                            <th>المستفيد</th>
+                            <th class="text-end">المبلغ</th>
+                            <th class="pe-4 text-center">طريقة الدفع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in rows %}
+                        <tr class="transition-all">
+                            <td class="ps-4">
+                                <span class="text-muted small fw-bold">#{{ r.expense_id }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-soft-secondary text-secondary rounded-pill px-3">EXP-{{ r.expense_number }}</span>
+                            </td>
+                            <td>
+                                <div class="small fw-medium text-muted">
+                                    <i class="bi bi-calendar3 me-1"></i>{{ r.expense_date }}
+                                </div>
+                            </td>
+                            <td>
+                                <span class="small fw-bold"><i class="bi bi-geo-alt me-1 text-primary"></i>{{ r.branch_name }}</span>
+                            </td>
+                            <td>
+                                <div class="fw-bold small text-dark">{{ r.account_name }}</div>
+                            </td>
+                            <td>
+                                <span class="text-muted small">{{ r.beneficiary or '---' }}</span>
+                            </td>
+                            <td class="text-end">
+                                <span class="fw-bold text-danger">{{ r.amount|currency }}</span>
+                            </td>
+                            <td class="pe-4 text-center">
+                                {% set p_map = {
+                                    'CASH': ('success', 'نقدي', 'cash-stack'),
+                                    'BANK': ('primary', 'تحويل', 'bank'),
+                                    'CHECK': ('warning', 'شيك', 'bank2')
+                                } %}
+                                {% set p_info = p_map.get(r.payment_method, ('secondary', r.payment_method, 'credit-card')) %}
+                                <span class="badge bg-soft-{{ p_info[0] }} text-{{ p_info[0] }} rounded-pill px-3 py-2">
+                                    <i class="bi bi-{{ p_info[2] }} me-1"></i>{{ p_info[1] }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-lift:hover { transform: translateY(-3px); }
+    .transition-all { transition: all 0.3s ease; }
+
+    .custom-list-table thead th {
+        background-color: #f8fafc;
+        color: #64748b;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        padding: 1rem 0.5rem;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .custom-list-table tbody tr:hover {
+        background-color: #f1f5f9;
+    }
+
+    .bg-soft-primary { background-color: rgba(37, 99, 235, 0.1); }
+    .bg-soft-success { background-color: rgba(22, 163, 74, 0.1); }
+    .bg-soft-danger { background-color: rgba(220, 38, 38, 0.1); }
+    .bg-soft-warning { background-color: rgba(217, 119, 6, 0.1); }
+    .bg-soft-secondary { background-color: rgba(100, 116, 139, 0.1); }
+
+    [data-theme='dark'] .card { background-color: #1e293b; color: #fff; }
+    [data-theme='dark'] .custom-list-table thead th { background-color: #0f172a; color: #94a3b8; border-color: #334155; }
+    [data-theme='dark'] .custom-list-table tbody tr:hover { background-color: #334155; }
+</style>
+{% endblock %}

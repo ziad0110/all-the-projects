@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="آخر أخبار ومستجدات شركة نبع الريحان للتجارة والصناعة">
+
+    <title>الأخبار | نبع الريحان</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        .page-hero {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-xl);
+        }
+
+        @media (max-width: 1024px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .news-card:hover {
+            border-color: var(--border-gold);
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-image i {
+            font-size: 4rem;
+            color: var(--gold-primary);
+            opacity: 0.3;
+        }
+
+        .news-date {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            background: var(--gold-primary);
+            color: var(--bg-primary);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .news-content {
+            padding: var(--space-xl);
+        }
+
+        .news-category {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold-primary);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .news-title {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-md);
+            line-height: 1.5;
+        }
+
+        .news-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: var(--space-lg);
+        }
+
+        .news-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--gold-primary);
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .news-link:hover {
+            gap: var(--space-md);
+        }
+
+        .featured-news {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        @media (max-width: 1024px) {
+            .featured-news {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .featured-news-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+        }
+
+        .featured-news-card .news-image {
+            height: 300px;
+        }
+
+        .featured-news-card .news-title {
+            font-size: 1.75rem;
+        }
+
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, var(--bg-secondary) 100%);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: var(--space-md);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+        }
+
+        @media (max-width: 640px) {
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-text">
+                        <span class="text-gold">نبع الريحان</span>
+                    </div>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="about.html" class="nav-link">من نحن</a></li>
+                    <li><a href="index.html#brands" class="nav-link">علاماتنا</a></li>
+                    <li><a href="quality.html" class="nav-link">الجودة</a></li>
+                    <li><a href="news.html" class="nav-link active">الأخبار</a></li>
+                    <li><a href="contact.html" class="nav-link">تواصل معنا</a></li>
+                </ul>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="القائمة">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="reveal">الأخبار <span class="text-gold">والمستجدات</span></h1>
+            <div class="divider"></div>
+            <p class="lead reveal reveal-delay-1"
+                style="max-width: 700px; margin: 0 auto; color: var(--text-secondary);">
+                تابع آخر أخبارنا ومستجدات منتجاتنا وفعالياتنا
+            </p>
+        </div>
+    </section>
+
+    <!-- Featured News -->
+    <section class="section">
+        <div class="container">
+            <div class="featured-news">
+                <div class="featured-news-card reveal">
+                    <div class="news-image">
+                        <span class="news-date">25 ديسمبر 2024</span>
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">إعلان هام</span>
+                        <h2 class="news-title">إطلاق المنصة الرقمية الجديدة لنبع الريحان</h2>
+                        <p class="news-excerpt">
+                            يسعدنا الإعلان عن إطلاق منصتنا الرقمية الجديدة التي تجمع جميع علاماتنا التجارية في مكان
+                            واحد. المنصة الجديدة تتميز بتصميم عصري وتجربة مستخدم متميزة تعكس هويتنا الفاخرة.
+                        </p>
+                        <a href="#" class="news-link">
+                            <span>اقرأ المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+                    <div class="news-card reveal reveal-delay-1">
+                        <div class="news-content">
+                            <span class="news-category">منتجات</span>
+                            <h4 class="news-title">منتجات جديدة قادمة في 2025</h4>
+                            <p class="news-excerpt" style="margin-bottom: 0;">
+                                نعمل على تطوير مجموعة جديدة من المنتجات...
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="news-card reveal reveal-delay-2">
+                        <div class="news-content">
+                            <span class="news-category">شراكات</span>
+                            <h4 class="news-title">توسيع شبكة التوزيع الإقليمية</h4>
+                            <p class="news-excerpt" style="margin-bottom: 0;">
+                                نوقع شراكات جديدة لتوسيع انتشار منتجاتنا...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Grid -->
+    <section class="section" style="background: var(--bg-secondary); padding-top: 0;">
+        <div class="container">
+            <div class="section-header reveal" style="padding-top: var(--space-4xl);">
+                <h2>آخر <span class="text-gold">الأخبار</span></h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="news-grid">
+                <div class="news-card reveal reveal-delay-1">
+                    <div class="news-image">
+                        <span class="news-date">20 ديسمبر 2024</span>
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">جوائز</span>
+                        <h3 class="news-title">الأغا تحصد جائزة أفضل منتج محلي</h3>
+                        <p class="news-excerpt">
+                            حصلت علامة الأغا على جائزة أفضل منتج محلي في فئة العصائر الطبيعية ضمن مسابقة الجودة الوطنية.
+                        </p>
+                        <a href="#" class="news-link">
+                            <span>اقرأ المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-2">
+                    <div class="news-image">
+                        <span class="news-date">15 ديسمبر 2024</span>
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">منتجات</span>
+                        <h3 class="news-title">دريم تطلق نكهة جديدة من الشطة</h3>
+                        <p class="news-excerpt">
+                            أعلنت شركة دريم عن إطلاق نكهة جديدة بالثوم والأعشاب، تلبية لرغبات عملائنا الكرام.
+                        </p>
+                        <a href="#" class="news-link">
+                            <span>اقرأ المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-3">
+                    <div class="news-image">
+                        <span class="news-date">10 ديسمبر 2024</span>
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">شراكات</span>
+                        <h3 class="news-title">شراكة جديدة للتصدير إلى الخليج</h3>
+                        <p class="news-excerpt">
+                            وقعت نبع الريحان اتفاقية شراكة استراتيجية جديدة لتوزيع منتجاتنا في أسواق الخليج العربي.
+                        </p>
+                        <a href="#" class="news-link">
+                            <span>اقرأ المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-1">
+                    <div class="news-image">
+                        <span class="news-date">5 ديسمبر 2024</span>
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">فعاليات</span>
+                        <h3 class="news-title">مشاركتنا في معرض الغذاء الدولي</h3>
+                        <p class="news-excerpt">
+                            شاركت نبع الريحان في معرض الغذاء الدولي وحظيت منتجاتنا باهتمام كبير من الزوار والموزعين.
+                        </p>
+                        <a href="#" class="news-link">
+                            <span>اقرأ المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-2">
+                    <div class="news-image">
+                        <span class="news-date">28 نوفمبر 2024</span>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">مسؤولية اجتماعية</span>
+                        <h3 class="news-title">حملة دعم المزارعين المحليين</h3>
+                        <p class="news-excerpt">
+                            أطلقت نبع الريحان مبادرة لدعم المزارعين المحليين من خلال شراكات مباشرة وبرامج تدريبية.
+                        </p>
+                        <a href="#" class="news-link">
+                            <span>اقرأ المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-3">
+                    <div class="news-image">
+                        <span class="news-date">20 نوفمبر 2024</span>
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">جودة</span>
+                        <h3 class="news-title">تجديد شهادة ISO 22000</h3>
+                        <p class="news-excerpt">
+                            نجحت نبع الريحان في تجديد شهادة ISO 22000 لنظام إدارة سلامة الغذاء بعد اجتياز التدقيق
+                            السنوي.
+                        </p>
+                        <a href="#" class="news-link">
+                            <span>اقرأ المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="section newsletter-section">
+        <div class="container text-center">
+            <h2 class="reveal mb-md">اشترك في <span class="text-gold">النشرة البريدية</span></h2>
+            <p class="reveal mb-xl" style="color: var(--text-secondary);">
+                احصل على آخر الأخبار والعروض الحصرية في بريدك الإلكتروني
+            </p>
+
+            <form class="newsletter-form reveal">
+                <input type="email" class="form-control" placeholder="بريدك الإلكتروني">
+                <button type="submit" class="btn btn-primary">
+                    <span>اشترك</span>
+                    <i class="fas fa-envelope"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-text">نبع الريحان</span>
+                    </div>
+                    <p class="footer-desc">
+                        شركة نبع الريحان للتجارة والصناعة - رائدة في مجال الصناعات الغذائية في اليمن.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="footer-link">الرئيسية</a></li>
+                        <li><a href="about.html" class="footer-link">من نحن</a></li>
+                        <li><a href="quality.html" class="footer-link">الجودة</a></li>
+                        <li><a href="contact.html" class="footer-link">تواصل معنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">علاماتنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="brands/al-agha/index.html" class="footer-link">شركة الأغا</a></li>
+                        <li><a href="brands/dream/index.html" class="footer-link">شركة دريم</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">تواصل معنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+967123456789" class="footer-link"><i class="fas fa-phone-alt"
+                                    style="margin-left: 8px; color: var(--gold-primary);"></i>+967 123 456 789</a></li>
+                        <li><a href="mailto:info@nabalrehan.com" class="footer-link"><i class="fas fa-envelope"
+                                    style="margin-left: 8px; color: var(--gold-primary);"></i>info@nabalrehan.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 شركة نبع الريحان. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

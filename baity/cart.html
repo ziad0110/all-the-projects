@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>سلة المشتريات - بيتي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="search-box"><input type="text" placeholder="ابحث عن منتج..."><button><i
+                        class="fas fa-search"></i></button></div>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <a href="cart.html" class="header-btn"><i class="fas fa-shopping-cart"></i><span class="badge"
+                        id="cartCount">0</span></a>
+                <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <a href="login.html" class="user-menu"><i class="fas fa-user"></i> حسابي</a>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content full">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:.9rem;color:var(--text-muted)">
+            <a href="index.html" style="color:var(--green-500)">الرئيسية</a><i class="fas fa-chevron-left"
+                style="font-size:.6rem"></i><span>سلة المشتريات</span>
+        </div>
+        <h1 style="font-size:1.5rem;font-weight:700;margin-bottom:24px"><i class="fas fa-shopping-cart"
+                style="color:var(--green-500)"></i> سلة المشتريات (<span id="itemCount">0</span> منتجات)</h1>
+
+        <div class="cart-layout" id="cartLayout" style="display:none">
+            <div id="cartItemsList">
+                <!-- Dynamic items -->
+            </div>
+
+            <div class="cart-summary">
+                <h3><i class="fas fa-receipt"></i> ملخص الطلب</h3>
+                <div class="coupon-input"><input type="text" placeholder="أدخل كود الخصم"><button
+                        class="btn btn-outline btn-sm">تطبيق</button></div>
+                <div class="summary-row"><span>المجموع الفرعي</span><span id="subtotal">0 ر.ي</span></div>
+                <div class="summary-row"><span>الشحن</span><span style="color:var(--green-500)"
+                        id="shipping">مجاني</span></div>
+                <div class="summary-row"><span>الضريبة (5%)</span><span id="tax">0 ر.ي</span></div>
+                <div class="summary-row"><span>الخصم</span><span style="color:var(--danger)" id="discount">-0 ر.ي</span>
+                </div>
+                <div class="summary-row total"><span>الإجمالي</span><span id="grandTotal">0 ر.ي</span></div>
+                <a href="checkout.html" class="btn btn-primary btn-lg" style="width:100%;margin-top:16px"><i
+                        class="fas fa-lock"></i> المتابعة للدفع</a>
+                <a href="products.html" class="btn btn-ghost" style="width:100%;margin-top:8px"><i
+                        class="fas fa-arrow-right"></i> متابعة التسوق</a>
+                <div
+                    style="margin-top:16px;padding:12px;background:var(--green-50);border-radius:var(--radius-md);font-size:.82rem;color:var(--green-700);display:flex;align-items:center;gap:8px">
+                    <i class="fas fa-shield-alt"></i> جميع المعاملات مشفرة وآمنة 100%
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Cart -->
+        <div id="emptyCart" style="display:none;text-align:center;padding:100px 20px">
+            <i class="fas fa-shopping-basket" style="font-size:4rem;color:var(--cream-dark);margin-bottom:24px"></i>
+            <h2 style="color:var(--text-secondary);margin-bottom:12px">سلة المشتريات فارغة</h2>
+            <p style="color:var(--text-muted);margin-bottom:32px">اكتشف منتجاتنا الرائعة وابدأ بالتسوق الآن!</p>
+            <a href="products.html" class="btn btn-primary btn-lg">تصفح المنتجات</a>
+        </div>
+    </main>
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/app.js"></script>
+    <script>
+        function renderCart() {
+            const list = document.getElementById('cartItemsList');
+            const layout = document.getElementById('cartLayout');
+            const empty = document.getElementById('emptyCart');
+            const countEl = document.getElementById('itemCount');
+
+            if (cart.length === 0) {
+                layout.style.display = 'none';
+                empty.style.display = 'block';
+                countEl.textContent = '0';
+                return;
+            }
+
+            layout.style.display = 'grid';
+            empty.style.display = 'none';
+            countEl.textContent = cart.length;
+
+            list.innerHTML = cart.map((item, idx) => {
+                // Find latest data from productsData if available
+                const p = productsData.find(x => x.id === item.id) || item;
+                return `
+                <div class="cart-item animate-in" style="animation-delay:${idx * 0.1}s">
+                    <img src="${p.img}" alt="${p.name}">
+                    <div class="details">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                            <h3><a href="product-detail.html?id=${p.id}">${p.name}</a></h3>
+                            <button class="btn btn-ghost btn-sm" onclick="removeItem(${p.id})" style="color:var(--danger);padding:4px"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:8px">البائع: ${p.seller || 'بيتي'}</p>
+                        <div class="price">${p.price.toLocaleString()} ر.ي</div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+                            <div class="quantity-selector">
+                                <button onclick="changeCartQty(${p.id},-1)">-</button>
+                                <input type="number" value="${item.qty}" readonly>
+                                <button onclick="changeCartQty(${p.id},1)">+</button>
+                            </div>
+                            <button class="btn btn-ghost btn-sm" onclick="toggleWishlist(${p.id})"><i class="fas fa-heart"></i> للمفضلة</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            calculateTotals();
+        }
+
+        function changeCartQty(id, d) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty = Math.max(1, item.qty + d);
+                localStorage.setItem('bayti-cart', JSON.stringify(cart));
+                renderCart();
+                updateCartBadge();
+            }
+        }
+
+        function removeItem(id) {
+            removeFromCart(id);
+            renderCart();
+            showToast('تم إزالة المنتج من السلة', 'info');
+        }
+
+        function calculateTotals() {
+            let sub = 0;
+            cart.forEach(item => {
+                const p = productsData.find(x => x.id === item.id) || item;
+                sub += p.price * item.qty;
+            });
+
+            const tax = Math.round(sub * 0.05);
+            const shipping = sub > 5000 ? 0 : 500; // Free shipping over 5000
+            const total = sub + tax + shipping;
+
+            document.getElementById('subtotal').textContent = sub.toLocaleString() + ' ر.ي';
+            document.getElementById('tax').textContent = tax.toLocaleString() + ' ر.ي';
+            document.getElementById('shipping').textContent = shipping === 0 ? 'مجاني' : shipping.toLocaleString() + ' ر.ي';
+            document.getElementById('grandTotal').textContent = total.toLocaleString() + ' ر.ي';
+        }
+
+        document.addEventListener('DOMContentLoaded', renderCart);
+    </script>
+</body>
+
+</html>

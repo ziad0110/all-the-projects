@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الحادث - يمن سيف | YEMEN SAFE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/incidents.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon"><img src="image.png" alt="شعار يمن سيف"
+                        style="max-width: 100%; height: auto;"></div>
+                <div class="sidebar-logo-text">
+                    <h2>يمن سيف</h2><span>YEMEN SAFE</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">القائمة الرئيسية</div>
+                    <a class="nav-link" data-page="dashboard.html"><i class="fas fa-th-large"></i><span>لوحة
+                            التحكم</span></a>
+                    <a class="nav-link active" data-page="incidents.html"><i
+                            class="fas fa-exclamation-triangle"></i><span>إدارة الحوادث</span></a>
+                    <a class="nav-link" href="risks.html" data-page="risks.html"><i class="fas fa-shield-virus"></i><span>سجل المخاطر</span></a>
+                    <a class="nav-link" data-page="reports.html"><i
+                            class="fas fa-chart-bar"></i><span>التقارير</span></a>
+                    <a class="nav-link" data-page="notifications.html"><i
+                            class="fas fa-bell"></i><span>الإشعارات</span><span
+                            class="nav-badge notif-count">3</span></a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">الإدارة</div>
+                    <a class="nav-link" data-page="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <a class="nav-link" id="logoutBtn" href="#"><i class="fas fa-sign-out-alt"></i><span>تسجيل
+                        الخروج</span></a>
+            </div>
+        </div>
+        <div class="sidebar-overlay"></div>
+
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="header-right">
+                    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                    <div>
+                        <div class="header-title">تفاصيل الحادث</div>
+                        <div class="header-subtitle" id="incidentIdHeader">-</div>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <a href="incidents.html" class="btn btn-secondary"><i class="fas fa-arrow-right"></i> العودة
+                        للقائمة</a>
+                    <div class="header-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-info"><span class="user-name">المستخدم</span><span
+                                class="user-role">الدور</span></div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="main-content" id="incidentContent">
+                <!-- Content loaded dynamically -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeStatusModal()"></div>
+    <div class="modal" id="statusModal">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fas fa-edit" style="color:var(--primary-500)"></i> تحديث الحالة</h3>
+            <button class="modal-close" onclick="closeStatusModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">الحالة الجديدة</label>
+                <select class="form-control" id="newStatus">
+                    <option value="new">جديد</option>
+                    <option value="investigating">قيد التحقيق</option>
+                    <option value="responding">قيد الاستجابة</option>
+                    <option value="resolved">تم الحل</option>
+                    <option value="closed">مغلق</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">ملاحظات</label>
+                <textarea class="form-control" id="statusNote" placeholder="أضف ملاحظة حول التحديث..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" onclick="updateStatus()"><i class="fas fa-save"></i> حفظ التحديث</button>
+            <button class="btn btn-secondary" onclick="closeStatusModal()">إلغاء</button>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        let currentIncident = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            if (!id) { window.location.href = 'incidents.html'; return; }
+
+            currentIncident = getIncidentById(id);
+            if (!currentIncident) { window.location.href = 'incidents.html'; return; }
+
+            document.getElementById('incidentIdHeader').textContent = currentIncident.id;
+            renderIncidentDetail();
+        });
+
+        function renderIncidentDetail() {
+            const inc = currentIncident;
+            const type = MockData.incidentTypes.find(t => t.id === inc.type);
+            const statusInfo = MockData.statuses[inc.status];
+            const priorityInfo = MockData.priorities[inc.priority];
+            const content = document.getElementById('incidentContent');
+            const user = getCurrentUser();
+            const canChangeStatus = user && hasPermission(user, 'change_status');
+            const canAssign = user && hasPermission(user, 'assign_tasks');
+            const canReview = user && hasPermission(user, 'review_incident');
+            const canApprove = user && hasPermission(user, 'approve_incident');
+            const canConvertToRisk = user && hasPermission(user, 'convert_to_risk');
+            const canPrint = user && hasPermission(user, 'print_reports');
+
+            // Build assign dropdown
+            const assignOptions = MockData.users.map(u =>
+                `<option value="${u.name}" ${inc.assignedTo === u.name ? 'selected' : ''}>${u.name} — ${getRoleLabel(u.role)}</option>`
+            ).join('');
+
+            // Images section
+            let imagesHTML = '';
+            if (inc.images && inc.images.length > 0) {
+                imagesHTML = `
+                    <div class="incident-info-card animate-fade-up" style="margin-bottom:var(--space-6);">
+                        <h3 style="font-size:var(--text-lg); font-weight:var(--font-bold); margin-bottom:var(--space-4); color:var(--primary-800);"><i class="fas fa-images" style="color:var(--primary-500)"></i> الصور المرفقة</h3>
+                        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:var(--space-3);">
+                            ${inc.images.map((img, i) => `<img src="${img}" alt="صورة ${i + 1}" style="width:100%; height:120px; object-fit:cover; border-radius:var(--radius-md); border:1px solid var(--border-light); cursor:pointer;" onclick="window.open(this.src)">`).join('')}
+                        </div>
+                    </div>`;
+            }
+
+            // === Workflow Buttons ===
+            let workflowBtns = '';
+            // ضابط السلامة: مراجعة وإحالة
+            if (canReview && (inc.status === 'new' || inc.status === 'pending_review' || inc.status === 'returned')) {
+                workflowBtns += `<button class="btn btn-primary" onclick="forwardToManager()" style="background:linear-gradient(135deg,#0055a5,#003366);"><i class="fas fa-paper-plane"></i> مراجعة وإحالة للمدير</button>`;
+            }
+            // ضابط السلامة: تحويل لسجل مخاطر
+            if (canConvertToRisk) {
+                workflowBtns += `<button class="btn btn-secondary" onclick="convertToRisk()" style="border-color:#f39c12;color:#f39c12;"><i class="fas fa-shield-virus"></i> تحويل لسجل مخاطر</button>`;
+            }
+            // مدير العمليات: موافقة أو رفض
+            if (canApprove && inc.status === 'pending_approval') {
+                workflowBtns += `<button class="btn btn-primary" onclick="approveIncident()" style="background:linear-gradient(135deg,#27ae60,#1e8449);"><i class="fas fa-check-double"></i> موافقة</button>`;
+                workflowBtns += `<button class="btn btn-secondary" onclick="rejectIncident()" style="border-color:#e74c3c;color:#e74c3c;"><i class="fas fa-times"></i> إعادة للمراجعة</button>`;
+            }
+            // تحديث الحالة العادي
+            if (canChangeStatus && !['new','pending_review','pending_approval','returned'].includes(inc.status)) {
+                workflowBtns += `<button class="btn btn-primary" onclick="openStatusModal()"><i class="fas fa-edit"></i> تحديث الحالة</button>`;
+            }
+            // طباعة — المدير فقط
+            if (canPrint) {
+                workflowBtns += `<button class="btn btn-secondary print-btn" onclick="window.print()"><i class="fas fa-print"></i> طباعة</button>`;
+            }
+            // تقرير حادث أرضي — يظهر لجميع من لديه صلاحية إنشاء حادث
+            workflowBtns += `<button class="btn btn-primary" onclick="openGroundReport()" style="background:linear-gradient(135deg,#e67e22,#d35400);border:none;"><i class="fas fa-file-alt"></i> تقرير حادث أرضي</button>`;
+
+            // === Timeline ===
+            const timelineSteps = [
+                { title: 'التسجيل', desc: `تم تسجيل البلاغ بواسطة ${inc.reporter}`, done: true },
+                { title: 'بانتظار المراجعة', desc: 'بانتظار مراجعة ضابط السلامة', done: ['pending_review','pending_approval','returned','investigating','responding','resolved','closed'].includes(inc.status) || inc.status !== 'new' },
+                { title: 'مراجعة ضابط السلامة', desc: inc.status === 'returned' ? 'تم الإرجاع من المدير — يحتاج مراجعة إضافية' : 'مراجعة مبدئية وتقييم', done: ['pending_approval','investigating','responding','resolved','closed'].includes(inc.status) },
+                { title: 'موافقة المدير', desc: 'مدير العمليات يوافق على بدء التحقيق', done: ['investigating','responding','resolved','closed'].includes(inc.status) },
+                { title: 'التحقيق والاستجابة', desc: inc.status === 'investigating' ? 'جاري التحقيق...' : inc.status === 'responding' ? 'جاري الاستجابة...' : 'في الانتظار', done: ['responding','resolved','closed'].includes(inc.status), active: inc.status === 'investigating' },
+                { title: 'الحل', desc: ['resolved','closed'].includes(inc.status) ? 'تم حل الحادث' : 'في الانتظار', done: ['resolved','closed'].includes(inc.status) },
+                { title: 'الإغلاق', desc: inc.status === 'closed' ? 'تم إغلاق الحادث رسمياً' : 'في الانتظار', done: inc.status === 'closed' },
+            ];
+
+            content.innerHTML = `
+                <div class="incident-header-bar animate-fade-up">
+                    <div>
+                        <h2>${inc.title}</h2>
+                        <div style="display:flex; gap:var(--space-3); margin-top:var(--space-3); flex-wrap:wrap;">
+                            <span class="badge-status ${statusInfo.cssClass}" style="font-size:var(--text-sm); padding:var(--space-2) var(--space-4);"><i class="${statusInfo.icon}"></i> ${statusInfo.label}</span>
+                            <span class="badge-priority ${priorityInfo.cssClass}" style="font-size:var(--text-sm); padding:var(--space-2) var(--space-4);"><i class="${priorityInfo.icon}"></i> ${priorityInfo.label}</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+                        ${workflowBtns}
+                    </div>
+                </div>
+
+                <div class="incident-detail-grid">
+                    <div>
+                        <div class="incident-info-card animate-fade-up" style="margin-bottom:var(--space-6);">
+                            <h3 style="font-size:var(--text-lg); font-weight:var(--font-bold); margin-bottom:var(--space-4); color:var(--primary-800);"><i class="fas fa-info-circle" style="color:var(--primary-500)"></i> معلومات الحادث</h3>
+                            <div class="incident-meta">
+                                <div class="incident-meta-item"><span class="incident-meta-label"><i class="fas fa-hashtag"></i> رقم الحادث</span><span class="incident-meta-value">${inc.id}</span></div>
+                                <div class="incident-meta-item"><span class="incident-meta-label"><i class="fas fa-tag"></i> النوع</span><span class="incident-meta-value" style="color:${type.color}"><i class="${type.icon}"></i> ${type.label}</span></div>
+                                <div class="incident-meta-item"><span class="incident-meta-label"><i class="fas fa-map-marker-alt"></i> الموقع</span><span class="incident-meta-value">${inc.location}</span></div>
+                                <div class="incident-meta-item"><span class="incident-meta-label"><i class="fas fa-calendar"></i> التاريخ والوقت</span><span class="incident-meta-value">${inc.date} - ${inc.time}</span></div>
+                                <div class="incident-meta-item"><span class="incident-meta-label"><i class="fas fa-user"></i> المُبلّغ</span><span class="incident-meta-value">${inc.reporter}</span></div>
+                                <div class="incident-meta-item">
+                                    <span class="incident-meta-label"><i class="fas fa-user-shield"></i> المسؤول</span>
+                                    ${canAssign ? `<select class="form-control" style="max-width:250px;font-size:13px;" onchange="assignIncident(this.value)"><option value="">-- اختر المسؤول --</option>${assignOptions}</select>` : `<span class="incident-meta-value">${inc.assignedTo || 'لم يُعيّن بعد'}</span>`}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="incident-info-card animate-fade-up" style="margin-bottom:var(--space-6);">
+                            <h3 style="font-size:var(--text-lg); font-weight:var(--font-bold); margin-bottom:var(--space-4); color:var(--primary-800);"><i class="fas fa-align-right" style="color:var(--primary-500)"></i> الوصف التفصيلي</h3>
+                            <p style="color:var(--text-secondary); line-height:1.8;">${inc.description}</p>
+                        </div>
+
+                        ${imagesHTML}
+
+                        <div class="incident-info-card animate-fade-up">
+                            <h3 style="font-size:var(--text-lg); font-weight:var(--font-bold); margin-bottom:var(--space-4); color:var(--primary-800);"><i class="fas fa-tasks" style="color:var(--primary-500)"></i> الإجراءات المتخذة</h3>
+                            <ul style="padding-right:var(--space-5);">
+                                ${inc.actions.map(a => `<li style="color:var(--text-secondary); margin-bottom:var(--space-2); list-style-type:disc;"><i class="fas fa-check" style="color:var(--success-500); margin-left:var(--space-2);"></i> ${a}</li>`).join('')}
+                                ${inc.actions.length === 0 ? '<li style="color:var(--text-muted);">لا توجد إجراءات مسجلة بعد</li>' : ''}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="incident-info-card animate-fade-up" style="margin-bottom:var(--space-6);">
+                            <h3 style="font-size:var(--text-lg); font-weight:var(--font-bold); margin-bottom:var(--space-5); color:var(--primary-800);"><i class="fas fa-stream" style="color:var(--primary-500)"></i> مسار الحادث</h3>
+                            <div class="timeline">
+                                ${timelineSteps.map(step => `
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot ${step.done ? 'completed' : step.active ? 'active' : 'pending'}"></div>
+                                        <div class="timeline-content">
+                                            <h4>${step.title}</h4>
+                                            <p>${step.desc}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function assignIncident(userName) {
+            currentIncident.assignedTo = userName;
+            const idx = MockData.incidents.findIndex(i => i.id === currentIncident.id);
+            if (idx !== -1) MockData.incidents[idx] = currentIncident;
+            saveDataToStorage();
+            showToast(userName ? `تم تعيين ${userName} كمسؤول عن الحادث` : 'تم إلغاء تعيين المسؤول', 'success');
+        }
+
+        // === Workflow Functions ===
+        function forwardToManager() {
+            currentIncident.status = 'pending_approval';
+            currentIncident.actions.push('تمت المراجعة بواسطة ضابط السلامة وإحالته لمدير العمليات');
+            syncAndRender();
+            showToast('تم إحالة الحادث لمدير العمليات للموافقة', 'success');
+            // إشعار المدير
+            addNotification('حادث بانتظار موافقتك', `الحادث ${currentIncident.id} تمت مراجعته وينتظر موافقتك`, 'operations_manager');
+        }
+
+        function approveIncident() {
+            currentIncident.status = 'investigating';
+            currentIncident.actions.push('تمت الموافقة من مدير العمليات — بدء التحقيق الرسمي');
+            syncAndRender();
+            showToast('تمت الموافقة على الحادث — بدء التحقيق', 'success');
+            addNotification('تمت الموافقة على حادث', `الحادث ${currentIncident.id} تمت الموافقة عليه من المدير`, 'safety_officer');
+        }
+
+        function rejectIncident() {
+            const reason = prompt('سبب الإرجاع:');
+            if (!reason) return;
+            currentIncident.status = 'returned';
+            currentIncident.actions.push('تم الإرجاع من المدير: ' + reason);
+            syncAndRender();
+            showToast('تم إرجاع الحادث لضابط السلامة', 'warning');
+            addNotification('حادث مُعاد للمراجعة', `الحادث ${currentIncident.id} أُعيد من المدير: ${reason}`, 'safety_officer');
+        }
+
+        function convertToRisk() {
+            const newRisk = {
+                id: 'RSK-' + String(MockData.risks.length + 1).padStart(3, '0'),
+                event: currentIncident.title,
+                hazard: currentIncident.description.substring(0, 80),
+                consequence: 'مستمد من الحادث ' + currentIncident.id,
+                initialProb: '3', initialSev: 'C', initialRating: '3C', initialCategory: 'Reviewable',
+                existingControls: '', mitigation: currentIncident.actions.join('، '),
+                newControls: '', residualProb: '3', residualSev: 'C',
+                residualRating: '3C', residualCategory: 'Reviewable',
+                status: 'مفتوح', ownership: 'ضابط السلامة',
+                sourceIncident: currentIncident.id
+            };
+            MockData.risks.push(newRisk);
+            saveDataToStorage();
+            showToast(`تم تحويل الحادث إلى سجل المخاطر (${newRisk.id})`, 'success');
+        }
+
+        function addNotification(title, message, targetRole) {
+            MockData.notifications.unshift({
+                id: MockData.notifications.length + 1,
+                title: title, message: message,
+                type: 'incident', date: new Date().toISOString().split('T')[0],
+                time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}),
+                read: false, targetRole: targetRole
+            });
+            saveDataToStorage();
+        }
+
+        function syncAndRender() {
+            const idx = MockData.incidents.findIndex(i => i.id === currentIncident.id);
+            if (idx !== -1) MockData.incidents[idx] = currentIncident;
+            saveDataToStorage();
+            renderIncidentDetail();
+        }
+
+        function openStatusModal() {
+            document.getElementById('newStatus').value = currentIncident.status;
+            document.getElementById('modalBackdrop').classList.add('active');
+            document.getElementById('statusModal').classList.add('active');
+        }
+
+        function closeStatusModal() {
+            document.getElementById('modalBackdrop').classList.remove('active');
+            document.getElementById('statusModal').classList.remove('active');
+        }
+
+        function updateStatus() {
+            const newStatus = document.getElementById('newStatus').value;
+            const note = document.getElementById('statusNote').value;
+
+            currentIncident.status = newStatus;
+            if (note) currentIncident.actions.push(note);
+
+            syncAndRender();
+            closeStatusModal();
+            showToast('تم تحديث حالة الحادث بنجاح', 'success');
+            document.getElementById('statusNote').value = '';
+        }
+        function openGroundReport() {
+            const inc = currentIncident;
+            const params = new URLSearchParams({
+                incident: inc.id,
+                title: inc.title,
+                date: inc.date,
+                time: inc.time,
+                location: inc.location || '',
+                reporter: inc.reporter || '',
+                description: inc.description || ''
+            });
+            window.location.href = `ground-report.html?${params.toString()}`;
+        }
+    </script>
+</body>
+
+</html>

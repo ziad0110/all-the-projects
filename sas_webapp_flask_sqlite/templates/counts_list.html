@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-clipboard-check me-2"></i>سجلات جرد المخزون</h2>
+            <p class="text-muted">مراجعة واعتماد عمليات الجرد الدوري والتسويات المخزنية</p>
+        </div>
+        <a href="{{ url_for('count_create') }}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-2"></i>بدء جرد جديد
+        </a>
+    </div>
+
+    <!-- Status Stats -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3 border-start border-primary border-4" style="border-radius: 12px;">
+                <div class="text-muted small fw-bold">إجمالي عمليات الجرد</div>
+                <div class="h4 fw-bold mb-0 text-dark">{{ rows|length }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3 border-start border-warning border-4" style="border-radius: 12px;">
+                <div class="text-muted small fw-bold">مسودات قيد العمل</div>
+                {% set drafts = rows|selectattr('status', 'equalto', 'DRAFT')|list|length %}
+                <div class="h4 fw-bold mb-0 text-warning">{{ drafts }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3 border-start border-success border-4" style="border-radius: 12px;">
+                <div class="text-muted small fw-bold">عمليات معتمدة</div>
+                {% set completed = rows|selectattr('status', 'equalto', 'COMPLETED')|list|length %}
+                <div class="h4 fw-bold mb-0 text-success">{{ completed }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory List Table -->
+    <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light small fw-bold text-muted text-uppercase">
+                        <tr>
+                            <th class="ps-4 py-3">رقم الجرد</th>
+                            <th class="py-3">التاريخ</th>
+                            <th class="py-3">المستودع</th>
+                            <th class="py-3 text-center">عدد الأصناف</th>
+                            <th class="py-3 text-center">الحالة</th>
+                            <th class="pe-4 py-3 text-end">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in rows %}
+                        <tr>
+                            <td class="ps-4">
+                                <span class="badge bg-light text-dark border px-3">#{{ r.count_number }}</span>
+                            </td>
+                            <td class="small text-muted">{{ r.count_date }}</td>
+                            <td>
+                                <div class="fw-bold"><i class="bi bi-building me-1 text-primary"></i>{{ r.warehouse_name }}</div>
+                            </td>
+                            <td class="text-center fw-bold">{{ r.items_count }}</td>
+                            <td class="text-center">
+                                {% if r.status == 'COMPLETED' %}
+                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">
+                                    <i class="bi bi-check-all me-1"></i> تم الاعتماد
+                                </span>
+                                {% else %}
+                                <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 py-2">
+                                    <i class="bi bi-pencil-square me-1"></i> مسودة
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="pe-4 text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    {% if r.status == 'DRAFT' %}
+                                    <form method="post" action="{{ url_for('count_finalize', count_id=r.count_id) }}" class="d-inline">
+                                        <button class="btn btn-success btn-sm rounded-pill px-3 shadow-sm" onclick="return confirm('هل تريد اعتماد هذا الجرد نهائياً؟ لا يمكن التراجع بعد الاعتماد.')">
+                                            <i class="bi bi-check-lg me-1"></i> اعتماد
+                                        </button>
+                                    </form>
+                                    {% endif %}
+                                    <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                                        <i class="bi bi-eye me-1"></i> عرض
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">لا توجد سجلات جرد مسجلة حالياً</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

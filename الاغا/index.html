@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="نبع الريحان للتجارة والصناعة - فخامة الصناعة اليمنية برؤية عالمية">
+    <meta name="keywords" content="نبع الريحان, الأغا, دريم, عصائر, صلصات, اليمن, صناعة غذائية">
+    <meta name="author" content="Nab'a Al-Rehan">
+
+    <title>نبع الريحان | فخامة الصناعة اليمنية</title>
+
+    <!-- Fonts - Improved Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        /* Modern Glass Navbar Enhancement */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
+            padding: var(--space-md) 0;
+        }
+
+        /* Immersive Hero Design */
+        .hero {
+            background: radial-gradient(circle at center, var(--bg-tertiary) 0%, var(--bg-primary) 100%);
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000') center/cover no-repeat;
+            opacity: 0.15;
+            mix-blend-mode: soft-light;
+        }
+
+        .hero-visual {
+            position: relative;
+            z-index: 2;
+        }
+
+        .gold-glow {
+            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.4));
+        }
+
+        /* Advanced Brand Cards */
+        .brand-grid-modern {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-2xl);
+            margin-top: var(--space-3xl);
+        }
+
+        .brand-item {
+            position: relative;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            height: 450px;
+            transition: var(--transition-normal);
+            border: 1px solid var(--glass-border);
+        }
+
+        .brand-item:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold-primary);
+        }
+
+        .brand-item-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-2xl);
+            background: linear-gradient(to top, rgba(4, 47, 36, 0.95) 20%, transparent 100%);
+            z-index: 3;
+        }
+
+        /* Custom Reveal Animations */
+        @keyframes revealUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .revealed {
+            animation: revealUp 1s ease forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon gold-glow">
+                        <svg width="45" height="45" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" stroke="var(--gold-primary)" stroke-width="2" fill="none" />
+                            <path d="M50 20 L50 80 M20 50 L80 50" stroke="var(--gold-primary)" stroke-width="1.5" />
+                            <circle cx="50" cy="50" r="10" fill="var(--gold-primary)" />
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <span class="text-gold">نبع الريحان</span>
+                    </div>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link active">الرئيسية</a></li>
+                    <li><a href="about.html" class="nav-link">خبرتنا</a></li>
+                    <li><a href="#brands" class="nav-link">علاماتنا</a></li>
+                    <li><a href="quality.html" class="nav-link">الجودة</a></li>
+                    <li><a href="contact.html" class="btn btn-primary btn-sm">بدء شراكة</a></li>
+                </ul>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="grid grid-2 items-center">
+                <div class="hero-text revealed">
+                    <span class="text-gold fw-bold mb-md d-block">جودة تتوارثها الأجيال</span>
+                    <h1 class="mb-lg">نبع الريحان... <br><span class="text-gradient">أصل الفخامة اليمنية</span></h1>
+                    <p class="lead mb-xl">نجوب العالم حاملين معنا عراقة الأرض اليمنية وأسرار محاصيلها الخصبة، لنصنع منها
+                        أجود المنتجات العالمية.</p>
+                    <div class="flex gap-md flex-wrap">
+                        <a href="#brands" class="btn btn-primary btn-lg">استكشف منتجاتنا</a>
+                        <a href="about.html" class="btn btn-outline btn-lg">قصة نجاحنا</a>
+                    </div>
+                </div>
+                <div class="hero-visual revealed" style="animation-delay: 0.3s;">
+                    <!-- Visual representation of luxury -->
+                    <div class="gold-glow" style="display: flex; justify-content: flex-end;">
+                        <svg width="400" height="400" viewBox="0 0 200 200">
+                            <defs>
+                                <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="var(--gold-dark)" />
+                                    <stop offset="50%" stop-color="var(--gold-primary)" />
+                                    <stop offset="100%" stop-color="var(--gold-light)" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="100" cy="100" r="80" stroke="url(#heroGrad)" stroke-width="1" fill="none"
+                                opacity="0.3" />
+                            <path d="M100 20 Q140 60 100 120 Q60 60 100 20" fill="url(#heroGrad)"
+                                transform="translate(0, 20)" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section (Glass Style) -->
+    <section class="section">
+        <div class="container">
+            <div class="grid grid-4 text-center">
+                <div class="stat-box revealed" style="animation-delay: 0.1s;">
+                    <h3 class="text-gold">+15</h3>
+                    <p>عاماً من التميز</p>
+                </div>
+                <div class="stat-box revealed" style="animation-delay: 0.2s;">
+                    <h3 class="text-gold">+50</h3>
+                    <p>منتج مبتكر</p>
+                </div>
+                <div class="stat-box revealed" style="animation-delay: 0.3s;">
+                    <h3 class="text-gold">+20</h3>
+                    <p>سوق عالمي</p>
+                </div>
+                <div class="stat-box revealed" style="animation-delay: 0.4s;">
+                    <h3 class="text-gold">100%</h3>
+                    <p>جودة يمنية</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="section" id="brands" style="background: var(--surface-alternate); color: var(--text-dark);">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: var(--text-dark);">علاماتنا <span class="text-gold">الفارقة</span></h2>
+                <div class="divider"
+                    style="background: var(--gold-primary); height: 3px; width: 60px; margin: 1rem auto;"></div>
+                <p style="color: var(--text-dark); opacity: 0.8;">كل علامة تجارية في مجموعتنا هي وعد بالتميز والجودة
+                    التي لا تضاهى.</p>
+            </div>
+
+            <div class="brand-grid-modern">
+                <!-- Al-Agha -->
+                <a href="brands/al-agha/index.html" class="brand-item">
+                    <img src="https://images.unsplash.com/photo-1546173159-315724a31696?q=80&w=1000" alt="Al Agha"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="brand-item-content">
+                        <h3 class="text-gold mb-sm">شركة الأغا</h3>
+                        <p class="mb-lg">سحر الفواكه الطبيعية من مزارع اليمن إليك مباشرة.</p>
+                        <span class="btn btn-outline btn-sm">اكتشف المجموعة</span>
+                    </div>
+                </a>
+
+                <!-- Dream -->
+                <a href="brands/dream/index.html" class="brand-item">
+                    <img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=1000" alt="Dream Food"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="brand-item-content">
+                        <h3 class="text-gold mb-sm">شركة دريم</h3>
+                        <p class="mb-lg">الإبداع في كل لقمة.. صلصات وخدمات غذائية بمعايير عالمية.</p>
+                        <span class="btn btn-outline btn-sm">استعرض المنتجات</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--bg-primary); padding: var(--space-4xl) 0 var(--space-xl);">
+        <div class="container">
+            <div class="grid grid-4 mb-3xl">
+                <div>
+                    <h4 class="text-gold mb-lg">نبع الريحان</h4>
+                    <p class="text-muted">رؤيتنا تتجاوز الحدود.. لنضع الصناعة اليمنية في مصاف العالمية بأعلى معايير
+                        الجودة والاتقان.</p>
+                </div>
+                <div>
+                    <h5 class="mb-lg">روابط سريعة</h5>
+                    <ul class="flex flex-col gap-sm">
+                        <li><a href="#" class="text-muted hover-gold">عن الشركة</a></li>
+                        <li><a href="#" class="text-muted hover-gold">سياسة الجودة</a></li>
+                        <li><a href="#" class="text-muted hover-gold">المركز الإعلامي</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="mb-lg">تواصل معنا</h5>
+                    <p class="text-muted mb-sm"><i class="fas fa-phone text-gold ml-sm-r"></i> +967 1 234 567</p>
+                    <p class="text-muted"><i class="fas fa-envelope text-gold ml-sm-r"></i> info@nabrehan.com</p>
+                </div>
+                <div>
+                    <h5 class="mb-lg">تابعنا</h5>
+                    <div class="flex gap-md">
+                        <a href="#" class="text-gold"><i class="fab fa-facebook fa-xl"></i></a>
+                        <a href="#" class="text-gold"><i class="fab fa-instagram fa-xl"></i></a>
+                        <a href="#" class="text-gold"><i class="fab fa-linkedin fa-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-xl border-t border-subtle">
+                <p class="text-muted" style="font-size: 0.9rem;">&copy; 2024 نبع الريحان للتجارة والصناعة. جميع الحقوق
+                    محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

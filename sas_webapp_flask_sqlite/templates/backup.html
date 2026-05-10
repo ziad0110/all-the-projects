@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header mb-4">
+  <h2 class="mb-1">إدارة النسخ الاحتياطي</h2>
+  <p class="text-muted small">حماية بياناتك من خلال إنشاء واستعادة النسخ الاحتياطية بانتظام.</p>
+</div>
+
+<div class="row g-4">
+  <!-- Create Backup -->
+  <div class="col-md-6">
+    <div class="card p-4 h-100 shadow-sm border-0">
+      <div class="d-flex align-items-center mb-3">
+        <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3 text-primary">
+          <i class="bi bi-cloud-arrow-up fs-3"></i>
+        </div>
+        <div>
+          <h5 class="mb-0">إنشاء نسخة جديدة</h5>
+          <p class="text-muted small mb-0">سيتم حفظ حالة قاعدة البيانات الحالية.</p>
+        </div>
+      </div>
+      <form method="post" class="mt-auto">
+        <input type="hidden" name="action" value="backup">
+        <button type="submit" class="btn btn-primary w-100 py-2">
+          <i class="bi bi-plus-circle me-1"></i> إنشاء نسخة احتياطية الآن
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Restore Backup -->
+  <div class="col-md-6">
+    <div class="card p-4 h-100 shadow-sm border-0">
+      <div class="d-flex align-items-center mb-3">
+        <div class="bg-warning bg-opacity-10 p-3 rounded-3 me-3 text-warning">
+          <i class="bi bi-arrow-counterclockwise fs-3"></i>
+        </div>
+        <div>
+          <h5 class="mb-0">استعادة نسخة سابقة</h5>
+          <p class="text-muted small mb-0">تحذير: سيتم استبدال البيانات الحالية بالكامل.</p>
+        </div>
+      </div>
+      {% if backups %}
+      <div class="mt-auto">
+        <div class="mb-3 position-relative">
+          <label class="form-label small fw-bold">اختر النسخة المراد استعادتها:</label>
+          <div class="position-relative">
+            <select id="backupSelect" class="form-select border-warning shadow-none ps-5" style="cursor: pointer; height: 45px;">
+              {% for b in backups %}
+              <option value="{{ b.filename }}">
+                {{ b.date }} [{{ b.type }}] ({{ b.size }} MB)
+              </option>
+              {% endfor %}
+            </select>
+            <div class="position-absolute top-50 start-0 translate-middle-y ps-3 text-warning" style="pointer-events: none;">
+              <i class="bi bi-chevron-double-down"></i>
+            </div>
+          </div>
+        </div>
+        <button type="button" onclick="showConfirmRestore()" class="btn btn-warning w-100 py-2">
+          <i class="bi bi-shield-lock me-1"></i> تأكيد الاستعادة
+        </button>
+      </div>
+      {% else %}
+      <div class="alert alert-light border text-center mt-auto">لا توجد نسخ متوفرة للاستعادة</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Backups List -->
+{% if backups %}
+<div class="card mt-4 shadow-sm border-0 overflow-hidden">
+  <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">سجل النسخ الاحتياطية <span class="badge bg-secondary rounded-pill ms-2">{{ backups|length }}</span></h5>
+    <div id="bulkActions" class="d-none animate-fade-in">
+        <button type="button" onclick="selectAllExceptLatest()" class="btn btn-outline-primary btn-sm px-3 me-2">
+            <i class="bi bi-stars me-1"></i> تحديد الكل ماعدا الأحدث
+        </button>
+        <button type="button" onclick="showBulkDelete()" class="btn btn-danger btn-sm px-3">
+            <i class="bi bi-trash-fill me-1"></i> حذف المحدد (<span id="selectedCount">0</span>)
+        </button>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="backupsTable">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-4" style="width: 40px;">
+                <input type="checkbox" class="form-check-input" id="selectAllBackups" onclick="toggleAllCheckboxes(this); event.stopPropagation();">
+            </th>
+            <th>تاريخ النسخة</th>
+            <th>المصدر / النوع</th>
+            <th>حجم الملف</th>
+            <th>اسم الملف</th>
+            <th class="text-center">الحالة</th>
+            <th class="text-end pe-4">الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in backups %}
+          <tr class="{{ 'latest-backup-row' if loop.first else '' }} backup-row" onclick="toggleRowSelection(this, event)" style="cursor: pointer;">
+            <td class="ps-4">
+                <input type="checkbox" class="form-check-input backup-checkbox" value="{{ b.filename }}" onclick="event.stopPropagation(); updateSelectedCount();">
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                {% if loop.first %}
+                <div class="spinner-grow spinner-grow-sm text-success me-2" role="status" style="width: 8px; height: 8px;"></div>
+                {% endif %}
+                <span class="fw-bold">{{ b.date }}</span>
+                {% if loop.first %}
+                <span class="badge bg-success ms-2 animate-pulse" style="font-size: 11px; letter-spacing: 0.5px;">الأحدث</span>
+                {% endif %}
+              </div>
+            </td>
+            <td>
+              <span class="badge {{ 'bg-info' if 'تلقائي' in b.type else 'bg-primary' }} bg-opacity-10 {{ 'text-info' if 'تلقائي' in b.type else 'text-primary' }} border {{ 'border-info' if 'تلقائي' in b.type else 'border-primary' }} px-2 py-1">
+                {{ b.type }}
+              </span>
+            </td>
+            <td><span class="badge bg-light text-dark">{{ b.size }} MB</span></td>
+            <td><code class="opacity-75">{{ b.filename }}</code></td>
+            <td class="text-center">
+              {% if loop.first %}
+              <span class="text-success fw-bold small"><i class="bi bi-check-circle-fill me-1"></i>جاهزة</span>
+              {% else %}
+              <span class="text-muted small">نسخة سابقة</span>
+              {% endif %}
+            </td>
+            <td class="text-end pe-4">
+              <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="event.stopPropagation(); showConfirmDelete('{{ b.filename }}')" title="حذف">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Custom Action Confirmation Modal -->
+<div class="modal fade" id="actionConfirmModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold" id="confirmTitle">تأكيد الإجراء</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <div id="confirmIcon" class="mb-3"></div>
+        <p id="confirmMessage" class="fs-5 mb-0"></p>
+        <p id="confirmSubMessage" class="text-muted small mt-2"></p>
+      </div>
+      <div class="modal-footer border-0 pt-0 justify-content-center">
+        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">إلغاء</button>
+        <button type="button" id="confirmSubmitBtn" class="btn px-4">تأكيد</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden Forms for JS Submission -->
+<form id="jsActionForm" method="post" style="display:none;">
+  <input type="hidden" name="action" id="jsActionInput">
+  <input type="hidden" name="filename" id="jsFilenameInput">
+  <!-- For multiple deletions -->
+  <div id="bulkFilenameContainer"></div>
+</form>
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const actionModalEl = document.getElementById('actionConfirmModal');
+    if (!actionModalEl) return;
+    
+    const actionModal = new bootstrap.Modal(actionModalEl);
+    const jsForm = document.getElementById('jsActionForm');
+    const jsAction = document.getElementById('jsActionInput');
+    const jsFilename = document.getElementById('jsFilenameInput');
+    const bulkContainer = document.getElementById('bulkFilenameContainer');
+    const submitBtn = document.getElementById('confirmSubmitBtn');
+
+    // Show bulk actions by default if there are multiple backups
+    const checkboxes = document.querySelectorAll('.backup-checkbox');
+    if (checkboxes.length > 1) {
+        document.getElementById('bulkActions').classList.remove('d-none');
+    }
+
+    window.toggleAllCheckboxes = function(master) {
+        checkboxes.forEach(cb => cb.checked = master.checked);
+        updateSelectedCount();
+    }
+
+    window.toggleRowSelection = function(row, event) {
+        // Don't toggle if clicking a button or checkbox directly
+        if (event.target.tagName === 'BUTTON' || event.target.tagName === 'I' || event.target.tagName === 'INPUT') return;
+        
+        const cb = row.querySelector('.backup-checkbox');
+        if (cb) {
+            cb.checked = !cb.checked;
+            updateSelectedCount();
+        }
+    }
+
+    window.selectAllExceptLatest = function() {
+        checkboxes.forEach((cb, index) => {
+            cb.checked = (index !== 0); // Everything except the first (latest)
+        });
+        updateSelectedCount();
+    }
+
+    window.updateSelectedCount = function() {
+        const checked = document.querySelectorAll('.backup-checkbox:checked');
+        const countSpan = document.getElementById('selectedCount');
+        countSpan.innerText = checked.length;
+    }
+
+    window.showConfirmRestore = function() {
+      const select = document.getElementById('backupSelect');
+      if (!select || !select.value) return;
+      
+      document.getElementById('confirmTitle').innerText = 'تأكيد استعادة البيانات';
+      document.getElementById('confirmIcon').innerHTML = '<i class="bi bi-arrow-counterclockwise text-warning display-4"></i>';
+      document.getElementById('confirmMessage').innerText = 'هل أنت متأكد من استعادة هذه النسخة؟';
+      document.getElementById('confirmSubMessage').innerText = 'تنبيه: سيتم استبدال كافة البيانات الحالية بالكامل ولا يمكن التراجع.';
+      
+      submitBtn.className = 'btn btn-warning px-4';
+      submitBtn.onclick = () => {
+        bulkContainer.innerHTML = ''; // Clear bulk
+        jsAction.value = 'restore';
+        jsFilename.value = select.value;
+        jsForm.submit();
+      };
+      actionModal.show();
+    };
+
+    window.showConfirmDelete = function(filename) {
+      document.getElementById('confirmTitle').innerText = 'تأكيد حذف النسخة';
+      document.getElementById('confirmIcon').innerHTML = '<i class="bi bi-trash-fill text-danger display-4"></i>';
+      document.getElementById('confirmMessage').innerText = 'هل تريد حذف هذه النسخة الاحتياطية؟';
+      document.getElementById('confirmSubMessage').innerText = 'سيتم حذف الملف نهائياً من القرص الصلب.';
+      
+      submitBtn.className = 'btn btn-danger px-4';
+      submitBtn.onclick = () => {
+        bulkContainer.innerHTML = '';
+        jsAction.value = 'delete';
+        jsFilename.value = filename;
+        jsForm.submit();
+      };
+      actionModal.show();
+    };
+
+    window.showBulkDelete = function() {
+        const checked = document.querySelectorAll('.backup-checkbox:checked');
+        if (checked.length === 0) return;
+
+        document.getElementById('confirmTitle').innerText = 'حذف جماعي للنسخ';
+        document.getElementById('confirmIcon').innerHTML = '<i class="bi bi-trash-fill text-danger display-4"></i>';
+        document.getElementById('confirmMessage').innerText = `هل تريد حذف ${checked.length} نسخة احتياطية؟`;
+        document.getElementById('confirmSubMessage').innerText = 'سيتم مسح كافة الملفات المختارة نهائياً.';
+        
+        submitBtn.className = 'btn btn-danger px-4';
+        submitBtn.onclick = () => {
+            bulkContainer.innerHTML = '';
+            jsAction.value = 'delete';
+            checked.forEach(cb => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'filenames';
+                input.value = cb.value;
+                bulkContainer.appendChild(input);
+            });
+            jsForm.submit();
+        };
+        actionModal.show();
+    }
+  });
+</script>
+{% endblock %}
+
+<style>
+  [data-theme='dark'] .table { color: #cbd5e1; }
+  [data-theme='dark'] .table-light { background-color: #1e293b !important; color: #94a3b8; }
+  [data-theme='dark'] .table-hover tbody tr:hover { background-color: rgba(255,255,255,0.03); }
+  
+  [data-theme='dark'] .modal-content { background-color: #1e293b; color: #fff; }
+  [data-theme='dark'] .btn-light { background-color: #334155; border: none; color: #fff; }
+  [data-theme='dark'] .btn-close { filter: invert(1); }
+
+  .latest-backup-row { 
+    background-color: rgba(25, 135, 84, 0.15) !important; 
+    border-right: 4px solid #198754; 
+  }
+  .latest-backup-row td { color: var(--text-primary) !important; font-weight: 500; }
+  [data-theme='dark'] .latest-backup-row { background-color: rgba(25, 135, 84, 0.25) !important; }
+
+  .animate-pulse { animation: pulse-green 2s infinite; }
+  @keyframes pulse-green {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(25, 135, 84, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
+  }
+
+  .animate-fade-in { animation: fadeIn 0.3s ease-in; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  [data-theme='dark'] code { color: #94a3b8; }
+  .form-check-input:checked { background-color: #dc3545; border-color: #dc3545; }
+</style>
+{% endblock %}

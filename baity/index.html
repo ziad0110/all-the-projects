@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>بيتي - سوقك المنزلي الأول</title>
+    <meta name="description"
+        content="بيتي - أكبر سوق إلكتروني للأدوات المنزلية والطعام والمنتجات الجديدة والمستعملة. سجل كبائع وابدأ البيع اليوم!">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="with-splash">
+    <!-- Welcome Splash Screen -->
+    <div id="welcomeSplash" class="welcome-splash">
+        <div class="bg-shapes"><span></span><span></span><span></span><span></span></div>
+        <div class="particles">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="welcome-content">
+            <div class="logo-anim"><i class="fas fa-home"></i></div>
+            <h1 class="brand">بيتي</h1>
+            <p class="tagline">سوقك المنزلي الأول — كل ما يحتاجه بيتك في مكان واحد 🏠</p>
+            <div class="features-minimal">
+                <div class="feat"><i class="fas fa-couch"></i><span>أثاث</span></div>
+                <div class="feat"><i class="fas fa-utensils"></i><span>مطبخ</span></div>
+                <div class="feat"><i class="fas fa-recycle"></i><span>مستعمل</span></div>
+                <div class="feat"><i class="fas fa-store"></i><span>بائعين</span></div>
+            </div>
+            <button class="enter-btn" onclick="hideSplash()">دخول المتجر <i class="fas fa-arrow-left"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Check if splash should be shown
+        if (sessionStorage.getItem('bayti_splash_shown')) {
+            document.body.classList.remove('with-splash');
+            document.getElementById('welcomeSplash').style.display = 'none';
+        }
+        function hideSplash() {
+            const s = document.getElementById('welcomeSplash');
+            s.style.opacity = '0';
+            setTimeout(() => {
+                s.style.display = 'none';
+                document.body.classList.remove('with-splash');
+                sessionStorage.setItem('bayti_splash_shown', 'true');
+            }, 800);
+        }
+    </script>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-home"></i><span>بيتي</span></a>
+            <div class="search-box">
+                <input type="text" placeholder="ابحث عن منتج، قسم، أو بائع..." onkeypress="handleSearch(event)">
+                <button
+                    onclick="const v=document.querySelector('.search-box input').value;if(v)window.location.href='products.html?search='+encodeURIComponent(v)"><i
+                        class="fas fa-search"></i></button>
+            </div>
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleNotifications()" title="الإشعارات"><i
+                        class="fas fa-bell"></i><span class="badge" id="notifCount">5</span></button>
+                <a href="cart.html" class="header-btn" title="السلة"><i class="fas fa-shopping-cart"></i><span
+                        class="badge" id="cartCount">3</span></a>
+                <button class="header-btn" onclick="toggleTheme()" title="الوضع الداكن"><i
+                        class="fas fa-moon"></i></button>
+                <a href="login.html" class="user-menu"><i class="fas fa-user"></i> حسابي</a>
+                <button class="header-btn sidebar-toggle" onclick="toggleSidebar()" title="القائمة"><i
+                        class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- NOTIFICATIONS PANEL -->
+    <div class="notifications-panel" id="notifPanel">
+        <div class="notif-header">
+            <h3>الإشعارات</h3><button class="btn-ghost btn-sm" onclick="clearNotifs()">مسح الكل</button>
+        </div>
+        <div class="notif-list">
+            <div class="notif-item unread">
+                <div class="notif-icon order"><i class="fas fa-box"></i></div>
+                <div class="notif-text">
+                    <p><strong>تم شحن طلبك!</strong> طلبك رقم #1234 في الطريق إليك</p><span class="time">منذ 5
+                        دقائق</span>
+                </div>
+            </div>
+            <div class="notif-item unread">
+                <div class="notif-icon promo"><i class="fas fa-tag"></i></div>
+                <div class="notif-text">
+                    <p><strong>عرض خاص!</strong> خصم 30% على جميع أدوات المطبخ اليوم فقط</p><span class="time">منذ
+                        ساعة</span>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="notif-icon msg"><i class="fas fa-comment"></i></div>
+                <div class="notif-text">
+                    <p><strong>رسالة جديدة</strong> من البائع: متجر الأصالة</p><span class="time">منذ 3 ساعات</span>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="notif-icon order"><i class="fas fa-star"></i></div>
+                <div class="notif-text">
+                    <p>حصلت على <strong>50 نقطة</strong> من عملية الشراء الأخيرة!</p><span class="time">أمس</span>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="notif-icon promo"><i class="fas fa-gift"></i></div>
+                <div class="notif-text">
+                    <p>ترقيت إلى <strong>العضوية الفضية</strong>! استمتع بمزايا حصرية</p><span class="time">منذ
+                        يومين</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">الأقسام الرئيسية</div>
+            <a href="products.html?cat=home" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-couch"></i> أدوات منزلية <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=furniture" class="sidebar-link">أثاث وغرف نوم</a>
+                <a href="products.html?sub=decor" class="sidebar-link">ديكور وتزيين</a>
+                <a href="products.html?sub=lighting" class="sidebar-link">إضاءة</a>
+                <a href="products.html?sub=storage" class="sidebar-link">تخزين وتنظيم</a>
+                <a href="products.html?sub=garden" class="sidebar-link">حدائق ونباتات</a>
+                <a href="products.html?sub=bathroom" class="sidebar-link">حمامات وإكسسوارات</a>
+            </div>
+            <a href="products.html?cat=kitchen" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-utensils"></i> أدوات المطبخ <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=cookware" class="sidebar-link">أواني طبخ</a>
+                <a href="products.html?sub=appliances" class="sidebar-link">أجهزة صغيرة</a>
+                <a href="products.html?sub=serving" class="sidebar-link">أدوات تقديم</a>
+                <a href="products.html?sub=cutlery" class="sidebar-link">سكاكين وأدوات قطع</a>
+            </div>
+            <a href="products.html?cat=food" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-apple-whole"></i> طعام وبقالة <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=vegs" class="sidebar-link">خضروات وفواكه</a>
+                <a href="products.html?sub=meat" class="sidebar-link">لحوم ودواجن</a>
+                <a href="products.html?sub=dairy" class="sidebar-link">ألبان وأجبان</a>
+                <a href="products.html?sub=canned" class="sidebar-link">معلبات ومعجنات</a>
+                <a href="products.html?sub=spices" class="sidebar-link">توابل وبهارات</a>
+                <a href="products.html?sub=drinks" class="sidebar-link">مشروبات وعصائر</a>
+                <a href="products.html?sub=snacks" class="sidebar-link">حلويات وسناكات</a>
+            </div>
+            <a href="products.html?cat=fashion" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-shirt"></i> ملابس وأزياء <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=men" class="sidebar-link">ملابس رجالية</a>
+                <a href="products.html?sub=women" class="sidebar-link">ملابس نسائية</a>
+                <a href="products.html?sub=kids" class="sidebar-link">ملابس أطفال</a>
+                <a href="products.html?sub=shoes" class="sidebar-link">أحذية</a>
+                <a href="products.html?sub=accessories" class="sidebar-link">إكسسوارات</a>
+            </div>
+            <a href="products.html?cat=electronics" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-mobile-screen"></i> إلكترونيات <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=phones" class="sidebar-link">هواتف ذكية</a>
+                <a href="products.html?sub=tablets" class="sidebar-link">أجهزة لوحية</a>
+                <a href="products.html?sub=laptops" class="sidebar-link">لابتوبات</a>
+                <a href="products.html?sub=tvs" class="sidebar-link">تلفزيونات</a>
+                <a href="products.html?sub=eacc" class="sidebar-link">إكسسوارات إلكترونية</a>
+            </div>
+            <a href="products.html?cat=used" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-recycle"></i> مستعمل ومجدد <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=ufurniture" class="sidebar-link">أثاث مستعمل</a>
+                <a href="products.html?sub=uelectronics" class="sidebar-link">إلكترونيات مستعملة</a>
+                <a href="products.html?sub=uclothes" class="sidebar-link">ملابس مستعملة</a>
+                <a href="products.html?sub=ubooks" class="sidebar-link">كتب مستعملة</a>
+                <a href="products.html?sub=uother" class="sidebar-link">متنوعات</a>
+            </div>
+            <a href="products.html?cat=beauty" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-spa"></i> عناية شخصية <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=perfume" class="sidebar-link">عطور</a>
+                <a href="products.html?sub=skincare" class="sidebar-link">بشرة</a>
+                <a href="products.html?sub=haircare" class="sidebar-link">شعر</a>
+                <a href="products.html?sub=makeup" class="sidebar-link">مكياج</a>
+            </div>
+            <a href="products.html?cat=toys" class="sidebar-link" onclick="toggleSubMenu(event)"><i
+                    class="fas fa-gamepad"></i> ألعاب وترفيه <i class="fas fa-chevron-left arrow"></i></a>
+            <div class="sub-menu">
+                <a href="products.html?sub=kidtoys" class="sidebar-link">ألعاب أطفال</a>
+                <a href="products.html?sub=videogames" class="sidebar-link">ألعاب فيديو</a>
+                <a href="products.html?sub=boardgames" class="sidebar-link">ألعاب طاولة</a>
+            </div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">روابط سريعة</div>
+            <a href="products.html?filter=deals" class="sidebar-link"><i class="fas fa-fire"
+                    style="color:var(--danger)"></i> عروض اليوم</a>
+            <a href="products.html?filter=trending" class="sidebar-link"><i class="fas fa-chart-line"
+                    style="color:var(--gold)"></i> الأكثر مبيعاً</a>
+            <a href="products.html?filter=new" class="sidebar-link"><i class="fas fa-sparkles"
+                    style="color:var(--info)"></i> وصل حديثاً</a>
+            <a href="seller-register.html" class="sidebar-link"><i class="fas fa-store"
+                    style="color:var(--green-500)"></i> سجل كبائع</a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- Loyalty Banner -->
+        <div class="loyalty-banner animate-in">
+            <div class="info">
+                <h3>🏆 برنامج ولاء بيتي</h3>
+                <p>اجمع النقاط مع كل عملية شراء واستبدلها بخصومات حصرية!</p>
+                <div class="loyalty-levels"><span class="loyalty-level level-bronze">برونز</span><span
+                        class="loyalty-level level-silver">فضي</span><span class="loyalty-level level-gold">ذهبي
+                        ⭐</span></div>
+            </div>
+            <div class="points"><span class="num">1,250</span><span class="label">نقطة متاحة</span></div>
+        </div>
+
+        <!-- Hero Slider -->
+        <div class="hero-slider animate-in">
+            <div class="hero-slide active">
+                <div class="hero-content">
+                    <h1>مرحباً بك في بيتي 🏠</h1>
+                    <p>سوقك المنزلي الأول - اكتشف آلاف المنتجات من أدوات منزلية وطعام ومستلزمات يومية بأسعار مميزة</p>
+                    <a href="products.html" class="btn btn-secondary">تسوق الآن <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+            <div class="hero-slide" style="background:linear-gradient(135deg,#8d6e63,#a1887f)">
+                <div class="hero-content">
+                    <h1>سجّل كبائع اليوم! 🏪</h1>
+                    <p>ابدأ ببيع منتجاتك المنزلية والمستعملة - بدون رسوم تسجيل وعمولة تنافسية</p>
+                    <a href="seller-register.html" class="btn btn-primary">ابدأ البيع <i class="fas fa-store"></i></a>
+                </div>
+            </div>
+            <div class="hero-slide" style="background:linear-gradient(135deg,#1b5e20,#66bb6a)">
+                <div class="hero-content">
+                    <h1>عروض نهاية الشهر 🎉</h1>
+                    <p>خصومات تصل حتى 50% على أدوات المطبخ والأثاث المنزلي - لفترة محدودة!</p>
+                    <a href="products.html?filter=deals" class="btn btn-secondary">شاهد العروض <i
+                            class="fas fa-tag"></i></a>
+                </div>
+            </div>
+            <div class="hero-dots"><span class="hero-dot active" onclick="goToSlide(0)"></span><span class="hero-dot"
+                    onclick="goToSlide(1)"></span><span class="hero-dot" onclick="goToSlide(2)"></span></div>
+            <div class="hero-nav prev" onclick="prevSlide()"><i class="fas fa-chevron-right"></i></div>
+            <div class="hero-nav next" onclick="nextSlide()"><i class="fas fa-chevron-left"></i></div>
+        </div>
+
+        <!-- Trending Tags -->
+        <div class="trending-tags animate-in">
+            <a href="products.html?search=أثاث" class="trending-tag"><i class="fas fa-fire"></i> أثاث مودرن</a>
+            <a href="products.html?search=أواني" class="trending-tag"><i class="fas fa-fire"></i> أواني جرانيت</a>
+            <a href="products.html?search=عطور" class="trending-tag"><i class="fas fa-fire"></i> عطور رجالية</a>
+            <a href="products.html?search=آيفون" class="trending-tag"><i class="fas fa-fire"></i> آيفون مستعمل</a>
+            <a href="products.html?cat=fashion&sub=kids" class="trending-tag"><i class="fas fa-fire"></i> ملابس
+                أطفال</a>
+            <a href="products.html?search=توابل" class="trending-tag"><i class="fas fa-fire"></i> توابل يمنية</a>
+            <a href="products.html?search=ديكور" class="trending-tag"><i class="fas fa-fire"></i> ديكور منزلي</a>
+        </div>
+
+        <!-- Categories -->
+        <div class="section-header animate-in">
+            <h2><i class="fas fa-th-large"></i> تصفح الأقسام</h2><a href="products.html" class="see-all">عرض الكل <i
+                    class="fas fa-arrow-left"></i></a>
+        </div>
+        <div class="categories-grid animate-in">
+            <a href="products.html?cat=home" class="category-card">
+                <div class="icon"><i class="fas fa-couch"></i></div>
+                <h3>أدوات منزلية</h3><span>+520 منتج</span>
+            </a>
+            <a href="products.html?cat=kitchen" class="category-card">
+                <div class="icon"><i class="fas fa-utensils"></i></div>
+                <h3>أدوات المطبخ</h3><span>+380 منتج</span>
+            </a>
+            <a href="products.html?cat=food" class="category-card">
+                <div class="icon"><i class="fas fa-apple-whole"></i></div>
+                <h3>طعام وبقالة</h3><span>+1200 منتج</span>
+            </a>
+            <a href="products.html?cat=fashion" class="category-card">
+                <div class="icon"><i class="fas fa-shirt"></i></div>
+                <h3>ملابس وأزياء</h3><span>+890 منتج</span>
+            </a>
+            <a href="products.html?cat=electronics" class="category-card">
+                <div class="icon"><i class="fas fa-mobile-screen"></i></div>
+                <h3>إلكترونيات</h3><span>+340 منتج</span>
+            </a>
+            <a href="products.html?cat=used" class="category-card">
+                <div class="icon"><i class="fas fa-recycle"></i></div>
+                <h3>مستعمل ومجدد</h3><span>+670 منتج</span>
+            </a>
+            <a href="products.html?cat=beauty" class="category-card">
+                <div class="icon"><i class="fas fa-spa"></i></div>
+                <h3>عناية شخصية</h3><span>+290 منتج</span>
+            </a>
+            <a href="products.html?cat=toys" class="category-card">
+                <div class="icon"><i class="fas fa-gamepad"></i></div>
+                <h3>ألعاب وترفيه</h3><span>+210 منتج</span>
+            </a>
+        </div>
+
+        <!-- Featured Products -->
+        <div class="section-header animate-in">
+            <h2><i class="fas fa-star"></i> منتجات مميزة</h2><a href="products.html?filter=featured" class="see-all">عرض
+                الكل <i class="fas fa-arrow-left"></i></a>
+        </div>
+        <div class="products-grid animate-in">
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop" alt="كنبة">
+                    <div class="badges"><span class="badge-tag badge-new">جديد</span></div>
+                    <div class="actions"><button title="المفضلة"><i class="fas fa-heart"></i></button><button
+                            title="مقارنة"><i class="fas fa-balance-scale"></i></button><button title="عرض سريع"><i
+                                class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=أحمد&background=2E7D32&color=fff&size=40"
+                            alt=""><span>متجر الأصالة</span></div>
+                    <h3>كنبة عصرية 3 مقاعد - قماش فاخر</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star-half-alt"></i><span>(127)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">2,500 ر.ي</span><span class="old-price">3,200 ر.ي</span></div><button
+                            class="add-cart" onclick="addToCart(1)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&h=300&fit=crop"
+                        alt="طقم أواني">
+                    <div class="badges"><span class="badge-tag badge-sale">-25%</span></div>
+                    <div class="actions"><button title="المفضلة"><i class="fas fa-heart"></i></button><button
+                            title="مقارنة"><i class="fas fa-balance-scale"></i></button><button title="عرض سريع"><i
+                                class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=سارة&background=8d6e63&color=fff&size=40"
+                            alt=""><span>بيت الطبخ</span></div>
+                    <h3>طقم أواني جرانيت 10 قطع - ضمان 5 سنوات</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="far fa-star"></i><span>(89)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">850 ر.ي</span><span class="old-price">1,100 ر.ي</span></div><button
+                            class="add-cart" onclick="addToCart(2)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop"
+                        alt="ساعة">
+                    <div class="badges"><span class="badge-tag badge-used">مستعمل</span></div>
+                    <div class="actions"><button title="المفضلة"><i class="fas fa-heart"></i></button><button
+                            title="مقارنة"><i class="fas fa-balance-scale"></i></button><button title="عرض سريع"><i
+                                class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=خالد&background=FFB300&color=fff&size=40"
+                            alt=""><span>خالد للساعات</span></div>
+                    <h3>ساعة رجالية كلاسيكية - حالة ممتازة</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><span>(45)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">350 ر.ي</span></div><button class="add-cart" onclick="addToCart(3)"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop"
+                        alt="إضاءة">
+                    <div class="badges"><span class="badge-tag badge-hot">🔥 رائج</span></div>
+                    <div class="actions"><button title="المفضلة"><i class="fas fa-heart"></i></button><button
+                            title="مقارنة"><i class="fas fa-balance-scale"></i></button><button title="عرض سريع"><i
+                                class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=نور&background=2E7D32&color=fff&size=40"
+                            alt=""><span>نور الديكور</span></div>
+                    <h3>مصباح أرضي مودرن - إضاءة دافئة</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i
+                            class="far fa-star"></i><span>(63)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">420 ر.ي</span><span class="old-price">580 ر.ي</span></div><button
+                            class="add-cart" onclick="addToCart(4)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deals Countdown -->
+        <div class="deals-section animate-in">
+            <div class="section-header">
+                <h2><i class="fas fa-bolt"></i> عروض اليوم - ينتهي خلال</h2><a href="products.html?filter=deals"
+                    class="see-all">كل العروض <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="countdown">
+                <div class="countdown-item"><span class="num" id="hours">08</span><span class="label">ساعة</span></div>
+                <div class="countdown-item"><span class="num" id="mins">45</span><span class="label">دقيقة</span></div>
+                <div class="countdown-item"><span class="num" id="secs">30</span><span class="label">ثانية</span></div>
+            </div>
+            <div class="deals-grid">
+                <a href="product-detail.html?id=9" class="deal-card">
+                    <div class="img-wrap"><img
+                            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop"
+                            alt="خلاط"></div>
+                    <div class="info">
+                        <h3>خلاط كهربائي احترافي</h3>
+                        <div><span class="discount">-40%</span><span class="price">299 ر.ي</span></div>
+                    </div>
+                </a>
+                <a href="product-detail.html?id=10" class="deal-card">
+                    <div class="img-wrap"><img
+                            src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=300&h=200&fit=crop"
+                            alt="مفرش"></div>
+                    <div class="info">
+                        <h3>طقم مفارش سرير فاخر</h3>
+                        <div><span class="discount">-35%</span><span class="price">450 ر.ي</span></div>
+                    </div>
+                </a>
+                <a href="product-detail.html?id=11" class="deal-card">
+                    <div class="img-wrap"><img
+                            src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300&h=200&fit=crop"
+                            alt="عطر"></div>
+                    <div class="info">
+                        <h3>عطر رجالي فاخر 100مل</h3>
+                        <div><span class="discount">-20%</span><span class="price">180 ر.ي</span></div>
+                    </div>
+                </a>
+                <a href="product-detail.html?id=12" class="deal-card">
+                    <div class="img-wrap"><img
+                            src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=300&h=200&fit=crop"
+                            alt="كرسي"></div>
+                    <div class="info">
+                        <h3>كرسي مكتب مريح</h3>
+                        <div><span class="discount">-30%</span><span class="price">650 ر.ي</span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Latest Products -->
+        <div class="section-header animate-in">
+            <h2><i class="fas fa-clock"></i> أحدث المنتجات</h2><a href="products.html?filter=new" class="see-all">عرض
+                الكل <i class="fas fa-arrow-left"></i></a>
+        </div>
+        <div class="products-grid animate-in">
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1574180566232-aaad1b5b8450?w=400&h=300&fit=crop"
+                        alt="هاتف">
+                    <div class="badges"><span class="badge-tag badge-used">مستعمل</span></div>
+                    <div class="actions"><button><i class="fas fa-heart"></i></button><button><i
+                                class="fas fa-balance-scale"></i></button><button><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=محمد&background=2E7D32&color=fff&size=40"
+                            alt=""><span>محمد للإلكترونيات</span></div>
+                    <h3>آيفون 14 برو - 256 جيجا - حالة ممتازة</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="far fa-star"></i><span>(34)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">1,800 ر.ي</span></div><button class="add-cart"
+                            onclick="addToCart(5)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1617005082133-548c4dd27f35?w=400&h=300&fit=crop"
+                        alt="بهارات">
+                    <div class="badges"><span class="badge-tag badge-new">جديد</span></div>
+                    <div class="actions"><button><i class="fas fa-heart"></i></button><button><i
+                                class="fas fa-balance-scale"></i></button><button><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=أم+علي&background=8d6e63&color=fff&size=40"
+                            alt=""><span>بيت البهارات</span></div>
+                    <h3>مجموعة بهارات يمنية أصلية - 12 نوع</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><span>(201)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">120 ر.ي</span></div><button class="add-cart" onclick="addToCart(6)"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"
+                        alt="ملابس">
+                    <div class="badges"><span class="badge-tag badge-new">جديد</span></div>
+                    <div class="actions"><button><i class="fas fa-heart"></i></button><button><i
+                                class="fas fa-balance-scale"></i></button><button><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=فاطمة&background=FFB300&color=fff&size=40"
+                            alt=""><span>أزياء فاطمة</span></div>
+                    <h3>ثوب رجالي قطن مصري - عدة ألوان</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star-half-alt"></i><span>(78)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">280 ر.ي</span><span class="old-price">350 ر.ي</span></div><button
+                            class="add-cart" onclick="addToCart(7)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="img-wrap"><img
+                        src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&h=300&fit=crop"
+                        alt="حذاء">
+                    <div class="badges"><span class="badge-tag badge-hot">🔥 رائج</span></div>
+                    <div class="actions"><button><i class="fas fa-heart"></i></button><button><i
+                                class="fas fa-balance-scale"></i></button><button><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="seller-info"><img
+                            src="https://ui-avatars.com/api/?name=ياسر&background=2E7D32&color=fff&size=40"
+                            alt=""><span>أحذية ياسر</span></div>
+                    <h3>حذاء رياضي - ماركة أصلية</h3>
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="far fa-star"></i><span>(56)</span></div>
+                    <div class="price-row">
+                        <div><span class="price">390 ر.ي</span></div><button class="add-cart" onclick="addToCart(8)"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Sellers -->
+        <div class="section-header animate-in">
+            <h2><i class="fas fa-crown"></i> بائعون مميزون</h2><a href="#" class="see-all">عرض الكل <i
+                    class="fas fa-arrow-left"></i></a>
+        </div>
+        <div class="sellers-scroll animate-in">
+            <div class="seller-card">
+                <div class="avatar"><img src="https://ui-avatars.com/api/?name=أحمد&background=2E7D32&color=fff&size=80"
+                        alt=""></div>
+                <h4>متجر الأصالة</h4>
+                <div class="verified"><i class="fas fa-check-circle"></i> بائع موثوق</div>
+                <div class="stats">⭐ 4.8 | 520 منتج</div>
+            </div>
+            <div class="seller-card">
+                <div class="avatar"><img src="https://ui-avatars.com/api/?name=سارة&background=8d6e63&color=fff&size=80"
+                        alt=""></div>
+                <h4>بيت الطبخ</h4>
+                <div class="verified"><i class="fas fa-check-circle"></i> بائع موثوق</div>
+                <div class="stats">⭐ 4.9 | 380 منتج</div>
+            </div>
+            <div class="seller-card">
+                <div class="avatar"><img src="https://ui-avatars.com/api/?name=محمد&background=FFB300&color=fff&size=80"
+                        alt=""></div>
+                <h4>محمد للإلكترونيات</h4>
+                <div class="verified"><i class="fas fa-check-circle"></i> بائع موثوق</div>
+                <div class="stats">⭐ 4.7 | 290 منتج</div>
+            </div>
+            <div class="seller-card">
+                <div class="avatar"><img
+                        src="https://ui-avatars.com/api/?name=فاطمة&background=e53935&color=fff&size=80" alt=""></div>
+                <h4>أزياء فاطمة</h4>
+                <div class="verified"><i class="fas fa-check-circle"></i> بائع موثوق</div>
+                <div class="stats">⭐ 4.6 | 210 منتج</div>
+            </div>
+            <div class="seller-card">
+                <div class="avatar"><img src="https://ui-avatars.com/api/?name=نور&background=1e88e5&color=fff&size=80"
+                        alt=""></div>
+                <h4>نور الديكور</h4>
+                <div class="verified"><i class="fas fa-check-circle"></i> بائع موثوق</div>
+                <div class="stats">⭐ 4.8 | 175 منتج</div>
+            </div>
+            <div class="seller-card">
+                <div class="avatar"><img
+                        src="https://ui-avatars.com/api/?name=أم+علي&background=795548&color=fff&size=80" alt=""></div>
+                <h4>بيت البهارات</h4>
+                <div class="verified"><i class="fas fa-check-circle"></i> بائع موثوق</div>
+                <div class="stats">⭐ 5.0 | 95 منتج</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h3>🏠 بيتي</h3>
+                <p>سوقك المنزلي الأول - نجمع لك أفضل المنتجات المنزلية والطعام والمستلزمات اليومية من أفضل البائعين في
+                    مكان واحد.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <a href="about.html">من نحن</a><a href="contact.html">اتصل بنا</a>
+                <a href="seller-register.html">سجل كبائع</a><a href="products.html">جميع المنتجات</a>
+                <a href="#">سياسة الخصوصية</a><a href="#">الشروط والأحكام</a>
+            </div>
+            <div class="footer-col">
+                <h3>خدمة العملاء</h3>
+                <a href="#">مركز المساعدة</a><a href="#">سياسة الإرجاع</a>
+                <a href="#">الشحن والتوصيل</a><a href="#">الأسئلة الشائعة</a><a href="profile.html">تتبع طلبك</a>
+            </div>
+            <div class="footer-col">
+                <h3>طرق الدفع</h3>
+                <div class="payment-methods">
+                    <span class="method"><i class="fab fa-cc-visa"></i> Visa</span>
+                    <span class="method"><i class="fab fa-cc-mastercard"></i> MasterCard</span>
+                    <span class="method"><i class="fab fa-cc-apple-pay"></i> Apple Pay</span>
+                    <span class="method"><i class="fab fa-paypal"></i> PayPal</span>
+                    <span class="method"><i class="fas fa-money-bill"></i> كاش</span>
+                    <span class="method"><i class="fas fa-university"></i> تحويل بنكي</span>
+                </div>
+                <h3 style="margin-top:20px">تواصل معنا</h3>
+                <p>📞 777-123-456<br>📧 info@bayti.com<br>📍 صنعاء، اليمن</p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 بيتي - جميع الحقوق محفوظة ❤️</div>
+    </footer>
+
+    <!-- CHAT WIDGET -->
+    <div class="chat-widget">
+        <div class="chat-box" id="chatBox">
+            <div class="chat-head">
+                <div class="avatar"><i class="fas fa-headset"></i></div>
+                <div class="info">
+                    <h4>دعم بيتي</h4><span>متصل الآن</span>
+                </div><button onclick="toggleChat()" style="margin-right:auto;background:none;color:#fff"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages">
+                <div class="chat-msg received">مرحباً بك في بيتي! 👋 كيف يمكنني مساعدتك؟</div>
+            </div>
+            <div class="chat-input"><input type="text" placeholder="اكتب رسالتك..." id="chatInput"
+                    onkeypress="if(event.key==='Enter')sendChatMsg()"><button onclick="sendChatMsg()"><i
+                        class="fas fa-paper-plane"></i></button></div>
+        </div>
+        <button class="chat-toggle" onclick="toggleChat()"><i class="fas fa-comments"></i></button>
+    </div>
+
+    <!-- Compare Bar -->
+    <div class="compare-bar" id="compareBar">
+        <strong>المقارنة:</strong>
+        <div class="items" id="compareItems"></div>
+        <button class="btn btn-primary btn-sm" onclick="openCompare()">قارن الآن</button>
+        <button class="btn btn-ghost btn-sm" onclick="clearCompare()">مسح</button>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

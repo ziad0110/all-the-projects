@@ -1,0 +1,108 @@
+<div id="page-escrow" class="page p-4 md:p-8">
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="glass-card rounded-2xl p-4 text-center">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+            <i class="fas fa-handshake text-cyan-400 text-xl"></i>
+          </div>
+          <p class="text-xs text-gray-400 mb-1">عقود نشطة</p>
+          <p class="text-lg font-bold" id="escrow-active-count">0</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 text-center">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-gold/20 flex items-center justify-center">
+            <i class="fas fa-lock text-gold text-xl"></i>
+          </div>
+          <p class="text-xs text-gray-400 mb-1">مبالغ محجوزة</p>
+          <p class="text-lg font-bold" id="escrow-locked-amount">0 ر.س</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 text-center">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-emerald/20 flex items-center justify-center">
+            <i class="fas fa-check-double text-emerald text-xl"></i>
+          </div>
+          <p class="text-xs text-gray-400 mb-1">عقود مكتملة</p>
+          <p class="text-lg font-bold" id="escrow-completed-count">0</p>
+        </div>
+      </div>
+
+      <!-- Trust Score -->
+      <div class="premium-card rounded-2xl p-6 mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-shield-alt text-emerald"></i>
+            <h3 class="font-bold">درجة الثقة</h3>
+          </div>
+          <span class="text-2xl font-bold text-emerald" id="trust-score-value">95%</span>
+        </div>
+        <div class="trust-meter">
+          <div class="trust-meter-fill" style="width: 95%" id="trust-meter-bar"></div>
+        </div>
+        <p class="text-xs text-gray-400 mt-2">
+          مبني على تاريخ المعاملات والالتزام بالمواعيد
+        </p>
+      </div>
+
+      <!-- Create Contract -->
+      <div class="glass-card rounded-2xl p-6 mb-6 border border-dashed border-ethereal-cyan/30">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-lg">إنشاء عقد ضمان جديد</h3>
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-ethereal-cyan to-emerald flex items-center justify-center">
+            <i class="fas fa-plus text-white"></i>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">عنوان المشروع</label>
+              <input type="text" class="premium-input w-full" placeholder="مثال: تصميم هوية بصرية" id="escrow-title">
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">اسم الطرف الآخر</label>
+              <input type="text" class="premium-input w-full" placeholder="اسم المستقل أو العميل" id="escrow-party">
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">المبلغ الإجمالي (ر.س)</label>
+            <input type="number" class="premium-input w-full" placeholder="0.00" id="escrow-amount">
+          </div>
+
+          <!-- Contract Templates -->
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">قوالب جاهزة (اختياري)</label>
+            <div class="flex gap-2 overflow-x-auto hide-scroll pb-1">
+              <button class="template-chip" onclick="applyTemplate(0)">
+                <i class="fas fa-paint-brush text-purple-400"></i> تصميم شعار
+              </button>
+              <button class="template-chip" onclick="applyTemplate(1)">
+                <i class="fas fa-code text-cyan-400"></i> تطوير موقع
+              </button>
+              <button class="template-chip" onclick="applyTemplate(2)">
+                <i class="fas fa-pen-fancy text-amber-400"></i> كتابة محتوى
+              </button>
+              <button class="template-chip" onclick="applyTemplate(3)">
+                <i class="fas fa-mobile-alt text-emerald"></i> تطبيق جوال
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">المراحل (Milestones)</label>
+            <div id="escrow-milestones-inputs" class="space-y-2">
+              <div class="milestone-input-row">
+                <input type="text" class="premium-input" placeholder="وصف المرحلة الأولى">
+                <input type="number" class="premium-input" style="max-width: 120px" placeholder="المبلغ">
+              </div>
+            </div>
+            <button class="mt-2 text-sm text-ethereal-cyan flex items-center gap-1" onclick="addMilestoneInput()">
+              <i class="fas fa-plus-circle"></i> إضافة مرحلة
+            </button>
+          </div>
+          <button class="w-full py-4 rounded-2xl bg-gradient-to-r from-ethereal-cyan to-emerald text-white font-bold" onclick="createEscrowContract()">
+            <i class="fas fa-lock ml-2"></i>
+            إنشاء وحجز المبلغ
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Contracts -->
+      <h3 class="font-bold text-lg mb-4">العقود</h3>
+      <div id="escrow-contracts-list" class="space-y-6"></div>
+    </div>

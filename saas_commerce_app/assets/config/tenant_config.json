@@ -1,0 +1,27 @@
+{
+  "id": "default",
+  "companyName": "شركتي",
+  "slogan": "منتجات عالية الجودة",
+  "logoPath": "assets/images/logo.png",
+  "currency": "YER",
+  "currencySymbol": "ريال",
+  "locale": "ar_YE",
+  "theme": {
+    "primaryColor": "#D4AF37",
+    "accentColor": "#6366F1",
+    "backgroundColor": "#080C14",
+    "cardColor": "#162033",
+    "textPrimaryColor": "#FFFFFF",
+    "textSecondaryColor": "#94A3B8",
+    "fontFamily": "Almarai",
+    "isDarkMode": true
+  },
+  "contact": {
+    "phone": "+967123456789",
+    "email": "info@company.com",
+    "address": "العنوان",
+    "whatsapp": "+967123456789"
+  },
+  "features": ["products", "orders", "delivery", "reports"],
+  "copyrightText": "© 2024 جميع الحقوق محفوظة"
+}

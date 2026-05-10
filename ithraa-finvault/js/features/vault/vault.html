@@ -1,0 +1,90 @@
+<div id="page-vault" class="page p-4 md:p-8">
+      <!-- Vault Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        <div class="glass-card rounded-2xl p-4 text-center">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-gold/20 flex items-center justify-center">
+            <i class="fas fa-piggy-bank text-gold text-xl"></i>
+          </div>
+          <p class="text-xs text-gray-400 mb-1">إجمالي المدخرات</p>
+          <p class="text-lg font-bold" id="vault-total-saved">0 ر.س</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 text-center">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-purple-500/20 flex items-center justify-center">
+            <i class="fas fa-lock text-ethereal-violet text-xl"></i>
+          </div>
+          <p class="text-xs text-gray-400 mb-1">حصالات مقفلة</p>
+          <p class="text-lg font-bold" id="vault-locked-count">0</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 text-center col-span-2 md:col-span-1">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-emerald/20 flex items-center justify-center">
+            <i class="fas fa-coins text-emerald text-xl"></i>
+          </div>
+          <p class="text-xs text-gray-400 mb-1">تقريب الفكة</p>
+          <div class="flex items-center justify-center gap-2">
+            <span class="text-lg font-bold" id="vault-roundup-total">0 ر.س</span>
+            <div class="toggle-switch" id="roundup-toggle" onclick="toggleRoundup(this)"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto-Save Card -->
+      <div class="glass-card rounded-2xl p-5 mb-6 border border-emerald/20" style="background: linear-gradient(135deg, rgba(16,185,129,0.05) 0%, rgba(6,182,212,0.05) 100%);">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-emerald/20 flex items-center justify-center">
+              <i class="fas fa-robot text-emerald text-xl"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-sm">الادخار التلقائي</p>
+              <p class="text-[10px] text-gray-400">ادخار تلقائي عند وصول الراتب</p>
+            </div>
+          </div>
+          <div class="text-left flex items-center gap-3">
+            <span class="text-xs text-gray-400" id="vault-autosave-status">معطّل</span>
+            <div class="toggle-switch" id="vault-autosave-toggle" onclick="toggleAutoSave(this); document.getElementById('vault-autosave-status').textContent = autoSaveEnabled ? 'مفعّل' : 'معطّل'">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Vault -->
+      <div class="glass-card rounded-2xl p-6 mb-6 border border-dashed border-ethereal-violet/30">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-lg">إنشاء حصالة جديدة</h3>
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-ethereal-violet to-ethereal-cyan flex items-center justify-center">
+            <i class="fas fa-plus text-white"></i>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm text-gray-400 block mb-2">اسم الحصالة</label>
+            <input type="text" class="premium-input w-full" placeholder="مثال: حصالة السفر ✈️" id="vault-name">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">المبلغ المستهدف (ر.س)</label>
+              <input type="number" class="premium-input w-full" placeholder="0.00" id="vault-target">
+            </div>
+            <div>
+              <label class="text-sm text-gray-400 block mb-2">مدة القفل (شهور)</label>
+              <select class="premium-input w-full" id="vault-duration">
+                <option value="3">3 أشهر</option>
+                <option value="6" selected="">6 أشهر</option>
+                <option value="12">سنة</option>
+                <option value="24">سنتين</option>
+              </select>
+            </div>
+          </div>
+          <button class="w-full py-4 rounded-2xl bg-gradient-to-r from-ethereal-violet to-ethereal-cyan text-white font-bold" onclick="createVault()">
+            <i class="fas fa-lock ml-2"></i>
+            إنشاء وقفل الحصالة
+          </button>
+        </div>
+      </div>
+
+      <!-- Existing Vaults -->
+      <h3 class="font-bold text-lg mb-4">حصالاتي</h3>
+      <div id="vaults-list" class="space-y-4">
+        <!-- Injected via JS -->
+      </div>
+    </div>

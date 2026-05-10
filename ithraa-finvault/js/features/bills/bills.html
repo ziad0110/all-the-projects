@@ -1,0 +1,31 @@
+<div id="page-bills" class="page p-4 md:p-8">
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="font-bold text-lg">الفواتير المستحقة</h3>
+            <p class="text-sm text-gray-400" id="bills-pending-count">
+              3 فواتير تنتظر الدفع
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="printAllBills()" class="p-2.5 sm:px-4 rounded-xl glass text-gray-400 hover:text-white hover:bg-white/5 transition flex items-center gap-2" title="طباعة التقرير الشامل">
+              <i class="fas fa-print text-lg"></i>
+              <span class="text-xs font-bold hidden sm:inline">طباعة الكل</span>
+            </button>
+            <div class="w-12 h-12 rounded-xl bg-rose/20 flex items-center justify-center">
+              <i class="fas fa-file-invoice text-rose text-xl"></i>
+            </div>
+          </div>
+        </div>
+        <div class="text-center py-4">
+          <p class="text-sm text-gray-400 mb-1">إجمالي المبالغ المستحقة</p>
+          <p class="text-3xl font-bold text-rose" id="bills-pending-total">
+            1,847.50 ر.س
+          </p>
+        </div>
+      </div>
+
+      <div id="bills-list" class="space-y-4">
+        <!-- Injected via JS -->
+      </div>
+    </div>

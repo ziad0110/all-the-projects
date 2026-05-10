@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإشعارات - يمن سيف | YEMEN SAFE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .notif-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+
+        .notif-filters {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+            flex-wrap: wrap;
+        }
+
+        .notif-filter-btn {
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            background: var(--gray-100);
+            color: var(--text-secondary);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            transition: var(--transition-base);
+            cursor: pointer;
+            border: none;
+        }
+
+        .notif-filter-btn.active,
+        .notif-filter-btn:hover {
+            background: var(--primary-500);
+            color: var(--white);
+        }
+
+        .notif-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+
+        .notif-item {
+            display: flex;
+            gap: var(--space-4);
+            padding: var(--space-5);
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-base);
+            cursor: pointer;
+            align-items: flex-start;
+        }
+
+        .notif-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .notif-item.unread {
+            border-right: 4px solid var(--primary-500);
+            background: var(--primary-50);
+        }
+
+        .notif-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-lg);
+            flex-shrink: 0;
+        }
+
+        .notif-body {
+            flex: 1;
+        }
+
+        .notif-title {
+            font-weight: var(--font-bold);
+            font-size: var(--text-sm);
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .notif-message {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .notif-time {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            margin-top: var(--space-2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .notif-actions {
+            display: flex;
+            gap: var(--space-2);
+            align-self: center;
+        }
+
+        .notif-unread-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-500);
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .notif-empty {
+            text-align: center;
+            padding: var(--space-16);
+            color: var(--text-muted);
+        }
+
+        .notif-empty i {
+            font-size: 4rem;
+            margin-bottom: var(--space-4);
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon"><img src="image.png" alt="شعار يمن سيف"
+                        style="max-width: 100%; height: auto;"></div>
+                <div class="sidebar-logo-text">
+                    <h2>يمن سيف</h2><span>YEMEN SAFE</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">القائمة الرئيسية</div>
+                    <a class="nav-link" data-page="dashboard.html"><i class="fas fa-th-large"></i><span>لوحة
+                            التحكم</span></a>
+                    <a class="nav-link" data-page="incidents.html"><i
+                            class="fas fa-exclamation-triangle"></i><span>إدارة الحوادث</span></a>
+                    <a class="nav-link" href="risks.html" data-page="risks.html"><i class="fas fa-shield-virus"></i><span>سجل المخاطر</span></a>
+                    <a class="nav-link" data-page="reports.html"><i
+                            class="fas fa-chart-bar"></i><span>التقارير</span></a>
+                    <a class="nav-link active" data-page="notifications.html"><i
+                            class="fas fa-bell"></i><span>الإشعارات</span></a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">الإدارة</div>
+                    <a class="nav-link" data-page="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <a class="nav-link" id="logoutBtn" href="#"><i class="fas fa-sign-out-alt"></i><span>تسجيل
+                        الخروج</span></a>
+            </div>
+        </div>
+        <div class="sidebar-overlay"></div>
+
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="header-right">
+                    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                    <div>
+                        <div class="header-title">الإشعارات</div>
+                        <div class="header-subtitle">جميع التنبيهات والتحديثات</div>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="header-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-info"><span class="user-name">المستخدم</span><span
+                                class="user-role">الدور</span></div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <div class="notif-page-header animate-fade-up">
+                    <div>
+                        <h1 class="page-title">الإشعارات</h1>
+                        <p class="page-description"><span id="unreadCount">0</span> إشعارات غير مقروءة</p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="markAllRead()"><i class="fas fa-check-double"></i> تعليم
+                        الكل كمقروء</button>
+                </div>
+
+                <div class="notif-filters animate-fade-up">
+                    <button class="notif-filter-btn active" onclick="filterNotifs('all', this)">الكل</button>
+                    <button class="notif-filter-btn" onclick="filterNotifs('incident', this)"><i
+                            class="fas fa-exclamation-triangle"></i> حوادث</button>
+                    <button class="notif-filter-btn" onclick="filterNotifs('update', this)"><i
+                            class="fas fa-sync-alt"></i> تحديثات</button>
+                    <button class="notif-filter-btn" onclick="filterNotifs('assignment', this)"><i
+                            class="fas fa-user-check"></i> مهام</button>
+                    <button class="notif-filter-btn" onclick="filterNotifs('resolved', this)"><i
+                            class="fas fa-check-circle"></i> محلولة</button>
+                    <button class="notif-filter-btn" onclick="filterNotifs('system', this)"><i class="fas fa-cog"></i>
+                        نظام</button>
+                </div>
+
+                <div class="notif-list" id="notifList"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        showPageLoading();
+        let currentFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderNotifications();
+            updateUnreadCount();
+            hidePageLoading();
+        });
+
+        function renderNotifications() {
+            const list = document.getElementById('notifList');
+            let notifs = MockData.notifications;
+
+            if (currentFilter !== 'all') {
+                notifs = notifs.filter(n => n.type === currentFilter);
+            }
+
+            if (notifs.length === 0) {
+                list.innerHTML = `<div class="notif-empty"><i class="fas fa-bell-slash"></i><h3>لا توجد إشعارات</h3></div>`;
+                return;
+            }
+
+            list.innerHTML = notifs.map((n, i) => `
+                <div class="notif-item ${n.read ? '' : 'unread'} animate-fade-up stagger-${Math.min(i + 1, 5)}">
+                    <div class="notif-icon-wrap" style="background:${n.color}15; color:${n.color};" onclick="markRead(${n.id})">
+                        <i class="${n.icon}"></i>
+                    </div>
+                    <div class="notif-body" onclick="markRead(${n.id})">
+                        <div class="notif-title">${n.title}</div>
+                        <div class="notif-message">${n.message}</div>
+                        <div class="notif-time"><i class="fas fa-clock"></i> ${n.time}</div>
+                    </div>
+                    <div class="notif-actions">
+                        ${!n.read ? '<div class="notif-unread-dot"></div>' : ''}
+                        <button onclick="deleteNotification(${n.id})" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px 8px;border-radius:6px;transition:all 0.15s;" onmouseover="this.style.color='var(--accent-500)';this.style.background='var(--accent-50)'" onmouseout="this.style.color='var(--text-muted)';this.style.background='none'" title="حذف"><i class="fas fa-trash-alt" style="font-size:13px;"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterNotifs(type, btn) {
+            currentFilter = type;
+            document.querySelectorAll('.notif-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderNotifications();
+        }
+
+        function markRead(id) {
+            const n = MockData.notifications.find(n => n.id === id);
+            if (n) n.read = true;
+            renderNotifications();
+            updateUnreadCount();
+            saveDataToStorage();
+        }
+
+        function markAllRead() {
+            MockData.notifications.forEach(n => n.read = true);
+            renderNotifications();
+            updateUnreadCount();
+            saveDataToStorage();
+            showToast('تم تعليم جميع الإشعارات كمقروءة', 'success');
+        }
+
+        function deleteNotification(id) {
+            const idx = MockData.notifications.findIndex(n => n.id === id);
+            if (idx !== -1) {
+                MockData.notifications.splice(idx, 1);
+                renderNotifications();
+                updateUnreadCount();
+                saveDataToStorage();
+                showToast('تم حذف الإشعار', 'success');
+            }
+        }
+
+        function updateUnreadCount() {
+            const count = getUnreadNotifications().length;
+            document.getElementById('unreadCount').textContent = count;
+        }
+    </script>
+</body>
+
+</html>

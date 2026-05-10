@@ -1,0 +1,86 @@
+<div id="page-security" class="page p-4 md:p-8">
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="font-bold text-lg">مستوى الأمان</h3>
+            <p class="text-sm text-gray-400">حماية حسابك</p>
+          </div>
+          <div class="security-level">
+            <div class="security-bar active"></div>
+            <div class="security-bar active"></div>
+            <div class="security-bar active"></div>
+            <div class="security-bar active"></div>
+            <div class="security-bar"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+          <i class="fas fa-check-circle text-emerald text-2xl"></i>
+          <div>
+            <p class="font-semibold">الحماية نشطة</p>
+            <p class="text-sm text-gray-400">آخر تحديث: اليوم 10:30 ص</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center">
+              <i class="fas fa-fingerprint text-ethereal-violet text-xl"></i>
+            </div>
+            <div>
+              <p class="font-semibold">البصمة / Face ID</p>
+              <p class="text-sm text-gray-400">تسجيل الدخول السريع</p>
+            </div>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSecurity(this, 'biometric')"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+              <i class="fas fa-mobile-alt text-cyan-400 text-xl"></i>
+            </div>
+            <div>
+              <p class="font-semibold">المصادقة الثنائية (2FA)</p>
+              <p class="text-sm text-gray-400">تأكيد إضافي عبر SMS</p>
+            </div>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSecurity(this, '2fa')"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-gold/20 flex items-center justify-center">
+              <i class="fas fa-bell text-gold text-xl"></i>
+            </div>
+            <div>
+              <p class="font-semibold">تنبيهات الأمان</p>
+              <p class="text-sm text-gray-400">إشعار فوري لأي نشاط مشبوه</p>
+            </div>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSecurity(this, 'alerts')"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-rose/20 flex items-center justify-center">
+              <i class="fas fa-map-marker-alt text-rose text-xl"></i>
+            </div>
+            <div>
+              <p class="font-semibold">تتبع الموقع</p>
+              <p class="text-sm text-gray-400">تسجيل موقع كل عملية</p>
+            </div>
+          </div>
+          <div class="toggle-switch" onclick="toggleSecurity(this, 'location')"></div>
+        </div>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="glass-card rounded-2xl p-6 mt-6">
+        <h3 class="font-bold text-lg mb-4">سجل النشاط</h3>
+        <div id="activity-log" class="space-y-3">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>

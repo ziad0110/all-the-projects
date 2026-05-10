@@ -1,0 +1,24 @@
+{
+    "name": "Satr - سطر",
+    "short_name": "سطر",
+    "description": "سطر - شريكك في النجاح الرقمي | Satr Digital Agency",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#0b1120",
+    "theme_color": "#0b1120",
+    "orientation": "portrait-primary",
+    "lang": "ar",
+    "dir": "rtl",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230b1120' width='100' height='100' rx='20'/><text x='50' y='55' text-anchor='middle' dominant-baseline='middle' font-size='50' font-weight='900' fill='%233b82f6'>س</text></svg>",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "business",
+        "utilities"
+    ]
+}

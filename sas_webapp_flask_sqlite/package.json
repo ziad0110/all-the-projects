@@ -1,0 +1,49 @@
+{
+  "name": "sas-accounting",
+  "version": "4.2.0",
+  "description": "Smart Accounting Suite - Electron Desktop App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.sas.accounting",
+    "productName": "Smart Accounting Suite",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Smart Accounting Suite"
+    },
+    "extraResources": [
+      {
+        "from": "backend_dist/SmartAccountingSuite.exe",
+        "to": "SmartAccountingSuite.exe"
+      },
+
+      {
+        "from": "templates",
+        "to": "templates"
+      },
+      {
+        "from": "static",
+        "to": "static"
+      },
+      {
+        "from": "schema.sql",
+        "to": "schema.sql"
+      }
+    ]
+  },
+  "author": "Ziad",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}

@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="لوحة التحكم - نظام يمن سيف لإدارة الحوادث التشغيلية" />
+  <title>لوحة التحكم - يمن سيف | YEMEN SAFE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <img src="image.png" alt="شعار يمن سيف" style="max-width: 100%; height: auto" />
+        </div>
+        <div class="sidebar-logo-text">
+          <h2>يمن سيف</h2>
+          <span>YEMEN SAFE</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">القائمة الرئيسية</div>
+          <a class="nav-link active" data-page="dashboard.html"><i class="fas fa-th-large"></i><span>لوحة
+              التحكم</span></a>
+          <a class="nav-link" data-page="incidents.html"><i class="fas fa-exclamation-triangle"></i><span>إدارة
+              الحوادث</span><span class="nav-badge notif-count">3</span></a>
+          <a class="nav-link" href="risks.html" data-page="risks.html"><i class="fas fa-shield-virus"></i><span>سجل
+              المخاطر</span></a>
+          <a class="nav-link" data-page="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a>
+          <a class="nav-link" data-page="notifications.html"><i class="fas fa-bell"></i><span>الإشعارات</span><span
+              class="nav-badge notif-count">3</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">الإدارة</div>
+          <a class="nav-link" data-page="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="nav-link" id="logoutBtn" href="#"><i class="fas fa-sign-out-alt"></i><span>تسجيل الخروج</span></a>
+      </div>
+    </div>
+    <div class="sidebar-overlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-right">
+          <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+          <div>
+            <div class="header-title">لوحة التحكم</div>
+            <div class="header-subtitle">نظرة عامة على الحوادث والأداء</div>
+          </div>
+        </div>
+        <div class="header-left">
+          <div class="header-search">
+            <input type="text" placeholder="بحث عن حادث، موقع..." />
+            <i class="fas fa-search"></i>
+          </div>
+          <a href="notifications.html" class="header-icon-btn notif-btn">
+            <i class="fas fa-bell"></i>
+            <span class="badge notif-count">3</span>
+          </a>
+          <div class="header-user">
+            <div class="user-avatar"></div>
+            <div class="user-info">
+              <span class="user-name">المستخدم</span>
+              <span class="user-role">الدور</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner animate-fade-up">
+          <div class="welcome-text">
+            <h2>مرحباً بك في نظام يمن سيف 👋</h2>
+            <p>
+              النظام الرقمي المتكامل لإدارة الحوادث التشغيلية - الخطوط الجوية
+              اليمنية
+            </p>
+          </div>
+          <div style="
+                display: flex;
+                align-items: center;
+                gap: var(--space-6);
+                position: relative;
+                z-index: 1;
+              ">
+            <div class="live-clock" id="liveClock">
+              <i class="fas fa-clock clock-icon"></i>
+              <div>
+                <div class="clock-time">--:--:--</div>
+                <div class="clock-date">جاري التحميل...</div>
+              </div>
+            </div>
+            <div class="welcome-stats">
+              <div class="welcome-stat">
+                <div class="welcome-stat-value" id="welcomeToday">0</div>
+                <div class="welcome-stat-label">حوادث اليوم</div>
+              </div>
+              <div class="welcome-stat">
+                <div class="welcome-stat-value" id="welcomeOpen">0</div>
+                <div class="welcome-stat-label">حوادث مفتوحة</div>
+              </div>
+              <div class="welcome-stat"
+                style="border-right: 1px solid rgba(255,255,255,0.2); padding-right: 15px; margin-right: 5px;">
+                <div class="welcome-stat-value" id="welcomeRisks">0</div>
+                <div class="welcome-stat-label">مخاطر فعالة</div>
+              </div>
+              <div class="welcome-stat">
+                <div class="welcome-stat-value" id="welcomeRate">0%</div>
+                <div class="welcome-stat-label">معدل الإغلاق</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card blue animate-fade-up stagger-1">
+            <div class="stat-card-top">
+              <div>
+                <div class="stat-label">حوادث اليوم</div>
+                <div class="stat-value" id="statToday">0</div>
+              </div>
+              <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+            </div>
+            <div class="stat-change up">
+              <i class="fas fa-arrow-up"></i> 8% مقارنة بالأمس
+            </div>
+          </div>
+          <div class="stat-card orange animate-fade-up stagger-2">
+            <div class="stat-card-top">
+              <div>
+                <div class="stat-label">حوادث الأسبوع</div>
+                <div class="stat-value" id="statWeek">0</div>
+              </div>
+              <div class="stat-icon">
+                <i class="fas fa-calendar-week"></i>
+              </div>
+            </div>
+            <div class="stat-change down">
+              <i class="fas fa-arrow-down"></i> 3% مقارنة بالأسبوع الماضي
+            </div>
+          </div>
+          <div class="stat-card red animate-fade-up stagger-3">
+            <div class="stat-card-top">
+              <div>
+                <div class="stat-label">حوادث الشهر</div>
+                <div class="stat-value" id="statMonth">0</div>
+              </div>
+              <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+            </div>
+            <div class="stat-change up">
+              <i class="fas fa-arrow-up"></i> 12% مقارنة بالشهر الماضي
+            </div>
+          </div>
+          <div class="stat-card green animate-fade-up stagger-4">
+            <div class="stat-card-top">
+              <div>
+                <div class="stat-label">معدل الإغلاق</div>
+                <div class="stat-value" id="statClosure">0%</div>
+              </div>
+              <div class="stat-icon"><i class="fas fa-check-double"></i></div>
+            </div>
+            <div class="stat-change up">
+              <i class="fas fa-arrow-up"></i> 4% تحسن
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card excellent animate-fade-up stagger-1">
+            <div class="kpi-icon"><i class="fas fa-stopwatch"></i></div>
+            <div class="kpi-label">متوسط وقت الاستجابة</div>
+            <div class="kpi-value">4.2 دقيقة</div>
+            <div class="kpi-target">الهدف: 5 دقائق</div>
+          </div>
+          <div class="kpi-card excellent animate-fade-up stagger-2">
+            <div class="kpi-icon"><i class="fas fa-tasks"></i></div>
+            <div class="kpi-label">نسبة الحوادث المغلقة</div>
+            <div class="kpi-value">94%</div>
+            <div class="kpi-target">الهدف: 90%</div>
+          </div>
+          <div class="kpi-card excellent animate-fade-up stagger-3">
+            <div class="kpi-icon"><i class="fas fa-bullseye"></i></div>
+            <div class="kpi-label">دقة البيانات المسجلة</div>
+            <div class="kpi-value">97%</div>
+            <div class="kpi-target">الهدف: 95%</div>
+          </div>
+          <div class="kpi-card excellent animate-fade-up stagger-4">
+            <div class="kpi-icon"><i class="fas fa-star"></i></div>
+            <div class="kpi-label">رضا المستخدمين</div>
+            <div class="kpi-value">4.6/5</div>
+            <div class="kpi-target">الهدف: 4.5/5</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+          <div class="chart-card animate-fade-up">
+            <div class="chart-card-header">
+              <div class="chart-card-title">الحوادث الشهرية</div>
+              <div class="chart-filter">
+                <button class="active" onclick="switchChartView('yearly', this)">
+                  سنوي
+                </button>
+                <button onclick="switchChartView('quarterly', this)">
+                  ربع سنوي
+                </button>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="monthlyChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card animate-fade-up">
+            <div class="chart-card-header">
+              <div class="chart-card-title">توزيع الحوادث حسب النوع</div>
+            </div>
+            <div class="chart-container">
+              <canvas id="typeChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk KPIs Section -->
+        <div style="margin-top:var(--space-6);">
+          <h3 style="font-size:var(--text-xl); font-weight:var(--font-bold); color:var(--primary-800); margin-bottom:var(--space-4);"><i class="fas fa-shield-virus" style="color:var(--accent-500);"></i> مؤشرات سجل المخاطر</h3>
+          <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:var(--space-4); margin-bottom:var(--space-6);">
+            <div class="stat-card red animate-fade-up stagger-1">
+              <div class="stat-card-top">
+                <div>
+                  <div class="stat-label">مخاطر غير مقبولة</div>
+                  <div class="stat-value" id="riskIntolerable">0</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+              </div>
+            </div>
+            <div class="stat-card orange animate-fade-up stagger-2">
+              <div class="stat-card-top">
+                <div>
+                  <div class="stat-label">قيد التنفيذ</div>
+                  <div class="stat-value" id="riskInProgress">0</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-spinner"></i></div>
+              </div>
+            </div>
+            <div class="stat-card green animate-fade-up stagger-3">
+              <div class="stat-card-top">
+                <div>
+                  <div class="stat-label">مخاطر تم حلها</div>
+                  <div class="stat-value" id="riskResolved">0</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+              </div>
+            </div>
+            <div class="stat-card blue animate-fade-up stagger-4">
+              <div class="stat-card-top">
+                <div>
+                  <div class="stat-label">نسبة التخفيف</div>
+                  <div class="stat-value" id="riskMitigationRate">0%</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="charts-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="chart-card animate-fade-up">
+              <div class="chart-card-header">
+                <div class="chart-card-title">توزيع المخاطر حسب التصنيف</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="riskCategoryChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card animate-fade-up">
+              <div class="chart-card-header">
+                <div class="chart-card-title">المخاطر حسب الجهة المسؤولة</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="riskOwnerChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Incidents & Activity -->
+        <div class="recent-section">
+          <div class="incidents-table-card animate-fade-up">
+            <div class="card-header">
+              <h3 class="card-title">آخر الحوادث</h3>
+              <a href="incidents.html" class="view-all-link">عرض الكل <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>الرقم</th>
+                    <th>العنوان</th>
+                    <th>النوع</th>
+                    <th>الأولوية</th>
+                    <th>الحالة</th>
+                    <th>التاريخ</th>
+                  </tr>
+                </thead>
+                <tbody id="recentIncidentsBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="activity-card animate-fade-up">
+            <div class="card-header">
+              <h3 class="card-title">آخر النشاطات</h3>
+            </div>
+            <div class="activity-list" id="activityList"></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- System Footer -->
+      <footer class="system-footer">
+        <p>
+          الخطوط الجوية اليمنية &copy; 2026 | نظام يمن سيف v2.1.0 |
+          <a href="#">الدعم الفني</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let monthlyChart;
+    showPageLoading();
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const stats = MockData.dashboardStats;
+
+      animateNumber(
+        document.getElementById("statToday"),
+        stats.todayIncidents,
+      );
+      animateNumber(document.getElementById("statWeek"), stats.weekIncidents);
+      animateNumber(
+        document.getElementById("statMonth"),
+        stats.monthIncidents,
+      );
+      animatePercentage(
+        document.getElementById("statClosure"),
+        stats.closureRate,
+      );
+
+      animateNumber(
+        document.getElementById("welcomeToday"),
+        stats.todayIncidents,
+      );
+      const openCount = MockData.incidents.filter(
+        (i) => i.status !== "closed" && i.status !== "resolved",
+      ).length;
+      animateNumber(document.getElementById("welcomeOpen"), openCount);
+
+      const openRisks = MockData.risks ? MockData.risks.filter(r => r.status !== 'مغلق').length : 0;
+      if (document.getElementById("welcomeRisks")) {
+        animateNumber(document.getElementById("welcomeRisks"), openRisks);
+      }
+
+      animatePercentage(
+        document.getElementById("welcomeRate"),
+        stats.closureRate,
+      );
+
+      // Recent incidents table
+      const tbody = document.getElementById("recentIncidentsBody");
+      MockData.incidents.slice(0, 6).forEach((inc) => {
+        const type = MockData.incidentTypes.find((t) => t.id === inc.type);
+        const statusInfo = MockData.statuses[inc.status];
+        const priorityInfo = MockData.priorities[inc.priority];
+        tbody.innerHTML += `
+                    <tr class="incident-row" onclick="window.location.href='incident-detail.html?id=${inc.id}'">
+                        <td><span class="incident-id">${inc.id}</span></td>
+                        <td>${inc.title.substring(0, 35)}...</td>
+                        <td><span style="color:${type.color}"><i class="${type.icon}"></i> ${type.label}</span></td>
+                        <td><span class="badge-priority ${priorityInfo.cssClass}">${priorityInfo.label}</span></td>
+                        <td><span class="badge-status ${statusInfo.cssClass}">${statusInfo.label}</span></td>
+                        <td>${inc.date}</td>
+                    </tr>`;
+      });
+
+      // Activity list
+      const activityEl = document.getElementById("activityList");
+      MockData.activityLog.forEach((a) => {
+        activityEl.innerHTML += `
+                    <div class="activity-item">
+                        <div class="activity-dot ${a.color}"></div>
+                        <div class="activity-content">
+                            <div class="activity-text">${a.text}</div>
+                            <div class="activity-time">${a.time}</div>
+                        </div>
+                    </div>`;
+      });
+
+      // Monthly Chart
+      monthlyChart = new Chart(document.getElementById("monthlyChart"), {
+        type: "bar",
+        data: {
+          labels: MockData.monthlyData.labels,
+          datasets: [
+            {
+              label: "إجمالي الحوادث",
+              data: MockData.monthlyData.incidents,
+              backgroundColor: "rgba(0, 102, 204, 0.7)",
+              borderColor: "#0066cc",
+              borderWidth: 1,
+              borderRadius: 6,
+              borderSkipped: false,
+            },
+            {
+              label: "الحوادث المحلولة",
+              data: MockData.monthlyData.resolved,
+              backgroundColor: "rgba(39, 174, 96, 0.7)",
+              borderColor: "#27ae60",
+              borderWidth: 1,
+              borderRadius: 6,
+              borderSkipped: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "top",
+              labels: {
+                font: { family: "Cairo", size: 12 },
+                usePointStyle: true,
+              },
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: "rgba(0,0,0,0.05)" },
+              ticks: { font: { family: "Cairo" } },
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: "Cairo", size: 11 } },
+            },
+          },
+        },
+      });
+
+      // Type Distribution Chart
+      new Chart(document.getElementById("typeChart"), {
+        type: "doughnut",
+        data: {
+          labels: MockData.typeDistribution.labels,
+          datasets: [
+            {
+              data: MockData.typeDistribution.data,
+              backgroundColor: MockData.typeDistribution.colors,
+              borderWidth: 2,
+              borderColor: "#fff",
+              hoverOffset: 8,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "60%",
+          plugins: {
+            legend: {
+              position: "right",
+              labels: {
+                font: { family: "Cairo", size: 12 },
+                usePointStyle: true,
+                padding: 12,
+              },
+            },
+          },
+        },
+      });
+
+      hidePageLoading();
+      initLiveClock();
+
+      // === Risk KPIs ===
+      if (MockData.risks) {
+        const risks = MockData.risks;
+        const intolerable = risks.filter(r => r.initialCategory === 'Intolerable' && r.status !== 'مغلق').length;
+        const inProgress = risks.filter(r => r.status === 'قيد التنفيذ').length;
+        const resolved = risks.filter(r => r.status === 'مغلق').length;
+        const mitigationRate = risks.length > 0 ? Math.round((resolved / risks.length) * 100) : 0;
+
+        animateNumber(document.getElementById('riskIntolerable'), intolerable);
+        animateNumber(document.getElementById('riskInProgress'), inProgress);
+        animateNumber(document.getElementById('riskResolved'), resolved);
+        animatePercentage(document.getElementById('riskMitigationRate'), mitigationRate);
+
+        // Risk Category Doughnut Chart
+        const catCounts = { Intolerable: 0, Reviewable: 0, Acceptable: 0 };
+        risks.forEach(r => { catCounts[r.initialCategory] = (catCounts[r.initialCategory] || 0) + 1; });
+        new Chart(document.getElementById('riskCategoryChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['غير مقبول (Intolerable)', 'يحتاج مراجعة (Reviewable)', 'مقبول (Acceptable)'],
+            datasets: [{ data: [catCounts.Intolerable, catCounts.Reviewable, catCounts.Acceptable], backgroundColor: ['#e74c3c99', '#f39c1299', '#27ae6099'], borderColor: ['#e74c3c', '#f39c12', '#27ae60'], borderWidth: 2, hoverOffset: 8 }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 }, usePointStyle: true, padding: 10 } } } }
+        });
+
+        // Risk Ownership Bar Chart
+        const ownerCounts = {};
+        risks.forEach(r => { ownerCounts[r.ownership] = (ownerCounts[r.ownership] || 0) + 1; });
+        const ownerLabels = Object.keys(ownerCounts);
+        const ownerData = Object.values(ownerCounts);
+        new Chart(document.getElementById('riskOwnerChart'), {
+          type: 'bar',
+          data: {
+            labels: ownerLabels,
+            datasets: [{ label: 'عدد المخاطر', data: ownerData, backgroundColor: '#0066cc80', borderColor: '#0066cc', borderWidth: 1, borderRadius: 6 }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1, font: { family: 'Cairo' } } }, y: { ticks: { font: { family: 'Cairo', size: 11 } } } } }
+        });
+      }
+
+      // Personalize welcome
+      const user = getCurrentUser();
+      if (user) {
+        const welcomeH2 = document.querySelector(".welcome-text h2");
+        if (welcomeH2)
+          welcomeH2.textContent = `مرحباً ${user.name.split(" ")[0]} 👋`;
+      }
+    });
+
+    function switchChartView(view, btn) {
+      document
+        .querySelectorAll(".chart-filter button")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const d = MockData.monthlyData;
+      if (view === "quarterly") {
+        const qLabels = [
+          "الربع الأول",
+          "الربع الثاني",
+          "الربع الثالث",
+          "الربع الرابع",
+        ];
+        const qIncidents = [];
+        const qResolved = [];
+        for (let i = 0; i < 12; i += 3) {
+          qIncidents.push(
+            d.incidents.slice(i, i + 3).reduce((a, b) => a + b, 0),
+          );
+          qResolved.push(
+            d.resolved.slice(i, i + 3).reduce((a, b) => a + b, 0),
+          );
+        }
+        monthlyChart.data.labels = qLabels;
+        monthlyChart.data.datasets[0].data = qIncidents;
+        monthlyChart.data.datasets[1].data = qResolved;
+      } else {
+        monthlyChart.data.labels = d.labels;
+        monthlyChart.data.datasets[0].data = d.incidents;
+        monthlyChart.data.datasets[1].data = d.resolved;
+      }
+      monthlyChart.update();
+    }
+  </script>
+</body>
+
+</html>

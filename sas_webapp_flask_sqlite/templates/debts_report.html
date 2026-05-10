@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-person-lines-fill me-2"></i>إدارة المديونيات</h2>
+            <p class="text-muted">متابعة مديونيات العملاء والموردين وتحصيل المبالغ</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-dark rounded-pill px-4 shadow-sm" onclick="window.print()">
+                <i class="bi bi-printer me-2"></i>طباعة التقرير الشامل
+            </button>
+            <form action="{{ url_for('debts_report') }}" method="GET" class="d-flex gap-0" id="searchForm">
+                <div class="input-group shadow-sm" style="max-width: 450px; direction: rtl;">
+                    <input type="text" name="q" id="debtSearch" class="form-control px-3" 
+                           placeholder="اكتب الاسم أو الرقم هنا..." 
+                           value="{{ request.args.get('q', '') }}" 
+                           autocomplete="off" autofocus style="border-radius: 0 15px 15px 0;"
+                           oninput="checkAutoSubmit(this)">
+                    <button class="btn btn-primary px-4" type="submit" id="searchBtn" style="border-radius: 15px 0 0 15px;">
+                        <i class="bi bi-search me-1"></i> بحث
+                    </button>
+                </div>
+                <datalist id="debtSuggestions">
+                    {% for d in debtors %}<option value="{{ d.name_ar }}">{% endfor %}
+                    {% for c in creditors %}<option value="{{ c.name_ar }}">{% endfor %}
+                </datalist>
+                {% if request.args.get('q') %}
+                <a href="{{ url_for('debts_report') }}" class="btn btn-outline-secondary rounded-pill">
+                    <i class="bi bi-x-lg"></i> مسح
+                </a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <!-- Print Header (Visible only on print) -->
+    <div class="print-only-header text-center mb-5">
+        <h1 class="fw-bold">Smart Accounting Suite (SAS)</h1>
+        <h3 class="text-muted">تقرير المديونيات الشامل</h3>
+        <p>تاريخ الاستخراج: <span id="printDate"></span></p>
+        <hr style="border-top: 3px double #333;">
+    </div>
+
+    <!-- Summary Cards (Dynamic) -->
+    <div class="row mb-4 no-print">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm bg-primary text-white" style="border-radius: 20px; background: linear-gradient(45deg, #0d6efd, #0dcaf0) !important;">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">إجمالي مديونيات العملاء (لنا)</div>
+                        <div class="h2 fw-bold mb-0" id="totalDebtorsDisplay">{{ "{:,.2f}".format(total_debtors) }} ريال</div>
+                    </div>
+                    <i class="bi bi-cash-stack h1 opacity-25"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm bg-dark text-white" style="border-radius: 20px; background: linear-gradient(45deg, #212529, #495057) !important;">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">إجمالي مديونيات الموردين (علينا)</div>
+                        <div class="h2 fw-bold mb-0" id="totalCreditorsDisplay">{{ "{:,.2f}".format(total_creditors) }} ريال</div>
+                    </div>
+                    <i class="bi bi-truck h1 opacity-25"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+    .print-only-header { display: none; }
+    
+    @media print {
+        .no-print, .btn, .btn-group, .search-box, .sidebar, .pos-navbar, nav, footer {
+            display: none !important;
+        }
+        .print-only-header { display: block !important; }
+        body { background: white !important; padding: 0 !important; margin: 0 !important; }
+        .container-fluid { width: 100% !important; padding: 0 !important; }
+        .card { border: 1px solid #ddd !important; box-shadow: none !important; margin-bottom: 20px !important; break-inside: avoid; }
+        .card-header { background: #f8f9fa !important; color: black !important; border-bottom: 2px solid #333 !important; }
+        .table th { background-color: #f2f2f2 !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .text-danger { color: #dc3545 !important; }
+        .text-warning { color: #ffc107 !important; }
+    }
+
+    .highlight-match {
+        animation: pulseMatch 1.5s ease-out infinite;
+        background-color: rgba(25, 135, 84, 0.1) !important;
+        border: 2px solid #198754 !important;
+        transform: scale(1.01);
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+
+    @keyframes pulseMatch {
+        0% { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(25, 135, 84, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
+    }
+</style>
+
+<div class="row">
+    <!-- Customers Debts Section -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm border-0" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-header bg-primary text-white p-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-people-fill me-2"></i>مديونيات العملاء (لنا عندهم)</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="debtorsTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>العميل</th>
+                                <th>الجوال</th>
+                                <th class="text-end">المبلغ</th>
+                                <th class="text-center">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for d in debtors %}
+                            <tr class="debt-row">
+                                <td>
+                                    <div class="fw-bold text-dark">{{ d.name_ar }}</div>
+                                    <small class="text-muted">{{ d.customer_code }}</small>
+                                </td>
+                                <td>{{ d.phone or '---' }}</td>
+                                <td class="text-end fw-bold text-danger">{{ "{:,.2f}".format(d.current_balance) }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-success rounded-pill px-3" onclick="openPayModal('{{ d.customer_id }}', '{{ d.name_ar }}', '{{ d.current_balance }}', 'customer')">تسديد</button>
+                                        <a href="{{ url_for('account_statement', account_id=d.account_id) if d.account_id else '#' }}" class="btn btn-sm btn-outline-primary rounded-pill px-3">كشف حساب</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">لا توجد مديونيات مستحقة حالياً</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suppliers Debts Section -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm border-0" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-header bg-dark text-white p-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-truck me-2"></i>مديونيات الموردين (علينا لهم)</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="creditorsTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>المورد</th>
+                                <th>الجوال</th>
+                                <th class="text-end">المبلغ</th>
+                                <th class="text-center">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in creditors %}
+                            <tr class="debt-row">
+                                <td>
+                                    <div class="fw-bold text-dark">{{ c.name_ar }}</div>
+                                    <small class="text-muted">{{ c.supplier_code }}</small>
+                                </td>
+                                <td>{{ c.phone or '---' }}</td>
+                                <td class="text-end fw-bold text-warning">{{ "{:,.2f}".format(c.current_balance) }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-warning rounded-pill px-3" onclick="openPayModal('{{ c.supplier_id }}', '{{ c.name_ar }}', '{{ c.current_balance }}', 'supplier')">سداد</button>
+                                        <a href="{{ url_for('account_statement', account_id=c.account_id) if c.account_id else '#' }}" class="btn btn-sm btn-outline-dark rounded-pill px-3">كشف حساب</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">لا توجد ديون للموردين حالياً</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print Summary (Visible only on print) -->
+<div class="print-only d-none d-print-block mt-4">
+    <div class="row">
+        <div class="col-6 ms-auto">
+            <table class="table table-bordered border-dark">
+                <tr class="table-light">
+                    <th class="fw-bold">إجمالي مديونيات العملاء (لنا)</th>
+                    <td class="text-end fw-bold">{{ "{:,.2f}".format(total_debtors) }} ريال</td>
+                </tr>
+                <tr class="table-light">
+                    <th class="fw-bold">إجمالي مديونيات الموردين (علينا)</th>
+                    <td class="text-end fw-bold">{{ "{:,.2f}".format(total_creditors) }} ريال</td>
+                </tr>
+                <tr class="bg-light">
+                    <th class="fw-bold fs-5">صافي المديونية</th>
+                    <td class="text-end fw-bold fs-5">{{ "{:,.2f}".format(total_debtors - total_creditors) }} ريال</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="mt-5 d-flex justify-content-between">
+        <div class="text-center" style="width: 200px; border-top: 1px solid #000;">توقيع المحاسب</div>
+        <div class="text-center" style="width: 200px; border-top: 1px solid #000;">ختم المنشأة</div>
+    </div>
+</div>
+
+<!-- Modal: Quick Payment -->
+<div class="modal fade" id="payModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 20px;">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold" id="payModalTitle">تسديد مبلغ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form id="payForm">
+            <input type="hidden" id="payEntityId">
+            <input type="hidden" id="payEntityType">
+            <div class="mb-3 text-center">
+                <div class="text-muted small">الاسم</div>
+                <div class="h5 fw-bold" id="payNameDisplay">---</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small">المبلغ المطلوب (الرصيد)</label>
+                <input type="text" id="payBalanceDisplay" class="form-control-plaintext fw-bold h4 text-center" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">المبلغ المدفوع الآن</label>
+                <input type="number" step="0.01" id="payAmountInput" class="form-control form-control-lg text-center" style="border-radius: 15px;" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold text-muted small">ملاحظات</label>
+                <textarea id="payNotesInput" class="form-control" style="border-radius: 15px;" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold mt-3" style="border-radius: 15px;">تأكيد العملية</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const payModalElement = document.getElementById('payModal');
+        if (!payModalElement) return;
+        const payModal = new bootstrap.Modal(payModalElement);
+
+        window.openPayModal = function(id, name, balance, type) {
+            document.getElementById('payEntityId').value = id;
+            document.getElementById('payEntityType').value = type;
+            document.getElementById('payNameDisplay').textContent = name;
+            document.getElementById('payBalanceDisplay').value = parseFloat(balance).toLocaleString() + " ريال";
+            document.getElementById('payAmountInput').value = Math.abs(parseFloat(balance));
+            document.getElementById('payModalTitle').textContent = type === 'customer' ? 'تسديد مبلغ من عميل' : 'سداد مبلغ لمورد';
+            payModal.show();
+        };
+
+        document.getElementById('payForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const payload = {
+                id: document.getElementById('payEntityId').value,
+                type: document.getElementById('payEntityType').value,
+                amount: document.getElementById('payAmountInput').value,
+                notes: document.getElementById('payNotesInput').value
+            };
+
+            fetch('/reports/quick-pay', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    location.reload();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطأ في العملية',
+                        text: data.message,
+                        confirmButtonText: 'حسناً'
+                    });
+                }
+            });
+        });
+
+        calculateTotals();
+        highlightSearchResults();
+        document.getElementById('printDate').textContent = new Date().toLocaleString('ar-YE');
+
+        // Show loading when searching
+        const searchForm = document.getElementById('searchForm');
+        if (searchForm) {
+            searchForm.onsubmit = function() {
+                const btn = document.getElementById('searchBtn');
+                if (btn) btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+            };
+        }
+    });
+
+    function highlightSearchResults() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const q = urlParams.get('q');
+        if (!q) return;
+
+        const searchTerm = normalizeArabic(q);
+        const rows = document.querySelectorAll('.debt-row');
+        let found = false;
+
+        rows.forEach(row => {
+            const text = normalizeArabic(row.innerText);
+            if (text.includes(searchTerm)) {
+                row.classList.add('highlight-match');
+                if (!found) {
+                    found = true;
+                    setTimeout(() => {
+                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 500);
+                }
+            }
+        });
+    }
+
+    function checkAutoSubmit(input) {
+        const list = document.getElementById('debtSuggestions');
+        if (!list) return;
+        const options = Array.from(list.options).map(opt => opt.value);
+        if (options.includes(input.value)) {
+            document.getElementById('searchForm').submit();
+        }
+    }
+
+    function calculateTotals() {
+        let debtorTotal = 0;
+        let creditorTotal = 0;
+
+        document.querySelectorAll('#debtorsTable tbody tr.debt-row').forEach(row => {
+            const el = row.querySelector('.text-danger');
+            if (el) {
+                const val = parseFloat(el.innerText.replace(/[^\d.]/g, '') || 0);
+                debtorTotal += val;
+            }
+        });
+
+        document.querySelectorAll('#creditorsTable tbody tr.debt-row').forEach(row => {
+            const el = row.querySelector('.text-warning');
+            if (el) {
+                const val = parseFloat(el.innerText.replace(/[^\d.]/g, '') || 0);
+                creditorTotal += val;
+            }
+        });
+
+        const fmt = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 });
+        const dDisp = document.getElementById('totalDebtorsDisplay');
+        const cDisp = document.getElementById('totalCreditorsDisplay');
+        if (dDisp) dDisp.innerText = fmt.format(debtorTotal) + " ريال";
+        if (cDisp) cDisp.innerText = fmt.format(creditorTotal) + " ريال";
+    }
+</script>
+{% endblock %}

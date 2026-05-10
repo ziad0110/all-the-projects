@@ -1,0 +1,525 @@
+/*
+ * Al-Agha Brand Styles
+ * Green & Orange Nature Theme
+ * Mango Juice Products
+ */
+
+/* ===================================
+   AL-AGHA BRAND CSS VARIABLES
+   =================================== */
+
+:root {
+    /* Al-Agha Brand Colors */
+    --agha-green-dark: #1a3d16;
+    --agha-green: #2d5a27;
+    --agha-green-light: #4a7c59;
+    --agha-green-pale: #6b9b5b;
+
+    --agha-orange-dark: #cc7000;
+    --agha-orange: #ff8c00;
+    --agha-orange-light: #ffa500;
+    --agha-orange-pale: #ffb833;
+
+    --agha-cream: #fff8dc;
+    --agha-cream-dark: #f5e6b8;
+
+    /* Background variations */
+    --agha-bg-primary: #0d1a0b;
+    --agha-bg-secondary: #142211;
+    --agha-bg-card: #1a2f17;
+
+    /* Gradients */
+    --agha-gradient-green: linear-gradient(135deg, #2d5a27 0%, #4a7c59 50%, #2d5a27 100%);
+    --agha-gradient-orange: linear-gradient(135deg, #ff8c00 0%, #ffa500 50%, #ff8c00 100%);
+    --agha-gradient-hero: linear-gradient(180deg, rgba(13, 26, 11, 0.8) 0%, rgba(45, 90, 39, 0.4) 50%, rgba(13, 26, 11, 0.95) 100%);
+}
+
+/* ===================================
+   AL-AGHA PAGE STYLES
+   =================================== */
+
+.agha-page {
+    background: var(--agha-bg-primary);
+}
+
+.agha-page .navbar {
+    background: transparent;
+}
+
+.agha-page .navbar.scrolled {
+    background: rgba(13, 26, 11, 0.95);
+}
+
+.agha-page .logo-text {
+    color: var(--agha-orange);
+}
+
+.agha-page .nav-link:hover,
+.agha-page .nav-link.active {
+    color: var(--agha-orange);
+}
+
+.agha-page .nav-link::after {
+    background: var(--agha-orange);
+}
+
+/* Hero Section */
+.agha-hero {
+    background: var(--agha-gradient-hero);
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.agha-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(255, 140, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(74, 124, 89, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.agha-hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.agha-hero .text-accent {
+    color: var(--agha-orange);
+}
+
+/* Floating Leaves Animation */
+.floating-leaves {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.leaf {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    opacity: 0.3;
+    animation: leaf-fall 15s linear infinite;
+}
+
+@keyframes leaf-fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.3;
+    }
+
+    90% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Buttons */
+.agha-page .btn-primary {
+    background: var(--agha-gradient-orange);
+    box-shadow: 0 4px 30px rgba(255, 140, 0, 0.3);
+}
+
+.agha-page .btn-primary:hover {
+    box-shadow: 0 6px 40px rgba(255, 140, 0, 0.5);
+}
+
+.agha-page .btn-outline {
+    color: var(--agha-orange);
+    border-color: var(--agha-orange);
+}
+
+.agha-page .btn-outline:hover {
+    background: var(--agha-orange);
+    color: var(--agha-bg-primary);
+}
+
+/* Section Headers */
+.agha-page .section-header h2 .text-accent,
+.agha-page .text-gold {
+    color: var(--agha-orange);
+}
+
+.agha-page .divider {
+    background: var(--agha-gradient-orange);
+}
+
+/* Cards */
+.agha-page .card {
+    background: var(--agha-bg-card);
+    border-color: rgba(74, 124, 89, 0.2);
+}
+
+.agha-page .card:hover {
+    border-color: rgba(255, 140, 0, 0.4);
+    box-shadow: 0 8px 40px rgba(255, 140, 0, 0.15);
+}
+
+/* Product Cards */
+.product-card {
+    background: var(--agha-bg-card);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(74, 124, 89, 0.2);
+    overflow: hidden;
+    transition: var(--transition-normal);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 140, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(255, 140, 0, 0.15);
+}
+
+.product-image {
+    position: relative;
+    height: 280px;
+    background: linear-gradient(135deg, var(--agha-green-dark), var(--agha-green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.product-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 140, 0, 0.1) 0%, transparent 70%);
+}
+
+.product-icon {
+    font-size: 6rem;
+    color: var(--agha-orange);
+    opacity: 0.8;
+    transition: var(--transition-normal);
+}
+
+.product-card:hover .product-icon {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.product-badge {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: var(--agha-orange);
+    color: #fff;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.product-info {
+    padding: var(--space-xl);
+}
+
+.product-name {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+    color: #fff;
+}
+
+.product-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    line-height: 1.7;
+}
+
+.product-features {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.product-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.9rem;
+    color: var(--agha-green-light);
+}
+
+.product-feature i {
+    color: var(--agha-orange);
+}
+
+/* Story Section */
+.story-section {
+    background: var(--agha-bg-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+.story-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(circle at 100% 50%, rgba(74, 124, 89, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+}
+
+.story-image {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    height: 500px;
+    background: linear-gradient(135deg, var(--agha-green-dark), var(--agha-green), var(--agha-green-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.story-image-decoration {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px solid var(--agha-orange);
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+}
+
+.story-content h2 {
+    margin-bottom: var(--space-lg);
+}
+
+.story-content p {
+    margin-bottom: var(--space-lg);
+    line-height: 1.9;
+}
+
+/* Process Section */
+.process-section {
+    background: var(--agha-bg-primary);
+}
+
+.process-timeline {
+    position: relative;
+    padding: var(--space-2xl) 0;
+}
+
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--agha-green), var(--agha-orange), var(--agha-green));
+}
+
+.process-step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+    position: relative;
+}
+
+.process-step:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.process-step:nth-child(even) .process-content {
+    text-align: left;
+}
+
+.process-icon {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    background: var(--agha-bg-card);
+    border: 3px solid var(--agha-orange);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--agha-orange);
+    position: relative;
+    z-index: 2;
+}
+
+.process-content {
+    flex: 1;
+    text-align: right;
+    max-width: 400px;
+}
+
+.process-content h3 {
+    margin-bottom: var(--space-sm);
+    color: var(--agha-orange);
+}
+
+.process-content p {
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .process-timeline::before {
+        left: 50px;
+    }
+
+    .process-step,
+    .process-step:nth-child(even) {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .process-content,
+    .process-step:nth-child(even) .process-content {
+        text-align: center;
+        max-width: 100%;
+    }
+}
+
+/* Certifications Section */
+.cert-section {
+    background: var(--agha-bg-secondary);
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+}
+
+.cert-card {
+    background: var(--agha-bg-card);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    border: 1px solid rgba(74, 124, 89, 0.2);
+    transition: var(--transition-normal);
+}
+
+.cert-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--agha-orange);
+    box-shadow: 0 10px 40px rgba(255, 140, 0, 0.1);
+}
+
+.cert-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--space-lg);
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(74, 124, 89, 0.1));
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--agha-orange);
+}
+
+.cert-card h4 {
+    margin-bottom: var(--space-sm);
+}
+
+.cert-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 1024px) {
+    .cert-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .cert-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Contact Form */
+.agha-page .form-control {
+    background: var(--agha-bg-card);
+    border-color: rgba(74, 124, 89, 0.3);
+}
+
+.agha-page .form-control:focus {
+    border-color: var(--agha-orange);
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
+}
+
+/* Value Items */
+.agha-page .value-item {
+    background: var(--agha-bg-card);
+    border-color: rgba(74, 124, 89, 0.2);
+}
+
+.agha-page .value-item:hover {
+    border-color: rgba(255, 140, 0, 0.4);
+}
+
+.agha-page .value-icon {
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(74, 124, 89, 0.1));
+    color: var(--agha-orange);
+}
+
+/* Footer */
+.agha-page .footer {
+    background: var(--agha-bg-secondary);
+    border-top-color: rgba(74, 124, 89, 0.2);
+}
+
+.agha-page .footer-title {
+    color: var(--agha-orange);
+}
+
+.agha-page .social-link:hover {
+    background: var(--agha-orange);
+    border-color: var(--agha-orange);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .story-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+
+    .story-image {
+        height: 350px;
+    }
+}

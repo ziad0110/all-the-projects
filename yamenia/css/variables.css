@@ -1,0 +1,402 @@
+/* ===== Yemen Safe - Design System Variables ===== */
+/* Based on Yemenia Airways Branding */
+
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap");
+
+:root {
+  /* === Primary Colors (Yemenia Airways) === */
+  --primary-900: #001a33;
+  --primary-800: #002244;
+  --primary-700: #003366;
+  --primary-600: #004080;
+  --primary-500: #0055a5;
+  --primary-400: #0066cc;
+  --primary-300: #3388dd;
+  --primary-200: #66aaee;
+  --primary-100: #99ccff;
+  --primary-50: #e6f0ff;
+
+  /* === Accent Colors (Red from logo) === */
+  --accent-700: #991a1f;
+  --accent-600: #b52025;
+  --accent-500: #cc2229;
+  --accent-400: #e63946;
+  --accent-300: #ff6b6b;
+  --accent-200: #ff9999;
+  --accent-100: #ffcccc;
+  --accent-50: #fff0f0;
+
+  /* === Success / Green === */
+  --success-600: #0d7a3e;
+  --success-500: #10b759;
+  --success-400: #2ecc71;
+  --success-100: #d4edda;
+  --success-50: #f0faf4;
+
+  /* === Warning / Orange === */
+  --warning-600: #cc8400;
+  --warning-500: #f0a500;
+  --warning-400: #f5b942;
+  --warning-100: #fff3cd;
+  --warning-50: #fffbf0;
+
+  /* === Danger / Red === */
+  --danger-600: #c0392b;
+  --danger-500: #e74c3c;
+  --danger-400: #ff6b6b;
+  --danger-100: #f8d7da;
+  --danger-50: #fef0f0;
+
+  /* === Info / Cyan === */
+  --info-500: #17a2b8;
+  --info-400: #3fc1d3;
+  --info-100: #d1ecf1;
+  --info-50: #f0fafb;
+
+  /* === Neutral / Grays === */
+  --gray-900: #1a1a2e;
+  --gray-800: #2d2d44;
+  --gray-700: #404060;
+  --gray-600: #606080;
+  --gray-500: #808098;
+  --gray-400: #a0a0b0;
+  --gray-300: #c0c0cc;
+  --gray-200: #e0e0e8;
+  --gray-100: #f0f2f5;
+  --gray-50: #f8f9fc;
+  --white: #ffffff;
+
+  /* === Semantic Colors === */
+  --bg-primary: var(--gray-50);
+  --bg-secondary: var(--white);
+  --bg-sidebar: var(--primary-800);
+  --bg-sidebar-hover: var(--primary-700);
+  --bg-header: var(--white);
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-muted: var(--gray-400);
+  --text-on-primary: var(--white);
+  --text-on-sidebar: rgba(255, 255, 255, 0.85);
+  --border-color: var(--gray-200);
+  --border-light: var(--gray-100);
+
+  /* === Priority Colors === */
+  --priority-critical: #e74c3c;
+  --priority-critical-bg: #fef0f0;
+  --priority-urgent: #f39c12;
+  --priority-urgent-bg: #fffbf0;
+  --priority-normal: #3498db;
+  --priority-normal-bg: #f0f7ff;
+  --priority-low: #27ae60;
+  --priority-low-bg: #f0faf4;
+
+  /* === Status Colors === */
+  --status-new: #e74c3c;
+  --status-new-bg: #fef0f0;
+  --status-investigating: #f39c12;
+  --status-investigating-bg: #fffbf0;
+  --status-responding: #3498db;
+  --status-responding-bg: #f0f7ff;
+  --status-resolved: #27ae60;
+  --status-resolved-bg: #f0faf4;
+  --status-closed: #95a5a6;
+  --status-closed-bg: #f5f6f7;
+
+  /* === Typography === */
+  --font-primary: "Cairo", "Tajawal", sans-serif;
+  --font-secondary: "Tajawal", "Cairo", sans-serif;
+  --font-mono: "Fira Code", monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+
+  /* === Spacing === */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* === Border Radius === */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* === Shadows === */
+  --shadow-xs: 0 1px 2px rgba(0, 51, 102, 0.04);
+  --shadow-sm: 0 2px 4px rgba(0, 51, 102, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 51, 102, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 51, 102, 0.1);
+  --shadow-xl: 0 16px 48px rgba(0, 51, 102, 0.12);
+  --shadow-glow: 0 0 20px rgba(0, 102, 204, 0.15);
+  --shadow-glow-accent: 0 0 20px rgba(204, 34, 41, 0.15);
+  --shadow-glow-success: 0 0 20px rgba(39, 174, 96, 0.15);
+  --shadow-glow-warning: 0 0 20px rgba(243, 156, 18, 0.15);
+
+  /* === Glassmorphism === */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px rgba(0, 51, 102, 0.1);
+  --glass-blur: blur(12px);
+
+  /* === Transitions === */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* === Layout === */
+  --sidebar-width: 280px;
+  --sidebar-collapsed: 80px;
+  --header-height: 70px;
+  --content-max-width: 1400px;
+
+  /* === Z-Index === */
+  --z-dropdown: 100;
+  --z-sidebar: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 400;
+  --z-notification: 500;
+  --z-tooltip: 600;
+}
+
+/* === Dark Mode Theme === */
+:root[data-theme="dark"] {
+  /* Neutral / Grays mapped for Dark Mode */
+  --gray-50: #121212;
+  --gray-100: #1e1e1e;
+  --gray-200: #2d2d2d;
+  --gray-300: #3d3d3d;
+  --gray-400: #666666;
+  --gray-500: #888888;
+  --gray-600: #aaaaaa;
+  --gray-700: #cccccc;
+  --gray-800: #e0e0e0;
+  --gray-900: #f5f5f5;
+  --white: #1e1e1e;
+
+  /* Semantic Colors */
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-header: #1e1e1e;
+  --text-primary: #f5f5f5;
+  --text-secondary: #aaaaaa;
+  --text-muted: #888888;
+  --border-color: #333333;
+  --border-light: #2d2d2d;
+
+  /* Status Backgrounds (Dimmed for dark mode) */
+  --priority-critical-bg: rgba(231, 76, 60, 0.15);
+  --priority-urgent-bg: rgba(243, 156, 18, 0.15);
+  --priority-normal-bg: rgba(52, 152, 219, 0.15);
+  --priority-low-bg: rgba(39, 174, 96, 0.15);
+
+  --status-new-bg: rgba(231, 76, 60, 0.15);
+  --status-investigating-bg: rgba(243, 156, 18, 0.15);
+  --status-responding-bg: rgba(52, 152, 219, 0.15);
+  --status-resolved-bg: rgba(39, 174, 96, 0.15);
+  --status-closed-bg: rgba(149, 165, 166, 0.15);
+
+  /* Shadows adjusted for dark mode */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 20px rgba(0, 102, 204, 0.3);
+  --shadow-glow-accent: 0 0 20px rgba(204, 34, 41, 0.3);
+
+  /* Glassmorphism (Dark) */
+  --glass-bg: rgba(30, 30, 30, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Primary colors adapted for dark mode */
+  --primary-50: rgba(0, 85, 165, 0.1);
+  --primary-100: rgba(0, 85, 165, 0.15);
+  --primary-800: #8bb8e0;
+  --primary-900: #a8cceb;
+
+  /* Success/Warning/Danger/Info backgrounds for dark mode */
+  --success-100: rgba(39, 174, 96, 0.15);
+  --warning-100: rgba(243, 156, 18, 0.15);
+  --danger-100: rgba(231, 76, 60, 0.15);
+  --info-100: rgba(52, 152, 219, 0.15);
+}
+
+/* === Dark Mode Component Overrides === */
+:root[data-theme="dark"] .form-control,
+:root[data-theme="dark"] select.form-control,
+:root[data-theme="dark"] input.form-control,
+:root[data-theme="dark"] textarea.form-control {
+  background: #2d2d2d;
+  color: #f5f5f5;
+  border-color: #444;
+}
+
+:root[data-theme="dark"] .form-control:focus {
+  border-color: var(--primary-500);
+  background: #333;
+}
+
+:root[data-theme="dark"] .form-control:disabled {
+  background: #252525;
+  color: #888;
+}
+
+:root[data-theme="dark"] .toggle-slider::before {
+  background: #e0e0e0;
+}
+
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .chart-card,
+:root[data-theme="dark"] .kpi-card,
+:root[data-theme="dark"] .incidents-table-card,
+:root[data-theme="dark"] .activity-card,
+:root[data-theme="dark"] .settings-section,
+:root[data-theme="dark"] .settings-nav,
+:root[data-theme="dark"] .filters-bar {
+  background: #1e1e1e;
+  border-color: #333;
+}
+
+:root[data-theme="dark"] table thead th {
+  background: #252525;
+  color: #ccc;
+  border-color: #333;
+}
+
+:root[data-theme="dark"] table tbody tr {
+  border-color: #333;
+}
+
+:root[data-theme="dark"] table tbody tr:hover {
+  background: rgba(0, 85, 165, 0.08) !important;
+}
+
+:root[data-theme="dark"] .btn-secondary {
+  background: #2d2d2d;
+  color: #ccc;
+  border-color: #444;
+}
+
+:root[data-theme="dark"] .btn-secondary:hover {
+  background: #3d3d3d;
+}
+
+:root[data-theme="dark"] .btn-outline {
+  border-color: #555;
+  color: #ccc;
+}
+
+:root[data-theme="dark"] .btn-outline:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+:root[data-theme="dark"] .modal {
+  background: #1e1e1e;
+  border: 1px solid #333;
+}
+
+:root[data-theme="dark"] .modal-header {
+  background: #1e1e1e;
+  border-color: #333;
+}
+
+:root[data-theme="dark"] .modal-footer {
+  border-color: #333;
+}
+
+:root[data-theme="dark"] .modal-close {
+  background: #2d2d2d;
+  color: #aaa;
+}
+
+:root[data-theme="dark"] .toast {
+  background: #2d2d2d;
+  border-color: #444;
+}
+
+:root[data-theme="dark"] .badge-status,
+:root[data-theme="dark"] .badge-priority,
+:root[data-theme="dark"] .user-role-badge {
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+:root[data-theme="dark"] .empty-state i {
+  color: #555;
+}
+
+:root[data-theme="dark"] .settings-nav-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+:root[data-theme="dark"] .settings-nav-item.active {
+  background: rgba(0, 85, 165, 0.15);
+}
+
+:root[data-theme="dark"] .role-banner {
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+:root[data-theme="dark"] .system-footer {
+  background: #1a1a1a;
+  border-color: #333;
+}
+
+:root[data-theme="dark"] .incident-id {
+  background: rgba(0, 85, 165, 0.15);
+}
+
+:root[data-theme="dark"] .incident-row:hover {
+  background: rgba(0, 85, 165, 0.1) !important;
+}
+
+:root[data-theme="dark"] .fab-action-label {
+  background: #333;
+}
+
+:root[data-theme="dark"] .header-search input {
+  background: #2d2d2d;
+  color: #f5f5f5;
+  border-color: #444;
+}
+
+:root[data-theme="dark"] .welcome-banner {
+  background: linear-gradient(135deg, #0a2a4a, #0d3d6e);
+}
+
+:root[data-theme="dark"] .sidebar {
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="dark"] .main-content {
+  background: #121212;
+}
+
+:root[data-theme="dark"] body {
+  background: #121212;
+}

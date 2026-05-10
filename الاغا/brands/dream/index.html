@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="شركة دريم - الصلصات الحارة والكتشب الفاخر بمذاق لا يُنسى - حرارة الطعم بثقة وطنية">
+    <meta name="keywords" content="دريم, شطة, صلصة حارة, كتشب, اليمن, صلصات يمنية">
+    <meta name="author" content="Dream">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="شركة دريم | Dream - الصلصات الحارة الفاخرة">
+    <meta property="og:description" content="حرارة الطعم… بثقة وطنية - الصلصات الحارة والكتشب الفاخر">
+    <meta property="og:type" content="website">
+
+    <title>شركة دريم | Dream - الصلصات الحارة والكتشب الفاخر</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/dream.css">
+</head>
+
+<body class="dream-page">
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg width="50" height="50" viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="45" stroke="#ff6b35" stroke-width="2" fill="none" />
+                            <path d="M50 25 L60 50 L50 75 L40 50 Z" fill="none" stroke="#c41e3a" stroke-width="2" />
+                            <circle cx="50" cy="50" r="10" fill="#ff6b35" />
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <span>دريم</span>
+                    </div>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="#about" class="nav-link">من نحن</a></li>
+                    <li><a href="#products" class="nav-link">منتجاتنا</a></li>
+                    <li><a href="#recipes" class="nav-link">وصفات</a></li>
+                    <li><a href="#distribution" class="nav-link">التوزيع</a></li>
+                    <li><a href="#contact" class="nav-link">تواصل معنا</a></li>
+                    <li><a href="#contact" class="btn btn-primary btn-sm">اطلب الآن</a></li>
+                </ul>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="القائمة">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero dream-hero" id="hero">
+        <!-- Fire Particles -->
+        <div class="fire-particles" id="fireParticles"></div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="container">
+            <div class="dream-hero-content">
+                <div class="hero-logo animate-float">
+                    <svg width="180" height="180" viewBox="0 0 200 200" fill="none">
+                        <!-- Outer Ring -->
+                        <circle cx="100" cy="100" r="90" stroke="#ff6b35" stroke-width="2" fill="none" />
+                        <circle cx="100" cy="100" r="80" stroke="#c41e3a" stroke-width="1" fill="none" opacity="0.5" />
+
+                        <!-- Flame Shape -->
+                        <path d="M100 40 Q130 70, 120 100 Q130 130, 100 160 Q70 130, 80 100 Q70 70, 100 40" fill="none"
+                            stroke="#ff6b35" stroke-width="3" />
+
+                        <!-- Inner Flame -->
+                        <path d="M100 60 Q115 80, 110 100 Q115 120, 100 140 Q85 120, 90 100 Q85 80, 100 60"
+                            fill="rgba(255, 107, 53, 0.3)" stroke="#c41e3a" stroke-width="2" />
+
+                        <!-- Center -->
+                        <circle cx="100" cy="100" r="15" fill="#ff6b35" />
+                        <circle cx="100" cy="100" r="8" fill="#c41e3a" />
+                    </svg>
+                </div>
+
+                <h1 class="hero-title">
+                    <span style="color: #c41e3a;">شركة</span>
+                    <span class="text-accent">دريم</span>
+                </h1>
+
+                <p class="hero-subtitle" style="color: #ff6b35;">
+                    حرارة الطعم… بثقة وطنية
+                </p>
+
+                <p class="lead"
+                    style="color: var(--text-secondary); margin-bottom: var(--space-2xl); max-width: 700px; margin-left: auto; margin-right: auto;">
+                    نقدم لكم أشهى الصلصات الحارة والكتشب الفاخر، المصنوعة من أجود المكونات الطبيعية
+                    <br>لتضيف لمسة نارية مميزة إلى مأكولاتكم المفضلة
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#products" class="btn btn-primary btn-lg">
+                        <span>اكتشف منتجاتنا</span>
+                        <i class="fas fa-fire"></i>
+                    </a>
+                    <a href="#recipes" class="btn btn-outline btn-lg">
+                        <span>وصفات مقترحة</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>اكتشف المزيد</span>
+            <div class="scroll-indicator-line" style="background: linear-gradient(to bottom, #ff6b35, transparent);">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section dream-about-section" id="about">
+        <div class="container">
+            <div class="dream-about-grid">
+                <div class="dream-about-image reveal">
+                    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" opacity="0.3">
+                        <path d="M100 30 Q140 60, 130 100 Q140 140, 100 170 Q60 140, 70 100 Q60 60, 100 30" fill="none"
+                            stroke="#ff6b35" stroke-width="3" />
+                    </svg>
+                    <div class="dream-about-decoration"></div>
+                </div>
+
+                <div class="dream-about-content reveal reveal-delay-2">
+                    <h2>
+                        قصة <span class="text-accent" style="color: #ff6b35;">دريم</span>
+                    </h2>
+                    <div class="divider" style="margin-right: 0; margin-left: auto;"></div>
+
+                    <p style="color: var(--text-secondary);">
+                        بدأت رحلتنا بحلم بسيط: تقديم صلصات تنافس أفضل المنتجات العالمية، بنكهة يمنية أصيلة. من هذا الحلم
+                        وُلدت "دريم" - العلامة التي تجمع بين الجرأة في الطعم والجودة في الصناعة.
+                    </p>
+
+                    <p style="color: var(--text-secondary);">
+                        نستخدم أجود أنواع الفلفل والطماطم المحلية، ونطبق أحدث معايير السلامة الغذائية العالمية. كل زجاجة
+                        من منتجاتنا تحمل شغفنا بالتميز والتزامنا بالجودة.
+                    </p>
+
+                    <p style="color: var(--text-secondary);">
+                        اليوم، تفخر دريم بوجودها في آلاف المطابخ اليمنية والعربية، حيث تضيف لمسة نارية مميزة إلى كل
+                        وجبة.
+                    </p>
+
+                    <a href="#products" class="btn btn-primary mt-lg">
+                        استكشف منتجاتنا
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" style="background: var(--dream-bg-primary);" id="products">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>منتجاتنا <span class="text-accent" style="color: #ff6b35;">المميزة</span></h2>
+                <div class="divider"></div>
+                <p>
+                    تشكيلة متنوعة من الصلصات الحارة والكتشب لتناسب جميع الأذواق
+                </p>
+            </div>
+
+            <!-- Spice Level Legend -->
+            <div class="spice-legend reveal">
+                <div class="spice-level-item">
+                    <div class="heat-indicator">
+                        <span class="heat-dot active"></span>
+                        <span class="heat-dot"></span>
+                        <span class="heat-dot"></span>
+                        <span class="heat-dot"></span>
+                        <span class="heat-dot"></span>
+                    </div>
+                    <span class="spice-level-label">خفيف</span>
+                </div>
+                <div class="spice-level-item">
+                    <div class="heat-indicator">
+                        <span class="heat-dot active"></span>
+                        <span class="heat-dot active"></span>
+                        <span class="heat-dot active"></span>
+                        <span class="heat-dot"></span>
+                        <span class="heat-dot"></span>
+                    </div>
+                    <span class="spice-level-label">متوسط</span>
+                </div>
+                <div class="spice-level-item">
+                    <div class="heat-indicator">
+                        <span class="heat-dot active hot"></span>
+                        <span class="heat-dot active hot"></span>
+                        <span class="heat-dot active hot"></span>
+                        <span class="heat-dot active hot"></span>
+                        <span class="heat-dot active hot"></span>
+                    </div>
+                    <span class="spice-level-label">حار جداً 🔥</span>
+                </div>
+            </div>
+
+            <div class="grid grid-3 mt-2xl">
+                <!-- Product 1: Original Hot Sauce -->
+                <div class="dream-product-card reveal reveal-delay-1">
+                    <div class="dream-product-image">
+                        <span class="dream-product-badge">الأكثر مبيعاً</span>
+                        <i class="fas fa-pepper-hot dream-product-icon"></i>
+                    </div>
+                    <div class="dream-product-info">
+                        <h3 class="dream-product-name">شطة دريم الأصلية</h3>
+                        <div class="heat-level">
+                            <span class="heat-label">درجة الحرارة:</span>
+                            <div class="heat-indicator">
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot"></span>
+                                <span class="heat-dot"></span>
+                            </div>
+                        </div>
+                        <p class="dream-product-description">
+                            الشطة الأصلية بنكهة متوازنة ومذاق مميز، مثالية للاستخدام اليومي
+                        </p>
+                        <div class="dream-product-features">
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                طبيعية 100%
+                            </span>
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                بدون مواد حافظة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: Extra Hot -->
+                <div class="dream-product-card reveal reveal-delay-2">
+                    <div class="dream-product-image">
+                        <span class="dream-product-badge" style="background: #c41e3a;">🔥 حار</span>
+                        <i class="fas fa-fire-alt dream-product-icon"></i>
+                    </div>
+                    <div class="dream-product-info">
+                        <h3 class="dream-product-name">شطة دريم الحارة</h3>
+                        <div class="heat-level">
+                            <span class="heat-label">درجة الحرارة:</span>
+                            <div class="heat-indicator">
+                                <span class="heat-dot active hot"></span>
+                                <span class="heat-dot active hot"></span>
+                                <span class="heat-dot active hot"></span>
+                                <span class="heat-dot active hot"></span>
+                                <span class="heat-dot active hot"></span>
+                            </div>
+                        </div>
+                        <p class="dream-product-description">
+                            لمحبي الحرارة الشديدة! نكهة قوية وحرارة عالية لتجربة لا تُنسى
+                        </p>
+                        <div class="dream-product-features">
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                فلفل حار طبيعي
+                            </span>
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                نكهة مميزة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3: Premium Ketchup -->
+                <div class="dream-product-card reveal reveal-delay-3">
+                    <div class="dream-product-image">
+                        <i class="fas fa-wine-bottle dream-product-icon"></i>
+                    </div>
+                    <div class="dream-product-info">
+                        <h3 class="dream-product-name">كتشب دريم الفاخر</h3>
+                        <div class="heat-level">
+                            <span class="heat-label">درجة الحرارة:</span>
+                            <div class="heat-indicator">
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot"></span>
+                                <span class="heat-dot"></span>
+                                <span class="heat-dot"></span>
+                                <span class="heat-dot"></span>
+                            </div>
+                        </div>
+                        <p class="dream-product-description">
+                            كتشب طماطم فاخر بقوام كثيف ونكهة غنية، مثالي مع البطاطس والبرجر
+                        </p>
+                        <div class="dream-product-features">
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                طماطم طازجة
+                            </span>
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                بدون ألوان صناعية
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4: Mild Hot Sauce -->
+                <div class="dream-product-card reveal reveal-delay-1">
+                    <div class="dream-product-image">
+                        <span class="dream-product-badge" style="background: #4a7c59;">للعائلة</span>
+                        <i class="fas fa-leaf dream-product-icon"></i>
+                    </div>
+                    <div class="dream-product-info">
+                        <h3 class="dream-product-name">شطة دريم الخفيفة</h3>
+                        <div class="heat-level">
+                            <span class="heat-label">درجة الحرارة:</span>
+                            <div class="heat-indicator">
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot"></span>
+                                <span class="heat-dot"></span>
+                                <span class="heat-dot"></span>
+                            </div>
+                        </div>
+                        <p class="dream-product-description">
+                            نكهة لذيذة بحرارة خفيفة، مناسبة للعائلة ولمن يفضلون الطعم المعتدل
+                        </p>
+                        <div class="dream-product-features">
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                مناسب للأطفال
+                            </span>
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                نكهة رائعة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5: Spicy Ketchup -->
+                <div class="dream-product-card reveal reveal-delay-2">
+                    <div class="dream-product-image">
+                        <span class="dream-product-badge">جديد</span>
+                        <i class="fas fa-bolt dream-product-icon"></i>
+                    </div>
+                    <div class="dream-product-info">
+                        <h3 class="dream-product-name">كتشب دريم الحار</h3>
+                        <div class="heat-level">
+                            <span class="heat-label">درجة الحرارة:</span>
+                            <div class="heat-indicator">
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot"></span>
+                                <span class="heat-dot"></span>
+                            </div>
+                        </div>
+                        <p class="dream-product-description">
+                            مزيج مثالي بين نكهة الكتشب الغنية ولمسة من الحرارة المميزة
+                        </p>
+                        <div class="dream-product-features">
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                نكهة فريدة
+                            </span>
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                حرارة معتدلة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6: Garlic Hot Sauce -->
+                <div class="dream-product-card reveal reveal-delay-3">
+                    <div class="dream-product-image">
+                        <i class="fas fa-mortar-pestle dream-product-icon"></i>
+                    </div>
+                    <div class="dream-product-info">
+                        <h3 class="dream-product-name">شطة دريم بالثوم</h3>
+                        <div class="heat-level">
+                            <span class="heat-label">درجة الحرارة:</span>
+                            <div class="heat-indicator">
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot active"></span>
+                                <span class="heat-dot"></span>
+                            </div>
+                        </div>
+                        <p class="dream-product-description">
+                            مزيج رائع من الشطة الحارة مع نكهة الثوم الطبيعي، مثالي للمشويات
+                        </p>
+                        <div class="dream-product-features">
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                ثوم طبيعي
+                            </span>
+                            <span class="dream-product-feature">
+                                <i class="fas fa-check"></i>
+                                للمشويات
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipes Section -->
+    <section class="section recipe-section" id="recipes">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>وصفات <span class="text-accent" style="color: #ff6b35;">مقترحة</span></h2>
+                <div class="divider"></div>
+                <p>
+                    أفكار شهية لاستخدام منتجات دريم في مطبخك
+                </p>
+            </div>
+
+            <div class="grid grid-4">
+                <div class="recipe-card reveal reveal-delay-1">
+                    <div class="recipe-image">
+                        <i class="fas fa-hamburger"></i>
+                        <span class="recipe-time"><i class="fas fa-clock"></i> 15 دقيقة</span>
+                    </div>
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">برجر دريم الناري</h4>
+                        <p class="recipe-desc">برجر لحم مع صلصة دريم الحارة والجبن الذائب</p>
+                        <div class="recipe-tags">
+                            <span class="recipe-tag">رئيسي</span>
+                            <span class="recipe-tag">سريع</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card reveal reveal-delay-2">
+                    <div class="recipe-image">
+                        <i class="fas fa-drumstick-bite"></i>
+                        <span class="recipe-time"><i class="fas fa-clock"></i> 30 دقيقة</span>
+                    </div>
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">أجنحة دجاج حارة</h4>
+                        <p class="recipe-desc">أجنحة دجاج مقرمشة مغطاة بصلصة دريم الأصلية</p>
+                        <div class="recipe-tags">
+                            <span class="recipe-tag">مقبلات</span>
+                            <span class="recipe-tag">🔥 حار</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card reveal reveal-delay-3">
+                    <div class="recipe-image">
+                        <i class="fas fa-pizza-slice"></i>
+                        <span class="recipe-time"><i class="fas fa-clock"></i> 25 دقيقة</span>
+                    </div>
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">بيتزا مكسيكية</h4>
+                        <p class="recipe-desc">بيتزا مميزة مع كتشب دريم الحار والفلفل الملون</p>
+                        <div class="recipe-tags">
+                            <span class="recipe-tag">رئيسي</span>
+                            <span class="recipe-tag">عائلي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card reveal reveal-delay-4">
+                    <div class="recipe-image">
+                        <i class="fas fa-fish"></i>
+                        <span class="recipe-time"><i class="fas fa-clock"></i> 20 دقيقة</span>
+                    </div>
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">سمك مشوي حار</h4>
+                        <p class="recipe-desc">سمك طازج متبل بشطة دريم بالثوم ومشوي للكمال</p>
+                        <div class="recipe-tags">
+                            <span class="recipe-tag">صحي</span>
+                            <span class="recipe-tag">مشويات</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Distribution Section -->
+    <section class="section distribution-section" id="distribution">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>قنوات <span class="text-accent" style="color: #ff6b35;">التوزيع</span></h2>
+                <div class="divider"></div>
+                <p>
+                    منتجاتنا متوفرة في مختلف نقاط البيع
+                </p>
+            </div>
+
+            <div class="distribution-grid">
+                <div class="distribution-card reveal reveal-delay-1">
+                    <div class="distribution-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h4>السوبرماركت</h4>
+                    <p>متوفرة في جميع السوبرماركت الكبرى</p>
+                </div>
+
+                <div class="distribution-card reveal reveal-delay-2">
+                    <div class="distribution-icon">
+                        <i class="fas fa-shopping-basket"></i>
+                    </div>
+                    <h4>البقالات</h4>
+                    <p>في معظم البقالات ومتاجر الحي</p>
+                </div>
+
+                <div class="distribution-card reveal reveal-delay-3">
+                    <div class="distribution-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h4>المطاعم</h4>
+                    <p>شريك للعديد من المطاعم المحلية</p>
+                </div>
+
+                <div class="distribution-card reveal reveal-delay-4">
+                    <div class="distribution-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h4>التوزيع المباشر</h4>
+                    <p>توزيع مباشر للتجار والموزعين</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-2xl reveal">
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);">
+                    هل تريد أن تصبح موزعاً لمنتجاتنا؟
+                </p>
+                <a href="#contact" class="btn btn-primary">
+                    تواصل معنا
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality Section -->
+    <section class="section" style="background: var(--dream-bg-secondary);" id="quality">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>معايير <span class="text-accent" style="color: #ff6b35;">السلامة</span> الغذائية</h2>
+                <div class="divider"></div>
+                <p>
+                    نلتزم بأعلى معايير الجودة والسلامة في جميع منتجاتنا
+                </p>
+            </div>
+
+            <div class="grid grid-4">
+                <div class="value-item reveal reveal-delay-1">
+                    <div class="value-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h4 class="value-title">ISO معتمد</h4>
+                    <p class="value-text">حاصلون على شهادة ISO 22000</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-2">
+                    <div class="value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="value-title">HACCP</h4>
+                    <p class="value-text">نظام تحليل المخاطر معتمد</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-3">
+                    <div class="value-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4 class="value-title">طبيعي 100%</h4>
+                    <p class="value-text">بدون مواد حافظة صناعية</p>
+                </div>
+
+                <div class="value-item reveal reveal-delay-4">
+                    <div class="value-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h4 class="value-title">فحوصات دورية</h4>
+                    <p class="value-text">رقابة مستمرة على الجودة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" style="background: var(--dream-bg-primary);" id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>تواصل <span class="text-accent" style="color: #ff6b35;">معنا</span></h2>
+                <div class="divider"></div>
+                <p>
+                    نرحب باستفساراتكم وطلباتكم
+                </p>
+            </div>
+
+            <div class="dream-about-grid" style="gap: var(--space-3xl);">
+                <div class="reveal">
+                    <form id="contactForm"
+                        style="background: var(--dream-bg-card); padding: var(--space-2xl); border-radius: var(--radius-xl); border: 1px solid rgba(196, 30, 58, 0.2);">
+                        <div class="grid grid-2" style="gap: var(--space-lg);">
+                            <div class="form-group">
+                                <label class="form-label">الاسم الكامل</label>
+                                <input type="text" class="form-control" placeholder="أدخل اسمك الكامل" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">رقم الهاتف</label>
+                                <input type="tel" class="form-control" placeholder="+967 xxx xxx xxx" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">البريد الإلكتروني</label>
+                            <input type="email" class="form-control" placeholder="example@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">نوع الاستفسار</label>
+                            <select class="form-control">
+                                <option value="">اختر نوع الاستفسار</option>
+                                <option value="wholesale">طلب جملة</option>
+                                <option value="distribution">التوزيع والشراكة</option>
+                                <option value="feedback">ملاحظات واقتراحات</option>
+                                <option value="other">استفسار آخر</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">رسالتك</label>
+                            <textarea class="form-control" rows="4" placeholder="اكتب رسالتك هنا..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-full">
+                            <span>إرسال الرسالة</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="reveal reveal-delay-2">
+                    <h3 style="color: #ff6b35; margin-bottom: var(--space-lg);">معلومات التواصل</h3>
+
+                    <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div
+                                style="width: 50px; height: 50px; background: rgba(255, 107, 53, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i class="fas fa-phone-alt" style="color: #ff6b35;"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: var(--space-xs);">الهاتف</h4>
+                                <a href="tel:+967123456789" style="color: var(--text-secondary);">+967 123 456 789</a>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div
+                                style="width: 50px; height: 50px; background: rgba(255, 107, 53, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i class="fas fa-envelope" style="color: #ff6b35;"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: var(--space-xs);">البريد الإلكتروني</h4>
+                                <a href="mailto:info@dream-yemen.com"
+                                    style="color: var(--text-secondary);">info@dream-yemen.com</a>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div
+                                style="width: 50px; height: 50px; background: rgba(255, 107, 53, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i class="fab fa-whatsapp" style="color: #ff6b35;"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: var(--space-xs);">واتساب</h4>
+                                <a href="https://wa.me/967123456789" style="color: var(--text-secondary);">+967 123 456
+                                    789</a>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div
+                                style="width: 50px; height: 50px; background: rgba(255, 107, 53, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i class="fas fa-map-marker-alt" style="color: #ff6b35;"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: var(--space-xs);">العنوان</h4>
+                                <span style="color: var(--text-secondary);">صنعاء، اليمن</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: var(--space-2xl);">
+                        <h4 style="margin-bottom: var(--space-md);">تابعنا</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="45" stroke="#ff6b35" stroke-width="2" fill="none" />
+                            <path d="M50 25 L60 50 L50 75 L40 50 Z" fill="none" stroke="#c41e3a" stroke-width="2" />
+                        </svg>
+                        <span class="logo-text" style="color: #ff6b35;">دريم</span>
+                    </div>
+                    <p class="footer-desc">
+                        شركة دريم للصلصات الحارة والكتشب - حرارة الطعم بثقة وطنية. نقدم أجود أنواع الصلصات بجودة عالمية.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="../../index.html" class="footer-link">الرئيسية</a></li>
+                        <li><a href="#about" class="footer-link">من نحن</a></li>
+                        <li><a href="#products" class="footer-link">منتجاتنا</a></li>
+                        <li><a href="#recipes" class="footer-link">وصفات</a></li>
+                        <li><a href="#contact" class="footer-link">تواصل معنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">منتجاتنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="#products" class="footer-link">شطة دريم الأصلية</a></li>
+                        <li><a href="#products" class="footer-link">شطة دريم الحارة</a></li>
+                        <li><a href="#products" class="footer-link">كتشب دريم</a></li>
+                        <li><a href="#products" class="footer-link">شطة بالثوم</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">تواصل معنا</h4>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="tel:+967123456789" class="footer-link">
+                                <i class="fas fa-phone-alt" style="margin-left: 8px; color: #ff6b35;"></i>
+                                +967 123 456 789
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:info@dream-yemen.com" class="footer-link">
+                                <i class="fas fa-envelope" style="margin-left: 8px; color: #ff6b35;"></i>
+                                info@dream-yemen.com
+                            </a>
+                        </li>
+                        <li>
+                            <span class="footer-link">
+                                <i class="fas fa-map-marker-alt" style="margin-left: 8px; color: #ff6b35;"></i>
+                                صنعاء، اليمن
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">
+                    © 2024 شركة دريم - إحدى شركات مجموعة نبع الريحان. جميع الحقوق محفوظة.
+                </p>
+                <a href="../../index.html" class="footer-link" style="color: #ff6b35;">
+                    <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                    العودة لنبع الريحان
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../../js/main.js"></script>
+    <script>
+        // Generate fire particles
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.getElementById('fireParticles');
+            if (!container) return;
+
+            for (let i = 0; i < 30; i++) {
+                const ember = document.createElement('div');
+                ember.className = 'ember';
+
+                // Random size
+                const size = Math.random() * 6 + 2;
+                ember.style.width = size + 'px';
+                ember.style.height = size + 'px';
+
+                // Random position
+                ember.style.left = Math.random() * 100 + '%';
+
+                // Random color (orange to red)
+                const colors = ['#ff6b35', '#ff4444', '#c41e3a', '#ffd700'];
+                ember.style.background = colors[Math.floor(Math.random() * colors.length)];
+                ember.style.boxShadow = `0 0 ${size * 2}px ${ember.style.background}`;
+
+                // Random animation
+                ember.style.animationDelay = Math.random() * 8 + 's';
+                ember.style.animationDuration = (Math.random() * 5 + 5) + 's';
+
+                container.appendChild(ember);
+            }
+        });
+    </script>
+</body>
+
+</html>

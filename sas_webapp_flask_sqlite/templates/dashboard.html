@@ -1,0 +1,408 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Page Header -->
+<div class="page-header mb-4 animate-fade-in">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3 text-primary">
+        <i class="bi bi-speedometer2 fs-3"></i>
+      </div>
+      <div>
+        <h2 class="mb-1">لوحة التحكم</h2>
+        <p class="text-muted small mb-0">نظرة عامة على أداء النشاط التجاري والعمليات المالية اليومية.</p>
+      </div>
+    </div>
+    <div class="quick-actions">
+      <a href="{{ url_for('pos_interface') }}" class="btn btn-primary shadow-sm rounded-pill px-4">
+        <i class="bi bi-cart-plus-fill me-1"></i> نقطة بيع جديدة
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Action Shortcuts -->
+<div class="row g-3 mb-4 animate-fade-in" style="animation-delay: 0.1s;">
+  <div class="col-md-3">
+    <a href="{{ url_for('sales_create') }}" class="card border-0 shadow-sm text-decoration-none h-100 py-2 hover-lift">
+      <div class="card-body d-flex align-items-center">
+        <div class="rounded-circle me-3 d-flex align-items-center justify-content-center" style="background-color: #dcfce7; color: #16a34a; width: 50px; height: 50px;">
+          <i class="bi bi-plus-circle fs-4"></i>
+        </div>
+        <div class="text-dark fw-bold">فاتورة مبيعات</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="{{ url_for('purchase_create') }}" class="card border-0 shadow-sm text-decoration-none h-100 py-2 hover-lift">
+      <div class="card-body d-flex align-items-center">
+        <div class="rounded-circle me-3 d-flex align-items-center justify-content-center" style="background-color: #e0f2fe; color: #0284c7; width: 50px; height: 50px;">
+          <i class="bi bi-bag-plus fs-4"></i>
+        </div>
+        <div class="text-dark fw-bold">فاتورة مشتريات</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="{{ url_for('item_form') }}" class="card border-0 shadow-sm text-decoration-none h-100 py-2 hover-lift">
+      <div class="card-body d-flex align-items-center">
+        <div class="rounded-circle me-3 d-flex align-items-center justify-content-center" style="background-color: #fef3c7; color: #d97706; width: 50px; height: 50px;">
+          <i class="bi bi-box-seam fs-4"></i>
+        </div>
+        <div class="text-dark fw-bold">إضافة صنف</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="{{ url_for('reports') }}" class="card border-0 shadow-sm text-decoration-none h-100 py-2 hover-lift">
+      <div class="card-body d-flex align-items-center">
+        <div class="rounded-circle me-3 d-flex align-items-center justify-content-center" style="background-color: #f3e8ff; color: #a855f7; width: 50px; height: 50px;">
+          <i class="bi bi-file-earmark-bar-graph fs-4"></i>
+        </div>
+        <div class="text-dark fw-bold">التقارير المالية</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Metric Cards -->
+<div class="row g-4 mb-4 animate-fade-in" style="animation-delay: 0.2s;">
+  <div class="col-xl-4 col-md-6">
+    <div class="card border-0 shadow-sm h-100 overflow-hidden position-relative">
+      <div class="card-body p-4 z-1 position-relative">
+        <div class="d-flex justify-content-between mb-3">
+          <div class="bg-success bg-opacity-10 text-success p-3 rounded-3">
+            <i class="bi bi-graph-up-arrow fs-3"></i>
+          </div>
+          <span class="badge bg-success bg-opacity-10 text-success h-fit mt-1">اليوم</span>
+        </div>
+        <h6 class="text-muted fw-bold mb-1">إجمالي المبيعات</h6>
+        <h3 class="fw-bold mb-0 text-dark">{{ metrics.sales_today|currency }}</h3>
+      </div>
+      <i class="bi bi-currency-dollar position-absolute card-bg-icon"></i>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6">
+    <div class="card border-0 shadow-sm h-100 overflow-hidden position-relative">
+      <div class="card-body p-4 z-1 position-relative">
+        <div class="d-flex justify-content-between mb-3">
+          <div class="bg-danger bg-opacity-10 text-danger p-3 rounded-3">
+            <i class="bi bi-cart-x fs-3"></i>
+          </div>
+          <span class="badge bg-danger bg-opacity-10 text-danger h-fit mt-1">اليوم</span>
+        </div>
+        <h6 class="text-muted fw-bold mb-1">إجمالي المشتريات</h6>
+        <h3 class="fw-bold mb-0 text-dark">{{ metrics.purchases_today|currency }}</h3>
+      </div>
+      <i class="bi bi-cart4 position-absolute card-bg-icon"></i>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-12">
+    <a href="{{ url_for('debts_report') }}" class="card border-0 shadow-sm h-100 bg-primary text-white overflow-hidden position-relative text-decoration-none hover-lift" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+      <div class="card-body p-4 z-1 position-relative">
+        <div class="d-flex justify-content-between mb-3 align-items-center">
+          <div class="bg-white bg-opacity-10 p-2 rounded-3">
+            <i class="bi bi-cash-stack fs-4 text-white"></i>
+          </div>
+          <span class="small fw-bold opacity-75">الملخص المالي</span>
+        </div>
+        <div class="row g-0">
+          <div class="col-6 border-end border-white border-opacity-10 pe-3">
+            <h6 class="opacity-75 small fw-bold mb-1">مطلوبات (لنا)</h6>
+            <h4 class="fw-bold mb-0 text-white">{{ metrics.receivables|currency }}</h4>
+          </div>
+          <div class="col-6 ps-3">
+            <h6 class="opacity-75 small fw-bold mb-1">مديونيات (علينا)</h6>
+            <h4 class="fw-bold mb-0 text-white">{{ metrics.payables|currency }}</h4>
+          </div>
+        </div>
+      </div>
+      <i class="bi bi-bank position-absolute card-bg-icon" style="opacity: 0.15 !important;"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Additional Metrics Row -->
+<div class="row g-4 mb-4 animate-fade-in" style="animation-delay: 0.3s;">
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm p-3 hover-lift h-100">
+            <div class="d-flex align-items-center">
+                <div class="bg-info bg-opacity-10 text-info p-3 rounded-3 me-3">
+                    <i class="bi bi-box-seam fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-bold mb-0">عدد الأصناف</h6>
+                    <h4 class="fw-bold mb-0">{{ metrics.inventory_items }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm p-3 hover-lift h-100">
+            <div class="d-flex align-items-center">
+                <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
+                    <i class="bi bi-exclamation-triangle fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-bold mb-0">تنبيهات المخزون</h6>
+                    <h4 class="fw-bold mb-0 text-warning">{{ metrics.low_stock_count }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row g-4 mb-4 animate-fade-in" style="animation-delay: 0.4s;">
+  <div class="col-xl-8">
+    <div class="card border-0 shadow-sm p-4 h-100">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-bar-chart-line me-2 text-primary"></i>المبيعات آخر 7 أيام</h5>
+        <div class="dropdown">
+            <button class="btn btn-light btn-sm rounded-pill" type="button" data-bs-toggle="dropdown">
+                خيارات <i class="bi bi-chevron-down ms-1"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                <li><a class="dropdown-item" href="{{ url_for('export_excel', entity='sales') }}"><i class="bi bi-file-earmark-excel me-2 text-success"></i>تصدير إلى Excel</a></li>
+            </ul>
+        </div>
+      </div>
+      <div style="height: 300px;">
+        <canvas id="salesChart" data-chart='{{ sales_chart|tojson }}'></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="card border-0 shadow-sm p-4 h-100">
+      <h5 class="mb-4 fw-bold"><i class="bi bi-trophy me-2 text-warning"></i>الأصناف الأعلى مبيعًا</h5>
+      <div class="top-items-list">
+        {% for row in top_items %}
+          <div class="d-flex justify-content-between align-items-center p-3 rounded-3 mb-2 bg-light bg-opacity-50 border border-light-subtle">
+            <div class="d-flex align-items-center">
+                <div class="item-rank me-3 bg-white shadow-sm rounded-circle d-flex align-items-center justify-content-center fw-bold text-primary" style="width: 32px; height: 32px; flex-shrink: 0;">
+                    {{ loop.index }}
+                </div>
+                <div>
+                    <div class="fw-bold small text-dark-emphasis">{{ row.name_ar }}</div>
+                    <div class="text-muted smaller">{{ row.qty }} كمية مباعة</div>
+                </div>
+            </div>
+            <span class="badge bg-primary px-3 py-2 rounded-pill shadow-sm fw-bold">{{ row.total|currency }}</span>
+          </div>
+        {% else %}
+          <div class="text-center py-5">
+              <i class="bi bi-inbox text-muted display-4"></i>
+              <p class="text-muted small mt-2">لا توجد بيانات بعد.</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Advanced Analytics Row -->
+<div class="row g-4 mb-4 animate-fade-in" style="animation-delay: 0.5s;">
+  <div class="col-xl-6">
+    <div class="card border-0 shadow-sm p-4">
+      <h5 class="mb-4 fw-bold">تحليل المصروفات</h5>
+      <div style="height: 250px;">
+        <canvas id="expenseChart" data-chart='{{ expense_breakdown|tojson }}'></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="card border-0 shadow-sm p-4">
+      <h5 class="mb-4 fw-bold">أفضل العملاء تعاملاً</h5>
+      <div style="height: 250px;">
+        <canvas id="customerChart" data-chart='{{ top_customers|tojson }}'></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Low Stock Alerts -->
+<div class="row g-4 animate-fade-in" style="animation-delay: 0.6s;">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm overflow-hidden">
+      <div class="card-header bg-transparent border-0 p-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold text-danger"><i class="bi bi-bell-fill me-2"></i>تنبيهات الحد الأدنى للمخزون</h5>
+        <span class="badge bg-danger rounded-pill">{{ low_stock|length }} صنف</span>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-4">الصنف</th>
+                <th>المستودع</th>
+                <th class="text-center">الرصيد الحالي</th>
+                <th class="text-center">الحد الأدنى</th>
+                <th class="text-end pe-4">الإجراء</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for row in low_stock %}
+              <tr>
+                <td class="ps-4 fw-bold text-dark">{{ row.item_name }}</td>
+                <td><span class="badge bg-light text-dark">{{ row.warehouse_name }}</span></td>
+                <td class="text-center text-danger fw-bold">{{ row.quantity }}</td>
+                <td class="text-center">{{ row.min_stock }}</td>
+                <td class="text-end pe-4">
+                    <a href="{{ url_for('purchase_create') }}" class="btn btn-outline-primary btn-sm px-3 rounded-pill">طلب شراء</a>
+                </td>
+              </tr>
+            {% else %}
+              <tr><td colspan="5" class="text-center py-5 text-muted">جميع الأصناف متوفرة فوق الحد الأدنى.</td></tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    .bg-purple { background-color: #a855f7; }
+    .text-purple { color: #a855f7; }
+    .hover-lift { transition: transform 0.25s, box-shadow 0.25s; }
+    .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important; }
+    .animate-fade-in { animation: fadeIn 0.5s ease-out both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    .h-fit { height: fit-content; }
+    .smaller { font-size: 0.8rem; }
+    
+    /* Background Icons Styling */
+    .card-bg-icon {
+        font-size: 6rem;
+        bottom: -1rem;
+        left: -1rem;
+        opacity: 0.05;
+        color: #000;
+        transition: all 0.3s ease;
+    }
+
+    [data-theme='dark'] .card { background-color: #1e293b; color: #fff; }
+    [data-theme='dark'] .bg-light { background-color: #0f172a !important; }
+    [data-theme='dark'] .top-items-list .bg-light { background-color: #334155 !important; }
+    [data-theme='dark'] .item-rank { background-color: #1e293b !important; color: #60a5fa !important; }
+    [data-theme='dark'] .card-bg-icon { color: #fff !important; opacity: 0.08 !important; }
+    [data-theme='dark'] h3.text-dark { color: #f8fafc !important; }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#94a3b8' : '#64748b';
+    const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+    Chart.defaults.font.family = "'Tajawal', sans-serif";
+
+    // Sales Chart
+    const salesCtx = document.getElementById('salesChart');
+    if(salesCtx) {
+        const chartData = JSON.parse(salesCtx.dataset.chart);
+        new Chart(salesCtx, {
+          type: 'line',
+          data: {
+            labels: chartData.map(x => x.day),
+            datasets: [{
+              label: 'المبيعات',
+              data: chartData.map(x => x.total),
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59,130,246,.1)',
+              fill: true,
+              tension: .45,
+              borderWidth: 3,
+              pointBackgroundColor: '#fff',
+              pointBorderColor: '#3b82f6',
+              pointBorderWidth: 2,
+              pointRadius: 5,
+              pointHoverRadius: 7
+            }]
+          },
+          options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { 
+                beginAtZero: true, 
+                grid: { color: gridColor, drawBorder: false },
+                ticks: { color: textColor, padding: 10 }
+              },
+              x: { 
+                grid: { display: false },
+                ticks: { color: textColor, padding: 10 }
+              }
+            }
+          }
+        });
+    }
+
+    // Expense Chart
+    const expenseCtx = document.getElementById('expenseChart');
+    if(expenseCtx) {
+        const expenseData = JSON.parse(expenseCtx.dataset.chart);
+        new Chart(expenseCtx, {
+            type: 'doughnut',
+            data: {
+                labels: expenseData.map(x => x.account),
+                datasets: [{
+                    data: expenseData.map(x => x.total),
+                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#a855f7'],
+                    borderWidth: 0,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: { 
+                    legend: { 
+                        position: 'right',
+                        labels: { color: textColor, usePointStyle: true, padding: 20, font: { size: 12 } }
+                    } 
+                }
+            }
+        });
+    }
+
+    // Customer Chart
+    const customerCtx = document.getElementById('customerChart');
+    if(customerCtx) {
+        const customerData = JSON.parse(customerCtx.dataset.chart);
+        new Chart(customerCtx, {
+            type: 'bar',
+            data: {
+                labels: customerData.map(x => x.name),
+                datasets: [{
+                    label: 'إجمالي المبيعات',
+                    data: customerData.map(x => x.total),
+                    backgroundColor: 'rgba(59,130,246,0.8)',
+                    hoverBackgroundColor: '#3b82f6',
+                    borderRadius: 10,
+                    barThickness: 20
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { 
+                        beginAtZero: true, 
+                        grid: { color: gridColor, drawBorder: false },
+                        ticks: { color: textColor }
+                    },
+                    y: { 
+                        grid: { display: false },
+                        ticks: { color: textColor }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

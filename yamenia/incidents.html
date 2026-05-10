@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الحوادث - يمن سيف | YEMEN SAFE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/incidents.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon"><img src="image.png" alt="شعار يمن سيف"
+                        style="max-width: 100%; height: auto;"></div>
+                <div class="sidebar-logo-text">
+                    <h2>يمن سيف</h2><span>YEMEN SAFE</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">القائمة الرئيسية</div>
+                    <a class="nav-link" data-page="dashboard.html"><i class="fas fa-th-large"></i><span>لوحة
+                            التحكم</span></a>
+                    <a class="nav-link active" data-page="incidents.html"><i
+                            class="fas fa-exclamation-triangle"></i><span>إدارة الحوادث</span></a>
+                    <a class="nav-link" href="risks.html" data-page="risks.html"><i class="fas fa-shield-virus"></i><span>سجل المخاطر</span></a>
+                    <a class="nav-link" data-page="reports.html"><i
+                            class="fas fa-chart-bar"></i><span>التقارير</span></a>
+                    <a class="nav-link" data-page="notifications.html"><i
+                            class="fas fa-bell"></i><span>الإشعارات</span><span
+                            class="nav-badge notif-count">3</span></a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">الإدارة</div>
+                    <a class="nav-link" data-page="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <a class="nav-link" id="logoutBtn" href="#"><i class="fas fa-sign-out-alt"></i><span>تسجيل
+                        الخروج</span></a>
+            </div>
+        </div>
+        <div class="sidebar-overlay"></div>
+
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="header-right">
+                    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                    <div>
+                        <div class="header-title">إدارة الحوادث</div>
+                        <div class="header-subtitle">عرض وإدارة جميع الحوادث التشغيلية</div>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="header-search">
+                        <input type="text" placeholder="بحث بالرقم أو العنوان..." id="searchInput">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <a href="notifications.html" class="header-icon-btn notif-btn"><i class="fas fa-bell"></i><span
+                            class="badge notif-count">3</span></a>
+                    <div class="header-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-info"><span class="user-name">المستخدم</span><span
+                                class="user-role">الدور</span></div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <!-- Header Bar -->
+                <div class="incidents-header">
+                    <div class="page-header" style="margin-bottom:0">
+                        <div>
+                            <h1 class="page-title">الحوادث التشغيلية</h1>
+                            <p class="page-description">إجمالي <span id="totalCount">0</span> حادث مسجل</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openNewIncidentModal()">
+                        <i class="fas fa-plus"></i> تسجيل حادث جديد
+                    </button>
+                </div>
+
+                <!-- Mini Stats -->
+                <div class="incidents-stats" style="margin-bottom: var(--space-6);">
+                    <div class="incident-mini-stat">
+                        <div class="dot" style="background:var(--status-new)"></div><span class="count"
+                            id="newCount">0</span> جديد
+                    </div>
+                    <div class="incident-mini-stat">
+                        <div class="dot" style="background:var(--status-investigating)"></div><span class="count"
+                            id="invCount">0</span> قيد التحقيق
+                    </div>
+                    <div class="incident-mini-stat">
+                        <div class="dot" style="background:var(--status-responding)"></div><span class="count"
+                            id="resCount">0</span> قيد الاستجابة
+                    </div>
+                    <div class="incident-mini-stat">
+                        <div class="dot" style="background:var(--status-resolved)"></div><span class="count"
+                            id="solvedCount">0</span> تم الحل
+                    </div>
+                    <div class="incident-mini-stat">
+                        <div class="dot" style="background:var(--status-closed)"></div><span class="count"
+                            id="closedCount">0</span> مغلق
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>النوع:</label>
+                        <select id="filterType" onchange="filterIncidents()">
+                            <option value="">الكل</option>
+                            <option value="aircraft">حوادث الطائرات</option>
+                            <option value="equipment">المعدات</option>
+                            <option value="human">البشرية</option>
+                            <option value="operational">التشغيلية</option>
+                            <option value="environmental">البيئية</option>
+                            <option value="security">الأمنية</option>
+                            <option value="electrical">الكهربائية</option>
+                            <option value="weather">المناخية</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>الحالة:</label>
+                        <select id="filterStatus" onchange="filterIncidents()">
+                            <option value="">الكل</option>
+                            <option value="new">جديد</option>
+                            <option value="investigating">قيد التحقيق</option>
+                            <option value="responding">قيد الاستجابة</option>
+                            <option value="resolved">تم الحل</option>
+                            <option value="closed">مغلق</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>الأولوية:</label>
+                        <select id="filterPriority" onchange="filterIncidents()">
+                            <option value="">الكل</option>
+                            <option value="critical">حرج</option>
+                            <option value="urgent">عاجل</option>
+                            <option value="normal">عادي</option>
+                            <option value="low">منخفض</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="resetFilters()"><i class="fas fa-redo"></i> إعادة
+                        تعيين</button>
+                </div>
+
+                <!-- Incidents Table -->
+                <div class="card">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>الرقم</th>
+                                    <th>العنوان</th>
+                                    <th>النوع</th>
+                                    <th>الموقع</th>
+                                    <th>الأولوية</th>
+                                    <th>الحالة</th>
+                                    <th>التاريخ</th>
+                                    <th>المسؤول</th>
+                                    <th>إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="incidentsTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- New Incident Modal -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
+    <div class="modal" id="newIncidentModal">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fas fa-plus-circle" style="color:var(--primary-500)"></i> تسجيل حادث جديد
+            </h3>
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="newIncidentForm">
+                <div class="form-group">
+                    <label class="form-label">عنوان الحادث *</label>
+                    <input type="text" class="form-control" id="incTitle" placeholder="وصف مختصر للحادث" required>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4);">
+                    <div class="form-group">
+                        <label class="form-label">نوع الحادث *</label>
+                        <select class="form-control" id="incType" required>
+                            <option value="">-- اختر النوع --</option>
+                            <option value="aircraft">حوادث الطائرات</option>
+                            <option value="equipment">المعدات</option>
+                            <option value="human">البشرية</option>
+                            <option value="operational">التشغيلية</option>
+                            <option value="environmental">البيئية</option>
+                            <option value="security">الأمنية</option>
+                            <option value="electrical">الكهربائية</option>
+                            <option value="weather">المناخية</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الأولوية *</label>
+                        <select class="form-control" id="incPriority" required>
+                            <option value="">-- اختر الأولوية --</option>
+                            <option value="critical">حرج</option>
+                            <option value="urgent">عاجل</option>
+                            <option value="normal">عادي</option>
+                            <option value="low">منخفض</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">الموقع *</label>
+                    <select class="form-control" id="incLocation" required>
+                        <option value="">-- اختر الموقع --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">وصف تفصيلي</label>
+                    <textarea class="form-control" id="incDescription"
+                        placeholder="اكتب وصفاً تفصيلياً للحادث..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">إرفاق صور</label>
+                    <input type="file" class="form-control" accept="image/*" multiple style="padding: var(--space-3);">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" onclick="submitNewIncident()"><i class="fas fa-paper-plane"></i> إرسال
+                البلاغ</button>
+            <button class="btn btn-secondary" onclick="closeModal()">إلغاء</button>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        showPageLoading();
+        let filteredIncidents = [];
+        let baseIncidents = [];
+        let currentPage = 1;
+        const itemsPerPage = 8;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            baseIncidents = getFilteredIncidents(user);
+            filteredIncidents = [...baseIncidents];
+
+            const locSelect = document.getElementById('incLocation');
+            MockData.locations.forEach(loc => {
+                locSelect.innerHTML += `<option value="${loc}">${loc}</option>`;
+            });
+
+            updateStats();
+            renderIncidents();
+            hidePageLoading();
+
+            document.getElementById('searchInput').addEventListener('input', function () {
+                const q = this.value.trim().toLowerCase();
+                if (q) {
+                    filteredIncidents = baseIncidents.filter(i =>
+                        i.id.toLowerCase().includes(q) ||
+                        i.title.includes(q) ||
+                        i.location.includes(q)
+                    );
+                } else {
+                    filterIncidents();
+                    return;
+                }
+                currentPage = 1;
+                renderIncidents();
+            });
+        });
+
+        function updateStats() {
+            document.getElementById('totalCount').textContent = baseIncidents.length;
+            document.getElementById('newCount').textContent = baseIncidents.filter(i => i.status === 'new').length;
+            document.getElementById('invCount').textContent = baseIncidents.filter(i => i.status === 'investigating').length;
+            document.getElementById('resCount').textContent = baseIncidents.filter(i => i.status === 'responding').length;
+            document.getElementById('solvedCount').textContent = baseIncidents.filter(i => i.status === 'resolved').length;
+            document.getElementById('closedCount').textContent = baseIncidents.filter(i => i.status === 'closed').length;
+        }
+
+        function filterIncidents() {
+            const type = document.getElementById('filterType').value;
+            const status = document.getElementById('filterStatus').value;
+            const priority = document.getElementById('filterPriority').value;
+
+            filteredIncidents = baseIncidents.filter(inc => {
+                if (type && inc.type !== type) return false;
+                if (status && inc.status !== status) return false;
+                if (priority && inc.priority !== priority) return false;
+                return true;
+            });
+            currentPage = 1;
+            renderIncidents();
+        }
+
+        function resetFilters() {
+            document.getElementById('filterType').value = '';
+            document.getElementById('filterStatus').value = '';
+            document.getElementById('filterPriority').value = '';
+            document.getElementById('searchInput').value = '';
+            filteredIncidents = [...baseIncidents];
+            currentPage = 1;
+            renderIncidents();
+        }
+
+        function renderIncidents() {
+            const tbody = document.getElementById('incidentsTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredIncidents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><i class="fas fa-search"></i><h3>لا توجد نتائج</h3><p>جرب تغيير معايير البحث</p></div></td></tr>`;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+
+            const totalPages = Math.ceil(filteredIncidents.length / itemsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            const start = (currentPage - 1) * itemsPerPage;
+            const pageItems = filteredIncidents.slice(start, start + itemsPerPage);
+            const user = getCurrentUser();
+            const canEdit = user && hasPermission(user, 'edit_incident');
+            const canDelete = user && hasPermission(user, 'delete_incident');
+
+            pageItems.forEach(inc => {
+                const type = MockData.incidentTypes.find(t => t.id === inc.type);
+                const statusInfo = MockData.statuses[inc.status];
+                const priorityInfo = MockData.priorities[inc.priority];
+
+                let actionBtns = `<button class="btn btn-icon btn-secondary" onclick="event.stopPropagation(); window.location.href='incident-detail.html?id=${inc.id}'" title="عرض"><i class="fas fa-eye"></i></button>`;
+                if (canEdit) actionBtns += ` <button class="btn btn-icon btn-secondary" onclick="event.stopPropagation(); openEditModal('${inc.id}')" title="تعديل" style="color:var(--primary-500);"><i class="fas fa-edit"></i></button>`;
+                if (canDelete) actionBtns += ` <button class="btn btn-icon btn-secondary" onclick="event.stopPropagation(); deleteIncident('${inc.id}')" title="حذف" style="color:var(--accent-500);"><i class="fas fa-trash"></i></button>`;
+
+                tbody.innerHTML += `
+                    <tr class="incident-row" onclick="window.location.href='incident-detail.html?id=${inc.id}'">
+                        <td><span class="incident-id">${inc.id}</span></td>
+                        <td><strong>${inc.title.substring(0, 40)}${inc.title.length > 40 ? '...' : ''}</strong></td>
+                        <td><div class="incident-type-cell"><div class="incident-type-icon ${type.cssClass}"><i class="${type.icon}"></i></div><span>${type.label}</span></div></td>
+                        <td><span class="incident-location"><i class="fas fa-map-marker-alt"></i> ${inc.location}</span></td>
+                        <td><span class="badge-priority ${priorityInfo.cssClass}"><i class="${priorityInfo.icon}"></i> ${priorityInfo.label}</span></td>
+                        <td><span class="badge-status ${statusInfo.cssClass}"><i class="${statusInfo.icon}"></i> ${statusInfo.label}</span></td>
+                        <td>${inc.date}</td>
+                        <td>${inc.assignedTo ? inc.assignedTo.split(' ').slice(0, 2).join(' ') : '-'}</td>
+                        <td style="white-space:nowrap;">${actionBtns}</td>
+                    </tr>`;
+            });
+
+            // Pagination
+            renderPagination(totalPages);
+        }
+
+        function renderPagination(totalPages) {
+            const pag = document.getElementById('pagination');
+            if (totalPages <= 1) { pag.innerHTML = ''; return; }
+            let html = `<span style="font-size:13px;color:var(--text-muted);margin-left:8px;">صفحة ${currentPage} من ${totalPages}</span>`;
+            html += `<button class="btn btn-icon btn-secondary" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})" style="margin:0 2px;"><i class="fas fa-chevron-right"></i></button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    html += `<button class="btn btn-icon btn-primary" style="margin:0 2px;">${i}</button>`;
+                } else if (i <= 3 || i >= totalPages - 1 || Math.abs(i - currentPage) <= 1) {
+                    html += `<button class="btn btn-icon btn-secondary" onclick="goToPage(${i})" style="margin:0 2px;">${i}</button>`;
+                } else if (Math.abs(i - currentPage) === 2) {
+                    html += `<span style="margin:0 4px;">...</span>`;
+                }
+            }
+            html += `<button class="btn btn-icon btn-secondary" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})" style="margin:0 2px;"><i class="fas fa-chevron-left"></i></button>`;
+            pag.innerHTML = html;
+            pag.style.cssText = 'display:flex; align-items:center; justify-content:center; gap:4px; padding:16px 0;';
+        }
+
+        function goToPage(page) { currentPage = page; renderIncidents(); }
+
+        function openNewIncidentModal() {
+            document.getElementById('modalBackdrop').classList.add('active');
+            document.getElementById('newIncidentModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalBackdrop').classList.remove('active');
+            document.getElementById('newIncidentModal').classList.remove('active');
+        }
+
+        function submitNewIncident() {
+            const title = document.getElementById('incTitle').value;
+            const type = document.getElementById('incType').value;
+            const priority = document.getElementById('incPriority').value;
+            const location = document.getElementById('incLocation').value;
+            const desc = document.getElementById('incDescription').value;
+            const fileInput = document.querySelector('#newIncidentForm input[type=file]');
+
+            if (!title || !type || !priority || !location) {
+                showToast('يرجى ملء جميع الحقول المطلوبة', 'warning');
+                return;
+            }
+
+            const user = getCurrentUser();
+            const newId = `INC-2024-${String(MockData.incidents.length + 1).padStart(3, '0')}`;
+
+            const newIncident = {
+                id: newId, title, type, priority, status: 'new', location,
+                date: new Date().toISOString().split('T')[0],
+                time: new Date().toTimeString().split(' ')[0].substring(0, 5),
+                reporter: user ? user.name : 'غير معروف',
+                assignedTo: '', description: desc, actions: [], images: [],
+            };
+
+            // Handle images
+            if (fileInput && fileInput.files.length > 0) {
+                const promises = Array.from(fileInput.files).map(file => {
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = e => resolve(e.target.result);
+                        reader.readAsDataURL(file);
+                    });
+                });
+                Promise.all(promises).then(images => {
+                    newIncident.images = images;
+                    finalizeNewIncident(newIncident, newId, user);
+                });
+            } else {
+                finalizeNewIncident(newIncident, newId, user);
+            }
+        }
+
+        function finalizeNewIncident(newIncident, newId, user) {
+            // Set initial workflow status
+            newIncident.status = 'pending_review';
+            MockData.incidents.unshift(newIncident);
+            
+            // إشعار ضابط السلامة تلقائياً
+            MockData.notifications.unshift({
+                id: MockData.notifications.length + 1,
+                title: 'حادث جديد بانتظار مراجعتك',
+                message: `تم تسجيل حادث جديد (${newId}): ${newIncident.title} — يرجى المراجعة والإحالة`,
+                type: 'incident', date: new Date().toISOString().split('T')[0],
+                time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}),
+                read: false, targetRole: 'safety_officer'
+            });
+            
+            baseIncidents = getFilteredIncidents(user);
+            filteredIncidents = [...baseIncidents];
+            currentPage = 1;
+            closeModal();
+            updateStats();
+            renderIncidents();
+            saveDataToStorage();
+            showToast(`تم تسجيل الحادث ${newId} بنجاح — أُرسل إشعار لضابط السلامة`, 'success');
+            document.getElementById('newIncidentForm').reset();
+        }
+
+        function deleteIncident(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا الحادث؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+            const idx = MockData.incidents.findIndex(i => i.id === id);
+            if (idx !== -1) {
+                MockData.incidents.splice(idx, 1);
+                const user = getCurrentUser();
+                baseIncidents = getFilteredIncidents(user);
+                filteredIncidents = [...baseIncidents];
+                updateStats();
+                renderIncidents();
+                saveDataToStorage();
+                showToast('تم حذف الحادث بنجاح', 'success');
+            }
+        }
+
+        function openEditModal(id) {
+            const inc = getIncidentById(id);
+            if (!inc) return;
+            document.getElementById('incTitle').value = inc.title;
+            document.getElementById('incType').value = inc.type;
+            document.getElementById('incPriority').value = inc.priority;
+            document.getElementById('incLocation').value = inc.location;
+            document.getElementById('incDescription').value = inc.description || '';
+
+            const submitBtn = document.querySelector('#newIncidentModal .modal-footer .btn-primary');
+            const modalTitle = document.querySelector('#newIncidentModal .modal-title');
+            modalTitle.innerHTML = '<i class="fas fa-edit" style="color:var(--primary-500)"></i> تعديل الحادث';
+            submitBtn.setAttribute('onclick', `saveEditedIncident('${id}')`);
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
+            openNewIncidentModal();
+        }
+
+        function saveEditedIncident(id) {
+            const inc = getIncidentById(id);
+            if (!inc) return;
+            inc.title = document.getElementById('incTitle').value;
+            inc.type = document.getElementById('incType').value;
+            inc.priority = document.getElementById('incPriority').value;
+            inc.location = document.getElementById('incLocation').value;
+            inc.description = document.getElementById('incDescription').value;
+
+            const user = getCurrentUser();
+            baseIncidents = getFilteredIncidents(user);
+            filteredIncidents = [...baseIncidents];
+            closeModal();
+            renderIncidents();
+            saveDataToStorage();
+            showToast('تم تعديل الحادث بنجاح', 'success');
+
+            // Restore modal to default state
+            const submitBtn = document.querySelector('#newIncidentModal .modal-footer .btn-primary');
+            const modalTitle = document.querySelector('#newIncidentModal .modal-title');
+            modalTitle.innerHTML = '<i class="fas fa-plus-circle" style="color:var(--primary-500)"></i> تسجيل حادث جديد';
+            submitBtn.setAttribute('onclick', 'submitNewIncident()');
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال البلاغ';
+            document.getElementById('newIncidentForm').reset();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1258 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="تقرير الحوادث الأرضية - نظام يمن سيف لإدارة الحوادث التشغيلية" />
+  <title>تقرير حادث أرضي - يمن سيف | YEMEN SAFE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/ground-report.css" />
+</head>
+
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <img src="image.png" alt="شعار يمن سيف" style="max-width: 100%; height: auto" />
+        </div>
+        <div class="sidebar-logo-text">
+          <h2>يمن سيف</h2>
+          <span>YEMEN SAFE</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">القائمة الرئيسية</div>
+          <a class="nav-link" data-page="dashboard.html"><i class="fas fa-th-large"></i><span>لوحة التحكم</span></a>
+          <a class="nav-link active" data-page="incidents.html"><i class="fas fa-exclamation-triangle"></i><span>إدارة
+              الحوادث</span><span class="nav-badge notif-count">3</span></a>
+          <a class="nav-link" data-page="risks.html"><i class="fas fa-shield-virus"></i><span>سجل المخاطر</span></a>
+          <a class="nav-link" data-page="reports.html"><i class="fas fa-chart-bar"></i><span>التقارير</span></a>
+          <a class="nav-link" data-page="notifications.html"><i class="fas fa-bell"></i><span>الإشعارات</span><span
+              class="nav-badge notif-count">3</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">الإدارة</div>
+          <a class="nav-link" data-page="settings.html"><i class="fas fa-cog"></i><span>الإعدادات</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="nav-link" id="logoutBtn" href="#"><i class="fas fa-sign-out-alt"></i><span>تسجيل الخروج</span></a>
+      </div>
+    </div>
+    <div class="sidebar-overlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-right">
+          <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+          <div>
+            <div class="header-title">تقرير حادث أرضي</div>
+            <div class="header-subtitle" id="headerSubtitle">Ground Incident / Accident / Damage Report</div>
+          </div>
+        </div>
+        <div class="header-left">
+          <a id="backToIncidentBtn" href="incidents.html" class="btn btn-secondary" style="display:none;padding:8px 16px;font-size:13px;border-radius:8px;text-decoration:none;"><i class="fas fa-arrow-right"></i> العودة للحادث</a>
+          <a href="notifications.html" class="header-icon-btn notif-btn">
+            <i class="fas fa-bell"></i>
+            <span class="badge notif-count">3</span>
+          </a>
+          <div class="header-user">
+            <div class="user-avatar"></div>
+            <div class="user-info">
+              <span class="user-name">المستخدم</span>
+              <span class="user-role">الدور</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- Page Header -->
+        <div class="report-page-header animate-fade-up">
+          <div class="page-header-info">
+            <h2><i class="fas fa-plane"></i> تقرير حوادث المطارات والمعدات</h2>
+            <p>Ground Incident / Accident / Damage Report — الخطوط الجوية اليمنية Yemenia Airways</p>
+          </div>
+          <div class="page-header-icon">
+            <i class="fas fa-file-medical-alt"></i>
+          </div>
+        </div>
+
+        <!-- Stepper -->
+        <div class="form-stepper animate-fade-up" id="formStepper">
+          <div class="stepper-item active" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-label">بيانات الحادث</div>
+          </div>
+          <div class="stepper-line"></div>
+          <div class="stepper-item" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-label">الأضرار والمركبات</div>
+          </div>
+          <div class="stepper-line"></div>
+          <div class="stepper-item" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-label">الموظفون</div>
+          </div>
+          <div class="stepper-line"></div>
+          <div class="stepper-item" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-label">الظروف والعوامل</div>
+          </div>
+          <div class="stepper-line"></div>
+          <div class="stepper-item" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-label">الرواية والصور</div>
+          </div>
+          <div class="stepper-line"></div>
+          <div class="stepper-item" data-step="6">
+            <div class="step-number">6</div>
+            <div class="step-label">الإجراءات والتوقيع</div>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 1 ==================== -->
+        <div class="form-section active" id="step1">
+          <!-- Basic Info -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-info-circle"></i>
+              <div>
+                <h3>بيانات الحادث الأساسية</h3>
+                <span>One Line Statement Of The Main Features Of The Incident / Accident</span>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="form-grid">
+                <div class="gr-form-group">
+                  <label><span class="required">*</span> التاريخ — Date</label>
+                  <input type="date" id="grDate" required />
+                </div>
+                <div class="gr-form-group">
+                  <label><span class="required">*</span> وقت الحدوث — Time Of Occurrence</label>
+                  <input type="time" id="grTime" required />
+                </div>
+                <div class="gr-form-group">
+                  <label><span class="required">*</span> الموقع — Area (Stand, etc.)</label>
+                  <select id="grArea">
+                    <option value="">اختر الموقع...</option>
+                    <option value="المدرج الرئيسي">المدرج الرئيسي</option>
+                    <option value="ساحة الطائرات - بوابة 1">ساحة الطائرات - بوابة 1</option>
+                    <option value="ساحة الطائرات - بوابة 2">ساحة الطائرات - بوابة 2</option>
+                    <option value="ساحة الطائرات - بوابة 3">ساحة الطائرات - بوابة 3</option>
+                    <option value="صالة المغادرة">صالة المغادرة</option>
+                    <option value="صالة الوصول">صالة الوصول</option>
+                    <option value="منطقة الشحن">منطقة الشحن</option>
+                    <option value="مستودع الوقود">مستودع الوقود</option>
+                    <option value="ورشة الصيانة">ورشة الصيانة</option>
+                    <option value="المرسى">المرسى (Apron)</option>
+                    <option value="other">أخرى...</option>
+                  </select>
+                </div>
+                <div class="gr-form-group">
+                  <label>تسجيل الطائرة — Aircraft Reg.</label>
+                  <input type="text" id="grAircraftReg" placeholder="مثال: 7O-ADA" />
+                </div>
+                <div class="gr-form-group">
+                  <label>نوع الطائرة — Aircraft Type</label>
+                  <select id="grAircraftType">
+                    <option value="">اختر نوع الطائرة...</option>
+                    <option value="A320">Airbus A320</option>
+                    <option value="A330">Airbus A330</option>
+                    <option value="B737">Boeing 737</option>
+                    <option value="B777">Boeing 777</option>
+                    <option value="other">أخرى</option>
+                  </select>
+                </div>
+                <div class="gr-form-group">
+                  <label><span class="required">*</span> رقم الرحلة — Flight Nr</label>
+                  <input type="text" id="grFlightNr" placeholder="مثال: IY431" />
+                </div>
+                <div class="gr-form-group">
+                  <label>وقت التوقف المجدول — Scheduled Ground Time</label>
+                  <input type="text" id="grGroundTime" placeholder="مثال: 2 ساعة" />
+                </div>
+                <div class="gr-form-group">
+                  <label>تأخير الرحلة — Flight Delay</label>
+                  <input type="text" id="grDelay" placeholder="مثال: 30 دقيقة" />
+                </div>
+                <div class="gr-form-group">
+                  <label>هل ألغيت الرحلة؟ — Flight Cancelled</label>
+                  <select id="grCancelled">
+                    <option value="no">لا — No</option>
+                    <option value="yes">نعم — Yes</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Damage By -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-bolt"></i>
+              <div>
+                <h3>نوع الضرر — Damage By</h3>
+                <span>حدد مصدر أو سبب الضرر</span>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="damage-type-grid" id="damageTypeGrid">
+                <label class="damage-type-item" onclick="toggleDamageType(this)">
+                  <input type="checkbox" name="damageType" value="other_aircraft" />
+                  <div class="dt-check"><i class="fas fa-check"></i></div>
+                  <div class="dt-icon" style="background:#e74c3c15;color:#e74c3c;"><i class="fas fa-plane"></i></div>
+                  <div class="dt-label">طائرة أخرى</div>
+                </label>
+                <label class="damage-type-item" onclick="toggleDamageType(this)">
+                  <input type="checkbox" name="damageType" value="ramp_equipment" />
+                  <div class="dt-check"><i class="fas fa-check"></i></div>
+                  <div class="dt-icon" style="background:#f39c1215;color:#f39c12;"><i class="fas fa-truck-loading"></i>
+                  </div>
+                  <div class="dt-label">معدات الساحة</div>
+                </label>
+                <label class="damage-type-item" onclick="toggleDamageType(this)">
+                  <input type="checkbox" name="damageType" value="vehicle" />
+                  <div class="dt-check"><i class="fas fa-check"></i></div>
+                  <div class="dt-icon" style="background:#3498db15;color:#3498db;"><i class="fas fa-car"></i></div>
+                  <div class="dt-label">مركبة</div>
+                </label>
+                <label class="damage-type-item" onclick="toggleDamageType(this)">
+                  <input type="checkbox" name="damageType" value="foreign_object" />
+                  <div class="dt-check"><i class="fas fa-check"></i></div>
+                  <div class="dt-icon" style="background:#9b59b615;color:#9b59b6;"><i
+                      class="fas fa-exclamation-triangle"></i></div>
+                  <div class="dt-label">جسم غريب (FOD)</div>
+                </label>
+                <label class="damage-type-item" onclick="toggleDamageType(this)">
+                  <input type="checkbox" name="damageType" value="jet_blast" />
+                  <div class="dt-check"><i class="fas fa-check"></i></div>
+                  <div class="dt-icon" style="background:#e67e2215;color:#e67e22;"><i class="fas fa-wind"></i></div>
+                  <div class="dt-label">انفجار نفاث</div>
+                </label>
+                <label class="damage-type-item" onclick="toggleDamageType(this)">
+                  <input type="checkbox" name="damageType" value="unknown" />
+                  <div class="dt-check"><i class="fas fa-check"></i></div>
+                  <div class="dt-icon" style="background:#95a5a615;color:#95a5a6;"><i class="fas fa-question"></i></div>
+                  <div class="dt-label">غير معروف</div>
+                </label>
+                <label class="damage-type-item" onclick="toggleDamageType(this)">
+                  <input type="checkbox" name="damageType" value="other" />
+                  <div class="dt-check"><i class="fas fa-check"></i></div>
+                  <div class="dt-icon" style="background:#1abc9c15;color:#1abc9c;"><i class="fas fa-ellipsis-h"></i>
+                  </div>
+                  <div class="dt-label">أخرى (حدد)</div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Casualties -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-user-injured"></i>
+              <div>
+                <h3>عدد الإصابات — Number Of Casualties</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="casualty-grid">
+                <div class="casualty-card">
+                  <div class="cas-title"><i class="fas fa-hard-hat"></i> الموظفون — Employees</div>
+                  <div class="cas-row"><label>وفيات (Fatalities)</label><input type="number" id="casFatalEmp" value="0"
+                      min="0" /></div>
+                  <div class="cas-row"><label>إصابات (Non-Fatal)</label><input type="number" id="casNonFatalEmp"
+                      value="0" min="0" /></div>
+                </div>
+                <div class="casualty-card">
+                  <div class="cas-title"><i class="fas fa-users"></i> الركاب — Passengers</div>
+                  <div class="cas-row"><label>وفيات (Fatalities)</label><input type="number" id="casFatalPax" value="0"
+                      min="0" /></div>
+                  <div class="cas-row"><label>إصابات (Non-Fatal)</label><input type="number" id="casNonFatalPax"
+                      value="0" min="0" /></div>
+                </div>
+                <div class="casualty-card">
+                  <div class="cas-title"><i class="fas fa-user"></i> آخرون — Others</div>
+                  <div class="cas-row"><label>وفيات (Fatalities)</label><input type="number" id="casFatalOther" value="0"
+                      min="0" /></div>
+                  <div class="cas-row"><label>إصابات (Non-Fatal)</label><input type="number" id="casNonFatalOther"
+                      value="0" min="0" /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 2 ==================== -->
+        <div class="form-section" id="step2">
+          <!-- Damage Details -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-clipboard-list"></i>
+              <div>
+                <h3>تفاصيل الأضرار — Details Of Damage</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="gr-form-group">
+                <label><span class="required">*</span> وصف الأضرار بالتفصيل</label>
+                <textarea id="grDamageDetails" rows="4"
+                  placeholder="صف الأضرار التي لحقت بالطائرة أو المعدات أو المركبات..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle/Equipment -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-truck"></i>
+              <div>
+                <h3>بيانات المركبات / المعدات — Vehicle / Ramp Equipment Details</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="form-grid">
+                <div class="gr-form-group">
+                  <label><span class="required">*</span> الرقم التسلسلي — Serial / Fleet Nr</label>
+                  <input type="text" id="grVehicleNr" placeholder="مثال: IY756, IY757" />
+                </div>
+                <div class="gr-form-group">
+                  <label>النوع — Type</label>
+                  <select id="grVehicleType">
+                    <option value="">اختر النوع...</option>
+                    <option value="bus">باص ركاب (Coaster)</option>
+                    <option value="tractor">جرار سحب (Tractor)</option>
+                    <option value="belt_loader">سير أمتعة (Belt Loader)</option>
+                    <option value="fuel_truck">صهريج وقود</option>
+                    <option value="cargo_loader">رافعة شحن</option>
+                    <option value="stairs">سلالم ركاب</option>
+                    <option value="catering">مركبة تموين</option>
+                    <option value="pushback">مركبة سحب طائرة</option>
+                    <option value="other">أخرى</option>
+                  </select>
+                </div>
+                <div class="gr-form-group">
+                  <label>المالك — Owner</label>
+                  <input type="text" id="grVehicleOwner" placeholder="مثال: الخدمات الأرضية" />
+                </div>
+                <div class="gr-form-group">
+                  <label>الموقع — Area</label>
+                  <input type="text" id="grVehicleArea" placeholder="مثال: المرسى" />
+                </div>
+                <div class="gr-form-group">
+                  <label>عمر المعدة — Age of Vehicle</label>
+                  <input type="text" id="grVehicleAge" placeholder="مثال: 5 سنوات" />
+                </div>
+                <div class="gr-form-group">
+                  <label>تاريخ آخر فحص — Last Overhaul</label>
+                  <input type="date" id="grLastOverhaul" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Condition Checklist -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-tasks"></i>
+              <div>
+                <h3>قائمة فحص الحالة — Condition Report</h3>
+                <span>Serviceable ✓ / Faulty ✗</span>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="checklist-grid" id="checklistGrid">
+                <!-- Generated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 3 ==================== -->
+        <div class="form-section" id="step3">
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-users"></i>
+              <div>
+                <h3>بيانات الموظفين المتورطين — Details Of Personnel Involved</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="form-grid-2" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-5);">
+                <!-- Person 1 -->
+                <div class="personnel-card">
+                  <div class="personnel-card-header">
+                    <div class="pc-avatar">1</div>
+                    <h4>الشخص الأول</h4>
+                  </div>
+                  <div class="personnel-card-body">
+                    <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                      <div class="gr-form-group">
+                        <label>الاسم — Name</label>
+                        <input type="text" id="grPerson1Name" placeholder="الاسم الكامل" />
+                      </div>
+                      <div class="gr-form-group">
+                        <label>الوظيفة — Job Title</label>
+                        <input type="text" id="grPerson1Job" placeholder="مثال: مشغل معدات" />
+                      </div>
+                      <div class="gr-form-group">
+                        <label>الشركة — Company</label>
+                        <input type="text" id="grPerson1Company" placeholder="مثال: الخدمات الأرضية" />
+                      </div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                        <div class="gr-form-group">
+                          <label>رقم الموظف — Staff Nr</label>
+                          <input type="text" id="grPerson1StaffNr" placeholder="مثال: 9868" />
+                        </div>
+                        <div class="gr-form-group">
+                          <label>الرخصة — License</label>
+                          <select id="grPerson1License">
+                            <option value="licensed">مرخص</option>
+                            <option value="unlicensed">غير مرخص</option>
+                            <option value="expired">منتهية</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Person 2 -->
+                <div class="personnel-card">
+                  <div class="personnel-card-header">
+                    <div class="pc-avatar">2</div>
+                    <h4>الشخص الثاني</h4>
+                  </div>
+                  <div class="personnel-card-body">
+                    <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                      <div class="gr-form-group">
+                        <label>الاسم — Name</label>
+                        <input type="text" id="grPerson2Name" placeholder="الاسم الكامل" />
+                      </div>
+                      <div class="gr-form-group">
+                        <label>الوظيفة — Job Title</label>
+                        <input type="text" id="grPerson2Job" placeholder="مثال: مشغل معدات" />
+                      </div>
+                      <div class="gr-form-group">
+                        <label>الشركة — Company</label>
+                        <input type="text" id="grPerson2Company" placeholder="مثال: الخدمات الأرضية" />
+                      </div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                        <div class="gr-form-group">
+                          <label>رقم الموظف — Staff Nr</label>
+                          <input type="text" id="grPerson2StaffNr" placeholder="مثال: 9403" />
+                        </div>
+                        <div class="gr-form-group">
+                          <label>الرخصة — License</label>
+                          <select id="grPerson2License">
+                            <option value="licensed">مرخص</option>
+                            <option value="unlicensed">غير مرخص</option>
+                            <option value="expired">منتهية</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 4 ==================== -->
+        <div class="form-section" id="step4">
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-cloud-sun"></i>
+              <div>
+                <h3>الظروف — Conditions</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <!-- Weather -->
+              <div class="conditions-group">
+                <div class="conditions-group-title"><i class="fas fa-cloud-rain"></i> الطقس — Weather</div>
+                <div class="conditions-options">
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="weather"
+                      value="rain" /><i class="fas fa-cloud-rain"></i> مطر — Rain</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="weather"
+                      value="snow" /><i class="fas fa-snowflake"></i> ثلج — Snow</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="weather"
+                      value="sleet" /><i class="fas fa-cloud-meatball"></i> مطر متجمد — Sleet</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="weather"
+                      value="hail" /><i class="fas fa-icicles"></i> برد — Hail</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="weather"
+                      value="fog" /><i class="fas fa-smog"></i> ضباب — Fog</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="weather"
+                      value="clear" /><i class="fas fa-sun"></i> صافي — Clear</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="weather"
+                      value="dust" /><i class="fas fa-wind"></i> غبار — Dust</label>
+                </div>
+              </div>
+
+              <!-- Visibility & Wind -->
+              <div class="conditions-group" style="margin-top:var(--space-4);">
+                <div class="form-grid-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);">
+                  <div class="gr-form-group">
+                    <label>الرؤية — Visibility</label>
+                    <input type="text" id="grVisibility" placeholder="مثال: 10 كم" />
+                  </div>
+                  <div class="gr-form-group">
+                    <label>الرياح — Wind / Gust</label>
+                    <input type="text" id="grWind" placeholder="مثال: 15 عقدة" />
+                  </div>
+                  <div class="gr-form-group">
+                    <label>درجة الحرارة — Temperature</label>
+                    <input type="text" id="grTemp" placeholder="مثال: 35°C" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Surface -->
+              <div class="conditions-group">
+                <div class="conditions-group-title"><i class="fas fa-road"></i> السطح — Surface</div>
+                <div class="conditions-options">
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="surface"
+                      value="dry" /> جاف — Dry</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="surface"
+                      value="wet" /> رطب — Wet</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="surface"
+                      value="snow" /> ثلج — Snow</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="surface"
+                      value="slush" /> نزول ثلج — Slush</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="surface"
+                      value="ice" /> جليد — Ice</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="surface"
+                      value="contamination" /> ملوث — Contamination</label>
+                </div>
+              </div>
+
+              <!-- Lighting -->
+              <div class="conditions-group">
+                <div class="conditions-group-title"><i class="fas fa-lightbulb"></i> الإضاءة — Lighting</div>
+                <div class="conditions-options">
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="lighting"
+                      value="good" /> جيدة — Good</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="lighting"
+                      value="poor" /> ضعيفة — Poor</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="lighting"
+                      value="day" /> نهاراً — Day</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="lighting"
+                      value="night" /> ليلاً — Night</label>
+                  <label class="condition-chip" onclick="toggleChip(this)"><input type="checkbox" name="lighting"
+                      value="twilight" /> شفق — Twilight</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contributory Factors -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-search-plus"></i>
+              <div>
+                <h3>العوامل المساهمة — Contributory Factors</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="form-grid-2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-4);">
+                <div class="gr-form-group">
+                  <label>رمز العوامل المساهمة الرئيسية</label>
+                  <input type="text" id="grFactorCodes" placeholder="كود العوامل من القائمة المرجعية" />
+                </div>
+                <div class="gr-form-group">
+                  <label>عوامل أخرى (حددها) — Other factors</label>
+                  <input type="text" id="grOtherFactors" placeholder="أي عوامل إضافية..." />
+                </div>
+              </div>
+              <div class="gr-form-group" style="margin-top:var(--space-4);">
+                <label>أي من هذه العوامل تمارس بشكل طبيعي؟</label>
+                <textarea id="grNormalPractice" rows="2"
+                  placeholder="Which of these contributory factors are normal practice?"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 5 ==================== -->
+        <div class="form-section" id="step5">
+          <!-- Sketch / Photos -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-camera"></i>
+              <div>
+                <h3>رسم كروكي / صور — Sketch & Photos</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" multiple accept="image/*"
+                  onchange="handleFileUpload(event)" style="display:none" />
+                <i class="fas fa-cloud-upload-alt"></i>
+                <div class="upload-text">
+                  <strong>انقر لرفع الصور</strong> أو اسحبها هنا<br />
+                  <small>يمكنك رفع صور الرسم الكروكي أو صور الأضرار (JPG, PNG)</small>
+                </div>
+              </div>
+              <div class="upload-preview" id="uploadPreview"></div>
+            </div>
+          </div>
+
+          <!-- Narrative -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-align-right"></i>
+              <div>
+                <h3>رواية الحادث — Narrative</h3>
+                <span>Give a description of what happened, include details of relevant contributory factors</span>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="gr-form-group">
+                <label><span class="required">*</span> تفاصيل الحادث الكاملة</label>
+                <textarea id="grNarrative" rows="8"
+                  placeholder="اكتب وصفاً تفصيلياً لما حدث، مع ذكر التسلسل الزمني للأحداث والعوامل المؤثرة..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 6 ==================== -->
+        <div class="form-section" id="step6">
+          <!-- Actions & Findings -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-clipboard-check"></i>
+              <div>
+                <h3>الإجراءات والنتائج — Actions & Findings</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+                <div class="gr-form-group">
+                  <label>الإجراءات المتخذة مبدئياً — Initial Action Taken</label>
+                  <textarea id="grInitialAction" rows="3"
+                    placeholder="ما الإجراءات التي تم اتخاذها فور وقوع الحادث..."></textarea>
+                </div>
+                <div class="gr-form-group">
+                  <label>النتائج الأولية — Initial Findings</label>
+                  <textarea id="grInitialFindings" rows="3"
+                    placeholder="ما النتائج الأولية للتحقيق..."></textarea>
+                </div>
+                <div class="gr-form-group">
+                  <label>الإجراء النهائي — Closing Action</label>
+                  <textarea id="grClosingAction" rows="3"
+                    placeholder="الإجراء النهائي المتخذ لإغلاق الحادث..."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prepared By & Signature -->
+          <div class="section-card animate-fade-up">
+            <div class="section-card-header">
+              <i class="fas fa-signature"></i>
+              <div>
+                <h3>معدّ التقرير والتوقيع — Prepared By & Signature</h3>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <div class="form-grid" style="margin-bottom:var(--space-5);">
+                <div class="gr-form-group">
+                  <label><span class="required">*</span> الاسم (بحروف كبيرة) — NAME (Block Capitals)</label>
+                  <input type="text" id="grPreparedName" placeholder="الاسم الكامل لمعدّ التقرير" />
+                </div>
+                <div class="gr-form-group">
+                  <label>المنصب — Title</label>
+                  <input type="text" id="grPreparedTitle" placeholder="مثال: مشرف السلامة" />
+                </div>
+                <div class="gr-form-group">
+                  <label>التاريخ — Date</label>
+                  <input type="date" id="grPreparedDate" />
+                </div>
+              </div>
+
+              <!-- Signature -->
+              <div class="signature-area">
+                <label
+                  style="display:block;margin-bottom:var(--space-3);font-weight:var(--font-semibold);color:var(--text-secondary);font-size:var(--text-sm);">
+                  التوقيع — Signature
+                </label>
+                <canvas id="signatureCanvas" width="500" height="150"
+                  style="border:1px solid var(--gray-200);border-radius:var(--radius-lg);background:#fff;"></canvas>
+                <div class="signature-actions">
+                  <button type="button" onclick="clearSignature()"><i class="fas fa-eraser"></i> مسح التوقيع</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SUCCESS STATE ==================== -->
+        <div class="form-section" id="stepSuccess">
+          <div class="section-card">
+            <div class="submit-success">
+              <div class="success-icon"><i class="fas fa-check"></i></div>
+              <h2>تم إرسال التقرير بنجاح!</h2>
+              <p>تم تسجيل تقرير الحادث الأرضي وإرسال إشعار للمسؤولين</p>
+              <div class="report-id" id="successReportId">GR-2026-001</div>
+              <div class="success-actions" id="successActions">
+                <a href="ground-report.html"><i class="fas fa-plus"></i> تقرير جديد</a>
+                <a href="incidents.html"><i class="fas fa-list"></i> عرض الحوادث</a>
+                <button onclick="window.print()"><i class="fas fa-print"></i> طباعة التقرير</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="form-navigation" id="formNav">
+          <button class="nav-btn nav-btn-prev" id="prevBtn" onclick="changeStep(-1)" disabled>
+            <i class="fas fa-arrow-right"></i> السابق
+          </button>
+          <span class="step-indicator" id="stepIndicator">الخطوة 1 من 6</span>
+          <button class="nav-btn nav-btn-next" id="nextBtn" onclick="changeStep(1)">
+            التالي <i class="fas fa-arrow-left"></i>
+          </button>
+        </div>
+
+      </main>
+
+      <footer class="system-footer">
+        <p>
+          الخطوط الجوية اليمنية &copy; 2026 | نظام يمن سيف v2.1.0 |
+          <a href="#">الدعم الفني</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // ===== PRINT PREPARATION (JS-based, bypasses CSS cascade issues) =====
+    let _printState = null;
+
+    window.addEventListener('beforeprint', function() {
+      // Save current state
+      _printState = {
+        sidebarDisplay: document.querySelector('.sidebar')?.style.display,
+        overlayDisplay: document.querySelector('.sidebar-overlay')?.style.display,
+        headerDisplay: document.querySelector('.top-header')?.style.display,
+        footerDisplay: document.querySelector('.system-footer')?.style.display,
+        stepperDisplay: document.querySelector('.form-stepper')?.style.display,
+        navDisplay: document.getElementById('formNav')?.style.display,
+        activeSections: []
+      };
+
+      // Hide UI elements
+      const hide = (sel) => { const el = document.querySelector(sel); if (el) el.style.display = 'none'; };
+      hide('.sidebar');
+      hide('.sidebar-overlay');
+      hide('.top-header');
+      hide('.system-footer');
+      hide('.form-stepper');
+      hide('#formNav');
+      hide('#stepSuccess');
+
+      // Reset layout
+      const appLayout = document.querySelector('.app-layout');
+      if (appLayout) appLayout.style.display = 'block';
+      const mainWrapper = document.querySelector('.main-wrapper');
+      if (mainWrapper) { mainWrapper.style.marginRight = '0'; mainWrapper.style.width = '100%'; }
+
+      // Show ALL form sections
+      document.querySelectorAll('.form-section').forEach(section => {
+        _printState.activeSections.push(section.classList.contains('active'));
+        section.style.display = 'block';
+        section.style.opacity = '1';
+        section.style.visibility = 'visible';
+        section.style.position = 'static';
+        section.style.height = 'auto';
+      });
+
+      // Reset all animations
+      document.querySelectorAll('.animate-fade-up, .section-card, [class*="animate"]').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animation = 'none';
+      });
+    });
+
+    window.addEventListener('afterprint', function() {
+      if (!_printState) return;
+
+      // Restore UI elements
+      const restore = (sel, val) => { const el = document.querySelector(sel); if (el) el.style.display = val || ''; };
+      restore('.sidebar', _printState.sidebarDisplay);
+      restore('.sidebar-overlay', _printState.overlayDisplay);
+      restore('.top-header', _printState.headerDisplay);
+      restore('.system-footer', _printState.footerDisplay);
+      restore('.form-stepper', _printState.stepperDisplay);
+      const formNav = document.getElementById('formNav');
+      if (formNav) formNav.style.display = _printState.navDisplay || '';
+
+      // Restore layout
+      const appLayout = document.querySelector('.app-layout');
+      if (appLayout) appLayout.style.display = '';
+      const mainWrapper = document.querySelector('.main-wrapper');
+      if (mainWrapper) { mainWrapper.style.marginRight = ''; mainWrapper.style.width = ''; }
+
+      // Restore form sections
+      document.querySelectorAll('.form-section').forEach((section, i) => {
+        section.style.display = '';
+        section.style.opacity = '';
+        section.style.visibility = '';
+        section.style.position = '';
+        section.style.height = '';
+      });
+
+      // Restore animations
+      document.querySelectorAll('.animate-fade-up, .section-card, [class*="animate"]').forEach(el => {
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.style.animation = '';
+      });
+
+      _printState = null;
+    });
+
+    // ===== Ground Report - Logic =====
+    let currentStep = 1;
+    const totalSteps = 6;
+    let uploadedFiles = [];
+
+    // === Stepper Navigation ===
+    function changeStep(direction) {
+      const newStep = currentStep + direction;
+      if (newStep < 1 || newStep > totalSteps) return;
+      goToStep(newStep);
+    }
+
+    function goToStep(step) {
+      // Hide current
+      document.getElementById('step' + currentStep).classList.remove('active');
+      // Show new
+      currentStep = step;
+      document.getElementById('step' + currentStep).classList.add('active');
+      updateStepper();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateStepper() {
+      // Update stepper items
+      document.querySelectorAll('.stepper-item').forEach((item, index) => {
+        const stepNum = index + 1;
+        item.classList.remove('active', 'completed');
+        if (stepNum === currentStep) item.classList.add('active');
+        else if (stepNum < currentStep) item.classList.add('completed');
+      });
+
+      // Update stepper lines
+      document.querySelectorAll('.stepper-line').forEach((line, index) => {
+        line.classList.toggle('completed', index + 1 < currentStep);
+      });
+
+      // Update completed step numbers to checkmark
+      document.querySelectorAll('.stepper-item.completed .step-number').forEach(el => {
+        el.innerHTML = '<i class="fas fa-check" style="font-size:14px;"></i>';
+      });
+      document.querySelectorAll('.stepper-item:not(.completed) .step-number').forEach(el => {
+        if (!el.querySelector('i')) return;
+        const step = el.closest('.stepper-item').dataset.step;
+        el.textContent = step;
+      });
+
+      // Update buttons
+      document.getElementById('prevBtn').disabled = (currentStep === 1);
+      const nextBtn = document.getElementById('nextBtn');
+      if (currentStep === totalSteps) {
+        nextBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال التقرير';
+        nextBtn.className = 'nav-btn nav-btn-submit';
+        nextBtn.onclick = submitReport;
+      } else {
+        nextBtn.innerHTML = 'التالي <i class="fas fa-arrow-left"></i>';
+        nextBtn.className = 'nav-btn nav-btn-next';
+        nextBtn.onclick = () => changeStep(1);
+      }
+
+      // Step indicator
+      document.getElementById('stepIndicator').textContent = `الخطوة ${currentStep} من ${totalSteps}`;
+    }
+
+    // === Damage Type Toggle ===
+    function toggleDamageType(el) {
+      const cb = el.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      el.classList.toggle('selected', cb.checked);
+    }
+
+    // === Condition Chip Toggle ===
+    function toggleChip(el) {
+      const cb = el.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      el.classList.toggle('selected', cb.checked);
+    }
+
+    // === Condition Checklist ===
+    const checklistItems = [
+      { id: 'tyres', label: 'الإطارات — Tyres', icon: 'fas fa-circle' },
+      { id: 'brakes', label: 'الفرامل — Brakes', icon: 'fas fa-stop-circle' },
+      { id: 'steering', label: 'التوجيه — Steering', icon: 'fas fa-dharmachakra' },
+      { id: 'lights', label: 'الأضواء — Lights', icon: 'fas fa-lightbulb' },
+      { id: 'wipers', label: 'المساحات — Wipers', icon: 'fas fa-water' },
+      { id: 'protection', label: 'الحماية — Protection', icon: 'fas fa-shield-alt' },
+      { id: 'warning', label: 'أجهزة التحذير — Warning Devices', icon: 'fas fa-bell' },
+      { id: 'stabilizers', label: 'المثبتات — Stabilizers', icon: 'fas fa-anchor' },
+      { id: 'tow_hitch', label: 'خطاف السحب — Tow Hitch', icon: 'fas fa-link' },
+      { id: 'field_of_vision', label: 'مجال الرؤية — Field Of Vision', icon: 'fas fa-eye' },
+    ];
+
+    function initChecklist() {
+      const grid = document.getElementById('checklistGrid');
+      grid.innerHTML = checklistItems.map(item => `
+        <div class="checklist-item">
+          <div class="cl-label"><i class="${item.icon}"></i> ${item.label}</div>
+          <div class="checklist-toggles">
+            <div class="cl-toggle ok" data-item="${item.id}" data-value="ok" onclick="toggleChecklist(this)">✓</div>
+            <div class="cl-toggle fault" data-item="${item.id}" data-value="fault" onclick="toggleChecklist(this)">✗</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleChecklist(el) {
+      const item = el.dataset.item;
+      const value = el.dataset.value;
+      // Deselect siblings
+      el.parentElement.querySelectorAll('.cl-toggle').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // === File Upload ===
+    function handleFileUpload(event) {
+      const files = Array.from(event.target.files);
+      const preview = document.getElementById('uploadPreview');
+
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          uploadedFiles.push(e.target.result);
+          const idx = uploadedFiles.length - 1;
+          const div = document.createElement('div');
+          div.className = 'upload-preview-item';
+          div.innerHTML = `
+            <img src="${e.target.result}" alt="صورة مرفقة" />
+            <button class="remove-img" onclick="removeImage(${idx}, this)"><i class="fas fa-times"></i></button>
+          `;
+          preview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function removeImage(index, btn) {
+      uploadedFiles[index] = null;
+      btn.closest('.upload-preview-item').remove();
+    }
+
+    // Drag & Drop
+    const uploadArea = document.getElementById('uploadArea');
+    if (uploadArea) {
+      ['dragenter', 'dragover'].forEach(ev => {
+        uploadArea.addEventListener(ev, (e) => { e.preventDefault(); uploadArea.style.borderColor = 'var(--primary-500)'; uploadArea.style.background = 'var(--primary-50)'; });
+      });
+      ['dragleave', 'drop'].forEach(ev => {
+        uploadArea.addEventListener(ev, (e) => { e.preventDefault(); uploadArea.style.borderColor = ''; uploadArea.style.background = ''; });
+      });
+      uploadArea.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        document.getElementById('fileInput').files = dt.files;
+        handleFileUpload({ target: { files: dt.files } });
+      });
+    }
+
+    // === Signature Canvas ===
+    let signatureDrawing = false;
+    function initSignature() {
+      const canvas = document.getElementById('signatureCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      // Responsive canvas
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = Math.min(500, rect.width - 40);
+
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const touch = e.touches ? e.touches[0] : e;
+        return { x: touch.clientX - r.left, y: touch.clientY - r.top };
+      }
+
+      function startDraw(e) {
+        e.preventDefault();
+        signatureDrawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+      }
+
+      function draw(e) {
+        if (!signatureDrawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#1a1a2e';
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+      }
+
+      function stopDraw() {
+        signatureDrawing = false;
+      }
+
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDraw);
+      canvas.addEventListener('mouseleave', stopDraw);
+      canvas.addEventListener('touchstart', startDraw, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', stopDraw);
+    }
+
+    function clearSignature() {
+      const canvas = document.getElementById('signatureCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // === Submit Report ===
+    function submitReport() {
+      // Basic validation
+      const date = document.getElementById('grDate').value;
+      const time = document.getElementById('grTime').value;
+      const flightNr = document.getElementById('grFlightNr').value;
+
+      if (!date || !time) {
+        showToast('يرجى ملء بيانات التاريخ والوقت في الخطوة الأولى', 'warning');
+        goToStep(1);
+        return;
+      }
+
+      // Generate report ID
+      const existingReports = JSON.parse(localStorage.getItem('yemensafe_ground_reports') || '[]');
+      const reportNum = existingReports.length + 1;
+      const reportId = 'GR-' + new Date().getFullYear() + '-' + String(reportNum).padStart(3, '0');
+
+      // Collect form data
+      const reportData = {
+        id: reportId,
+        date: date,
+        time: time,
+        area: document.getElementById('grArea').value,
+        aircraftReg: document.getElementById('grAircraftReg').value,
+        aircraftType: document.getElementById('grAircraftType').value,
+        flightNr: flightNr,
+        groundTime: document.getElementById('grGroundTime').value,
+        delay: document.getElementById('grDelay').value,
+        cancelled: document.getElementById('grCancelled').value,
+        damageTypes: Array.from(document.querySelectorAll('#damageTypeGrid input:checked')).map(cb => cb.value),
+        casualties: {
+          employees: { fatal: +document.getElementById('casFatalEmp').value, nonFatal: +document.getElementById('casNonFatalEmp').value },
+          passengers: { fatal: +document.getElementById('casFatalPax').value, nonFatal: +document.getElementById('casNonFatalPax').value },
+          others: { fatal: +document.getElementById('casFatalOther').value, nonFatal: +document.getElementById('casNonFatalOther').value },
+        },
+        damageDetails: document.getElementById('grDamageDetails')?.value || '',
+        vehicle: {
+          nr: document.getElementById('grVehicleNr')?.value || '',
+          type: document.getElementById('grVehicleType')?.value || '',
+          owner: document.getElementById('grVehicleOwner')?.value || '',
+          area: document.getElementById('grVehicleArea')?.value || '',
+          age: document.getElementById('grVehicleAge')?.value || '',
+          lastOverhaul: document.getElementById('grLastOverhaul')?.value || '',
+        },
+        personnel: [
+          { name: document.getElementById('grPerson1Name')?.value || '', job: document.getElementById('grPerson1Job')?.value || '', company: document.getElementById('grPerson1Company')?.value || '', staffNr: document.getElementById('grPerson1StaffNr')?.value || '', license: document.getElementById('grPerson1License')?.value || '' },
+          { name: document.getElementById('grPerson2Name')?.value || '', job: document.getElementById('grPerson2Job')?.value || '', company: document.getElementById('grPerson2Company')?.value || '', staffNr: document.getElementById('grPerson2StaffNr')?.value || '', license: document.getElementById('grPerson2License')?.value || '' },
+        ],
+        narrative: document.getElementById('grNarrative')?.value || '',
+        initialAction: document.getElementById('grInitialAction')?.value || '',
+        initialFindings: document.getElementById('grInitialFindings')?.value || '',
+        closingAction: document.getElementById('grClosingAction')?.value || '',
+        preparedBy: {
+          name: document.getElementById('grPreparedName')?.value || '',
+          title: document.getElementById('grPreparedTitle')?.value || '',
+          date: document.getElementById('grPreparedDate')?.value || '',
+        },
+        images: uploadedFiles.filter(f => f !== null),
+        createdAt: new Date().toISOString(),
+        status: 'new',
+      };
+
+      // Save to localStorage
+      existingReports.push(reportData);
+      localStorage.setItem('yemensafe_ground_reports', JSON.stringify(existingReports));
+
+      // If linked to a source incident, update the source incident
+      if (sourceIncidentId) {
+        const sourceIdx = MockData.incidents.findIndex(i => i.id === sourceIncidentId);
+        if (sourceIdx !== -1) {
+          MockData.incidents[sourceIdx].groundReportId = reportId;
+          MockData.incidents[sourceIdx].actions.push(`تم إعداد تقرير حادث أرضي (${reportId})`);
+        }
+        reportData.sourceIncident = sourceIncidentId;
+      } else {
+        // Create a new incident only if NOT linked to existing one
+        const newIncident = {
+          id: reportId,
+          title: `تقرير حادث أرضي — رحلة ${flightNr || 'غير محدد'}`,
+          type: 'equipment',
+          priority: reportData.casualties.employees.fatal > 0 || reportData.casualties.passengers.fatal > 0 ? 'critical' : 'urgent',
+          status: 'new',
+          location: reportData.area || 'غير محدد',
+          date: date,
+          time: time,
+          reporter: reportData.preparedBy.name || 'مشرف السلامة',
+          assignedTo: '',
+          description: reportData.narrative || reportData.damageDetails || 'تقرير حادث أرضي',
+          actions: [reportData.initialAction].filter(Boolean),
+          groundReport: true,
+        };
+        MockData.incidents.unshift(newIncident);
+      }
+      saveDataToStorage();
+
+      // Show success
+      document.getElementById('successReportId').textContent = reportId;
+      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('stepSuccess').classList.add('active');
+      document.getElementById('formNav').style.display = 'none';
+      document.querySelector('.form-stepper').style.display = 'none';
+
+      // Add notification — send to operations_manager and safety_officer
+      const notifMsg = sourceIncidentId 
+        ? `تم إعداد تقرير حادث أرضي (${reportId}) مرتبط بالحادث ${sourceIncidentId}`
+        : `تم تسجيل تقرير حادث أرضي جديد للرحلة ${flightNr || 'غير محدد'}`;
+
+      MockData.notifications.unshift({
+        id: Date.now(),
+        type: 'incident',
+        title: `تقرير حادث أرضي — ${reportId}`,
+        message: notifMsg,
+        time: 'الآن',
+        date: new Date().toISOString().split('T')[0],
+        read: false,
+        icon: 'fas fa-file-alt',
+        color: '#e74c3c',
+        targetRole: 'operations_manager',
+      });
+
+      showToast('تم إرسال التقرير بنجاح! ✈️', 'success');
+
+      // Update success actions if linked to an incident
+      if (sourceIncidentId) {
+        document.getElementById('successActions').innerHTML = `
+          <a href="incident-detail.html?id=${sourceIncidentId}" style="background:linear-gradient(135deg,#0055a5,#003366);color:#fff;border:none;"><i class="fas fa-arrow-right"></i> العودة للحادث ${sourceIncidentId}</a>
+          <a href="incidents.html"><i class="fas fa-list"></i> عرض الحوادث</a>
+          <button onclick="window.print()"><i class="fas fa-print"></i> طباعة التقرير</button>
+        `;
+      }
+    }
+
+    // === Initialize ===
+    let sourceIncidentId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initChecklist();
+      initSignature();
+
+      // Set default dates
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('grDate').value = today;
+      document.getElementById('grPreparedDate').value = today;
+
+      // Set default time
+      const now = new Date();
+      const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('grTime').value = timeStr;
+
+      // Stepper click navigation
+      document.querySelectorAll('.stepper-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const step = parseInt(item.dataset.step);
+          if (step <= currentStep || step === currentStep + 1) {
+            goToStep(step);
+          }
+        });
+      });
+
+      // Auto-fill preparer name from current user
+      const user = getCurrentUser();
+      if (user) {
+        document.getElementById('grPreparedName').value = user.name;
+        const roleLabel = getRoleLabel(user.role);
+        document.getElementById('grPreparedTitle').value = roleLabel;
+      }
+
+      // === Read incident data from URL parameters ===
+      const urlParams = new URLSearchParams(window.location.search);
+      sourceIncidentId = urlParams.get('incident');
+
+      if (sourceIncidentId) {
+        // Show back button
+        const backBtn = document.getElementById('backToIncidentBtn');
+        backBtn.style.display = 'inline-flex';
+        backBtn.href = `incident-detail.html?id=${sourceIncidentId}`;
+
+        // Update header subtitle
+        document.getElementById('headerSubtitle').textContent = `مرتبط بالحادث: ${sourceIncidentId}`;
+
+        // Auto-fill fields from URL params
+        const date = urlParams.get('date');
+        const time = urlParams.get('time');
+        const location = urlParams.get('location');
+        const reporter = urlParams.get('reporter');
+        const description = urlParams.get('description');
+
+        if (date) document.getElementById('grDate').value = date;
+        if (time) document.getElementById('grTime').value = time;
+        if (location) {
+          // Try to match select option
+          const areaSelect = document.getElementById('grArea');
+          const matchOption = Array.from(areaSelect.options).find(opt => opt.value === location);
+          if (matchOption) {
+            areaSelect.value = location;
+          } else {
+            // Add as custom option
+            const newOpt = document.createElement('option');
+            newOpt.value = location;
+            newOpt.textContent = location;
+            areaSelect.insertBefore(newOpt, areaSelect.lastElementChild);
+            areaSelect.value = location;
+          }
+        }
+        if (reporter) document.getElementById('grPreparedName').value = reporter;
+        if (description) {
+          // Pre-fill narrative with incident description
+          const narrativeEl = document.getElementById('grNarrative');
+          if (narrativeEl) narrativeEl.value = description;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

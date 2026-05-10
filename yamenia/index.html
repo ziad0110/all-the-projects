@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="نظام يمن سيف - النظام الرقمي المتكامل لإدارة الحوادث التشغيلية للخطوط الجوية اليمنية"
+    />
+    <title>يمن سيف - تسجيل الدخول | YEMEN SAFE</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+
+    <style>
+      body {
+        direction: rtl;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-page">
+      <!-- Animated Background -->
+      <div class="login-bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+
+      <!-- Airplane animations -->
+      <div class="login-airplane">✈️</div>
+      <div class="login-airplane">✈️</div>
+      <div class="login-airplane">✈️</div>
+
+      <!-- Login Card -->
+      <div class="login-card">
+        <!-- Logo -->
+        <div class="login-header animate-fade-up" style="text-align: center">
+          <div class="login-logo-container">
+            <img
+              src="image.png"
+              alt="شعار يمن سيف"
+              style="max-width: 100%; height: auto"
+            />
+          </div>
+          <h1>يمن سيف للطيران</h1>
+          <p>النظام الرقمي لإدارة الحوادث التشغيلية</p>
+          <div class="brand-text">YEMEN SAFE</div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="login-error" id="loginError">
+          <i class="fas fa-exclamation-circle"></i>
+          <span></span>
+        </div>
+
+        <!-- Login Form -->
+        <form class="login-form" id="loginForm">
+          <div class="form-group">
+            <label class="form-label">اسم المستخدم</label>
+            <div style="position: relative">
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="أدخل اسم المستخدم"
+                autocomplete="username"
+              />
+              <i
+                class="fas fa-user input-icon"
+                style="
+                  position: absolute;
+                  right: 14px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: var(--text-muted);
+                "
+              ></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">كلمة المرور</label>
+            <div style="position: relative">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="أدخل كلمة المرور"
+                autocomplete="current-password"
+              />
+              <i
+                class="fas fa-lock input-icon"
+                style="
+                  position: absolute;
+                  right: 14px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: var(--text-muted);
+                "
+              ></i>
+              <button type="button" class="password-toggle" id="passwordToggle">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="login-btn">
+            <i class="fas fa-sign-in-alt"></i>
+            تسجيل الدخول
+          </button>
+        </form>
+
+        <div class="login-footer">
+          <p>الخطوط الجوية اليمنية &copy; 2026 | نظام يمن سيف v2.1.0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>
